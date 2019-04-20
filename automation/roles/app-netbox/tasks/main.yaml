@@ -41,7 +41,7 @@
     seconds: 120 
 
 - name: Provision Netbox postgres db
-  shell: 'cat netbox_postgres.sql | docker exec -i netbox-docker_postgres_1 psql -U postgres'
+  shell: 'cat netbox_postgres.sql | docker exec -i netboxdocker_postgres_1 psql -U postgres'
   when:
     - netbox_state.stdout.find('netbox') == -1
 ...
