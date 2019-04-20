@@ -1,26 +1,19 @@
 ---
-- name: Check NetQ install
-  command: apt search cumulus-netq
-  register: netq_installed
-
 - name: Add Cumulus Apt Key
   apt_key:
     url: "https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey"
     state: present
-  when: netq_installed.stdout.find('[installed]') == -1
 
 - name: Add Cumulus Repo
   apt_repository:
-    repo: deb https://apps3.cumulusnetworks.com/repos/deb xenial netq-2.0
+    repo: deb https://apps3.cumulusnetworks.com/repos/deb xenial netq-2.1
     state: present
     update_cache: no
-  when: netq_installed.stdout.find('[installed]') == -1
 
 - name: Install NetQ
   apt:
     name: cumulus-netq
     update_cache: yes
-  when: netq_installed.stdout.find('[installed]') == -1
 
 - name: Add netq to mgmt vrf
   lineinfile:
@@ -30,11 +23,9 @@
     - 'netq-agent'
     - 'netq-notifier'
     - 'netqd'
-  when: netq_installed.stdout.find('[installed]') == -1
 
 - name: Restart VRF systemctl daemon
   command: systemctl daemon-reload
-  when: netq_installed.stdout.find('[installed]') == -1
 
 - name: copy netq config file
   copy:

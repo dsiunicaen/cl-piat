@@ -88,4 +88,5 @@ iface vlan{{l2domain}}
     post-up bridge vlan add vid {{l2domain}} untagged pvid dev veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0
 
     post-up ip link set veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0 up
+    post-up sysctl -w net.ipv4.conf.$IFACE.forwarding=1
 {% endfor %}

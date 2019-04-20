@@ -8,5 +8,34 @@
   command: pip3 install PyYAML
 
 - name: Install Pynetbox
-  command: pip3 install pynetbox==3.4.7 
+  command: pip3 install pynetbox==3.4.7
+
+- name: Add Cumulus Apt Key
+  apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: present
+
+- name: Add Cumulus Repo
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu xenial stable 
+    state: present
+    update_cache: yes
+
+- name: Install Docker
+  apt:
+    name: docker-ce
+    update_cache: yes
+
+- name: adding cumulus to group docker
+  user:
+    name: cumulus
+    groups: docker
+    append: yes
+
+- name: Get docker compose 
+  get_url: https://github.com/docker/compose/releases/download/1.18.0/docker-compose-Linux-x86_64 -o /usr/local/bin/docker-compose
+
+- file:
+    path: /usr/local/bin/docker-compose
+    mode: 0755
 ...

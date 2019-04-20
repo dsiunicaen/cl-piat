@@ -3,13 +3,13 @@
   become: true
   roles:
   - oob-mgmt-server
+  - app-grafana
+  - app-netbox
 
 - hosts: netq-ts
   become: true
   roles:
   - setup-netq-ts
-  - app-grafana
-  - app-netbox
 
 - hosts: spines,superspine
   become: true
@@ -28,15 +28,12 @@
   roles:
   - setup-server
   - server-multitenant
+  - app-netq
 
 - hosts: servers-rack2 
   become: true 
   roles:
   - setup-server
   - server-evpn
-  tasks:
-  - name: reboot
-    reboot:
-      reboot_timeout: 1200
-      test_command: mount
+  - app-netq
 ...
