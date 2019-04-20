@@ -6,7 +6,8 @@
     state: present
     force: yes
 
-- pip:
+- name: Pip installs
+  pip:
     name:
       - pyyaml
       - pynetbox==3.4.7
@@ -39,7 +40,8 @@
     url: https://github.com/docker/compose/releases/download/1.18.0/docker-compose-Linux-x86_64
     dest: /usr/local/bin/docker-compose
 
-- file:
+- name: Chown docker-compose
+  file:
     path: /usr/local/bin/docker-compose
     mode: 0755
 ...
