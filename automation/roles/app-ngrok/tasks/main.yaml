@@ -1,32 +1,41 @@
 ---
-- name: Create Grafana storage
-  docker_volume:
-    name: grafana-storage
+- name: Create Ngrok dir
+  file:
+    path: /opt/ngrok
+    state: directory
+    mode: 0755
 
-- name: Grafana container
-  docker_container:
-    name: grafana
-    image: grafana/grafana
-    state: started
-    ports:
-    - "3000:3000"
-    volumes:
-    - grafana-storage:/var/lib/grafana
-    env:
-      GF_SERVER_ROOT_URL: 'http://grafana.server.name'
-      GF_SECURITY_ADMIN_PASSWORD: 'CumulusLinux!' 
+- name: Download Ngrok 
+  get_url:
+    url: https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+    dest: /opt/ngrok/ngrok-stable-linux-amd64.zip
 
-- name: Pause to let container start 
-  pause:
-    seconds: 60 
+- name: Unzip Ngrok 
+  unarchive:
+    src: /opt/ngrok/ngrok-stable-linux-amd64.zip
+    dest: /opt/ngrok/ngrok
+    remote_src: yes
 
-- name: Create Grafana NetQ datasource
-  grafana_datasource:
-    name: NetQ
-    grafana_url: http://localhost:3000
-    grafana_password: 'CumulusLinux!'
-    ds_type: influxdb
-    url: http://192.168.200.250:8086
-    database: netq
-    state: present
+- name: Delete Ngrok zip
+  file:
+    path: /opt/ngrok/ngrok-stable-linux-amd64.zip
+    state: absent
+
+- name: Copy ngrok config file 
+  copy:
+    src: ngrok.yml
+    dest: /opt/ngrok.yml
+
+- name: Copy Ngrok service
+  copy:
+    src: ngrok.service
+    dest: /etc/systemd/system/ngrok.service
+
+- name: Reload daemon
+  command: systemctl daemon-reload
+
+- name: Enable Ngrok daemon
+  systemd:
+    name: ngrok
+    enabled: yes
 ...
