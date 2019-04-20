@@ -6,11 +6,15 @@
     state: present
     force: yes
 
+- name: Install Pyyaml
+  command: pip3 install PyYAML
+
+- name: Install Pynetbox
+  command: pip3 install pynetbox==3.4.7
+
 - name: Pip installs
   pip:
     name:
-      - pyyaml
-      - pynetbox==3.4.7
       - docker
 
 - name: Add Cumulus Apt Key
