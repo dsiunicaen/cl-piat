@@ -1,0 +1,15 @@
+authtoken:  
+
+tunnels:
+    ssh:
+        proto: tcp
+        addr: 127.0.0.1:22
+    netq-gui:
+        proto: http
+        addr: https://192.168.200.250:32666
+    grafana:
+        proto: http
+        addr: http://127.0.0.1:3000
+    netbox:
+        proto: http
+        addr: http://127.0.0.1:3000

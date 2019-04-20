@@ -5,6 +5,7 @@
   - oob-mgmt-server
   - app-grafana
   - app-netbox
+  - app-ngrok
 
 - hosts: netq-ts
   become: true
