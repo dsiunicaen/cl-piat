@@ -15,27 +15,33 @@
     src: /opt/ngrok/ngrok-stable-linux-amd64.zip
     dest: /opt/ngrok/
     remote_src: yes
+  tags: ngrok
 
 - name: Delete Ngrok zip
   file:
     path: /opt/ngrok/ngrok-stable-linux-amd64.zip
     state: absent
+  tags: ngrok
 
 - name: Copy ngrok config file 
   copy:
     src: ngrok.yml
     dest: /opt/ngrok.yml
+  tags: ngrok
 
 - name: Copy Ngrok service
   copy:
     src: ngrok.service
     dest: /etc/systemd/system/ngrok.service
+  tags: ngrok
 
 - name: Reload daemon
   command: systemctl daemon-reload
+  tags: ngrok
 
 - name: Enable Ngrok daemon
   systemd:
     name: ngrok
     enabled: yes
+  tags: ngrok
 ...
