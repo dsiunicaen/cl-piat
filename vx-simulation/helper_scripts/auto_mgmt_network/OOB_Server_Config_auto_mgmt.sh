@@ -21,7 +21,7 @@ REPONAME="cl-piat"
 #Install Automation Tools
 puppet=0
 ansible=1
-ansible_version=2.7.9
+ansible_version=2.7.10
 
 #######################
 
