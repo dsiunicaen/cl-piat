@@ -1,7 +1,7 @@
 ---
 - name: Install additional packages
   apt:
-    name: ['git','screen','python3-pip']
+    name: ['git','screen','python3-pip','unzip']
     update_cache: yes
     state: present
     force: yes

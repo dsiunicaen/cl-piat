@@ -6,7 +6,7 @@ from pprint import pprint
 import ipaddress
 
 nb = pynetbox.api(
-    'http://127.0.0.1:32768',
+    'http://localhost:32768',
     token='0123456789abcdef0123456789abcdefcumulus'
 )
 
