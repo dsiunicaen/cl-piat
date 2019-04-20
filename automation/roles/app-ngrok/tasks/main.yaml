@@ -13,7 +13,7 @@
 - name: Unzip Ngrok 
   unarchive:
     src: /opt/ngrok/ngrok-stable-linux-amd64.zip
-    dest: /opt/ngrok/ngrok
+    dest: /opt/ngrok/
     remote_src: yes
 
 - name: Delete Ngrok zip
