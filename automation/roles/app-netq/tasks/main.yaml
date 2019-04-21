@@ -43,11 +43,9 @@
     - systemctl start netqd@mgmt
     - systemctl enable netq-agent@mgmt
     - systemctl start netq-agent@mgmt
-  when: netq_installed.stdout.find('[installed]') == -1
 
 - name: Restart Rsyslog
   service:
     name: rsyslog
     state: restarted
-  when: netq_installed.stdout.find('[installed]') == -1
 ...
