@@ -41,6 +41,7 @@
 
 - name: Create NetQ influx DB
   influxdb_database:
+    hostname: "localhost"
     database_name: "netq"
 
 - name: copy influx-import script
