@@ -23,7 +23,7 @@
 
 - name: Download Influxdb
   get_url:
-    url: wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.6_amd64.deb
+    url: https://dl.influxdata.com/influxdb/releases/influxdb_1.7.6_amd64.deb
     dest: /home/cumulus/influxdb_1.7.6_amd64.deb
 
 - name: Install Influxdb
