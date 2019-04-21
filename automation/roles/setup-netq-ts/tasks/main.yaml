@@ -33,19 +33,23 @@
   with_items:
     - /home/cumulus/influxdb_1.7.6_amd64.deb
 
+- name: copy influx-import script
+  copy:
+    src: influx-import.py
+    dest: /home/cumulus/influx-import.py 
+
 - name: Systemctl enable influx
   systemd:
     state: started
     enabled: yes
     name: influxdb
 
+- name: Let influx start 
+  pause:
+    seconds: 30
+
 - name: Create NetQ influx DB
   influxdb_database:
     hostname: "localhost"
     database_name: "netq"
-
-- name: copy influx-import script
-  copy:
-    src: influx-import.py
-    dest: /home/cumulus/influx-import.py 
 ...
