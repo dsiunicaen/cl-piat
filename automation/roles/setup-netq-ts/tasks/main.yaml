@@ -37,6 +37,9 @@
   copy:
     src: influx-import.py
     dest: /home/cumulus/influx-import.py 
+    owner: cumulus
+    group: cumulus
+    
 
 - name: Systemctl enable influx
   systemd:

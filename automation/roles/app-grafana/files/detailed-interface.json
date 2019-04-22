@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:87",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -17,8 +16,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1528652632640,
+  "id": 1,
+  "iteration": 1555922972685,
   "links": [],
   "panels": [
     {
@@ -61,7 +60,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_hostname.$tag_interface.rx",
+          "alias": "$tag_hostname.$tag_ifname.rx",
           "groupBy": [
             {
               "params": [
@@ -71,13 +70,13 @@
             },
             {
               "params": [
-                "interface"
+                "ifname"
               ],
               "type": "tag"
             }
           ],
           "hide": false,
-          "measurement": "procnetdev",
+          "measurement": "netdev",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -86,7 +85,7 @@
             [
               {
                 "params": [
-                  "rxBytes"
+                  "rx_bytes"
                 ],
                 "type": "field"
               },
@@ -106,14 +105,14 @@
             },
             {
               "condition": "AND",
-              "key": "interface",
+              "key": "ifname",
               "operator": "=~",
               "value": "/^$interface$/"
             }
           ]
         },
         {
-          "alias": "$tag_hostname.$tag_interface.tx",
+          "alias": "$tag_hostname.$tag_ifname.tx",
           "groupBy": [
             {
               "params": [
@@ -123,13 +122,13 @@
             },
             {
               "params": [
-                "interface"
+                "ifname"
               ],
               "type": "tag"
             }
           ],
           "hide": false,
-          "measurement": "procnetdev",
+          "measurement": "netdev",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -138,7 +137,7 @@
             [
               {
                 "params": [
-                  "txBytes"
+                  "tx_bytes"
                 ],
                 "type": "field"
               },
@@ -158,7 +157,7 @@
             },
             {
               "condition": "AND",
-              "key": "interface",
+              "key": "ifname",
               "operator": "=~",
               "value": "/^$interface$/"
             }
@@ -167,6 +166,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "$switch $interface bandwidth",
       "tooltip": {
@@ -245,7 +245,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_hostname.$tag_interface.rx",
+          "alias": "$tag_hostname.$tag_ifname.rx",
           "groupBy": [
             {
               "params": [
@@ -255,13 +255,13 @@
             },
             {
               "params": [
-                "interface"
+                "ifname"
               ],
               "type": "tag"
             }
           ],
           "hide": false,
-          "measurement": "procnetdev",
+          "measurement": "netdev",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -270,7 +270,7 @@
             [
               {
                 "params": [
-                  "rxErrs"
+                  "rx_errs"
                 ],
                 "type": "field"
               },
@@ -290,14 +290,14 @@
             },
             {
               "condition": "AND",
-              "key": "interface",
+              "key": "ifname",
               "operator": "=~",
               "value": "/^$interface$/"
             }
           ]
         },
         {
-          "alias": "$tag_hostname.$tag_interface.tx",
+          "alias": "$tag_hostname.$tag_ifname.tx",
           "groupBy": [
             {
               "params": [
@@ -307,13 +307,13 @@
             },
             {
               "params": [
-                "interface"
+                "ifname"
               ],
               "type": "tag"
             }
           ],
           "hide": false,
-          "measurement": "procnetdev",
+          "measurement": "netdev",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -322,7 +322,7 @@
             [
               {
                 "params": [
-                  "txErrs"
+                  "tx_errs"
                 ],
                 "type": "field"
               },
@@ -342,7 +342,7 @@
             },
             {
               "condition": "AND",
-              "key": "interface",
+              "key": "ifname",
               "operator": "=~",
               "value": "/^$interface$/"
             }
@@ -351,6 +351,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "$switch $interface CRC errors",
       "tooltip": {
@@ -429,7 +430,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_hostname.$tag_interface.rx",
+          "alias": "$tag_hostname.$tag_ifname.rx",
           "groupBy": [
             {
               "params": [
@@ -439,13 +440,13 @@
             },
             {
               "params": [
-                "interface"
+                "ifname"
               ],
               "type": "tag"
             }
           ],
           "hide": false,
-          "measurement": "procnetdev",
+          "measurement": "netdev",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -454,7 +455,7 @@
             [
               {
                 "params": [
-                  "rxDrop"
+                  "rx_drop"
                 ],
                 "type": "field"
               },
@@ -474,14 +475,14 @@
             },
             {
               "condition": "AND",
-              "key": "interface",
+              "key": "ifname",
               "operator": "=~",
               "value": "/^$interface$/"
             }
           ]
         },
         {
-          "alias": "$tag_hostname.$tag_interface.tx",
+          "alias": "$tag_hostname.$tag_ifname.tx",
           "groupBy": [
             {
               "params": [
@@ -491,13 +492,13 @@
             },
             {
               "params": [
-                "interface"
+                "ifname"
               ],
               "type": "tag"
             }
           ],
           "hide": false,
-          "measurement": "procnetdev",
+          "measurement": "netdev",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -506,7 +507,7 @@
             [
               {
                 "params": [
-                  "txDrop"
+                  "tx_drop"
                 ],
                 "type": "field"
               },
@@ -526,7 +527,7 @@
             },
             {
               "condition": "AND",
-              "key": "interface",
+              "key": "ifname",
               "operator": "=~",
               "value": "/^$interface$/"
             }
@@ -535,6 +536,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "$switch $interface Drops",
       "tooltip": {
@@ -575,7 +577,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 16,
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -583,11 +585,11 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
           "text": "leaf02",
           "value": "leaf02"
         },
         "datasource": "NetQ",
+        "definition": "",
         "hide": 0,
         "includeAll": true,
         "label": "Switch",
@@ -597,6 +599,7 @@
         "query": "show tag values with key=\"hostname\"",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
@@ -613,15 +616,17 @@
           ]
         },
         "datasource": "NetQ",
+        "definition": "show tag values with key=\"ifname\"",
         "hide": 0,
         "includeAll": true,
         "label": null,
         "multi": true,
         "name": "interface",
         "options": [],
-        "query": "show tag values with key=\"interface\"",
+        "query": "show tag values with key=\"ifname\"",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
@@ -663,5 +668,5 @@
   "timezone": "browser",
   "title": "Detailed interface statistics",
   "uid": "ktxurwzmz",
-  "version": 4
+  "version": 28
 }
