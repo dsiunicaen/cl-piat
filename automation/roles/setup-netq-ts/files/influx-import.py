@@ -16,7 +16,7 @@ netdev_data = []
 current_time = datetime.datetime.utcnow()
 prev_time = current_time - datetime.timedelta(0,20)
 
-query = "SELECT * from netq.procdevstats WHERE timestamp >= \'" + prev_time.strftime("%Y-%m-%d %H:%M:%S") + "\' AND timestamp <= \'" + current_time.strftime("%Y-%m-%d %H:%M:%S") + "\' ALLOW FILTERING"
+query = "SELECT * from netq.procnetdev WHERE timestamp >= \'" + prev_time.strftime("%Y-%m-%d %H:%M:%S") + "\' AND timestamp <= \'" + current_time.strftime("%Y-%m-%d %H:%M:%S") + "\' ALLOW FILTERING"
 rows = session.execute(query)
 i=0
 for row in rows:

@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1555922972685,
+  "iteration": 1557999520115,
   "links": [],
   "panels": [
     {
@@ -585,8 +585,11 @@
       {
         "allValue": null,
         "current": {
-          "text": "leaf02",
-          "value": "leaf02"
+          "text": "leaf01 + leaf02",
+          "value": [
+            "leaf01",
+            "leaf02"
+          ]
         },
         "datasource": "NetQ",
         "definition": "",
@@ -610,9 +613,12 @@
       {
         "allValue": null,
         "current": {
-          "text": "All",
+          "text": "swp1 + swp2 + swp49 + swp50",
           "value": [
-            "$__all"
+            "swp1",
+            "swp2",
+            "swp49",
+            "swp50"
           ]
         },
         "datasource": "NetQ",
@@ -668,5 +674,5 @@
   "timezone": "browser",
   "title": "Detailed interface statistics",
   "uid": "ktxurwzmz",
-  "version": 28
+  "version": 13
 }
