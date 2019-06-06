@@ -1,6 +1,6 @@
 # /etc/dhcp/dhcpd.conf
 # Created by Topology-Converter v{{ version }}
-#    Template Revision: v4.6.8
+#    Template Revision: v4.7.0
 #    https://github.com/cumulusnetworks/topology_converter
 #    using topology data from: {{ topology_file }}
 
@@ -45,7 +45,6 @@ shared-network LOCAL-NET{
 subnet {{ devices[0].mgmt_network }} netmask {{ devices[0].mgmt_netmask }} {
   range {{ devices[0].mgmt_dhcp_start }} {{ devices[0].mgmt_dhcp_stop }};
   option domain-name-servers {{ devices[0].mgmt_ip }};
-  option routers {{ devices[0].mgmt_ip }};
   option domain-name "simulation";
   default-lease-time 172800;  #2 days
   max-lease-time 345600;      #4 days
