@@ -134,7 +134,7 @@ restrict ::1
 EOT
 
 echo " ### Creating cumulus user ###"
-useradd -m cumulus /bin/bash
+useradd -m -s /bin/bash cumulus
 echo "cumulus:CumulusLinux!" | chpasswd
 
 echo " ### Setting Up DHCP ###"
