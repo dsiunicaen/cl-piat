@@ -134,7 +134,7 @@ restrict ::1
 EOT
 
 echo " ### Creating cumulus user ###"
-useradd -m cumulus
+useradd -m cumulus /bin/bash
 
 echo " ### Setting Up DHCP ###"
 mv /home/$username/dhcpd.conf /etc/dhcp/dhcpd.conf
@@ -171,6 +171,10 @@ chmod 777 -R /var/www/html/*
 
 echo " ###Making cumulus passwordless sudo ###"
 echo "cumulus ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/10_cumulus
+
+echo " ###Auto login cumulus user ###"
+echo "sudo su - cumulus" >> /home/vagrant/.bash_profile
+echo "exit" >> /home/vagrant/.bash_profile
 
 echo ' ### Setting UP NAT and Routing on MGMT server... ### '
 echo -e '#!/bin/bash \n/sbin/iptables -t nat -A POSTROUTING -o vagrant -j MASQUERADE' > /etc/rc.local
