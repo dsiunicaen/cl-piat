@@ -3689,7 +3689,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$36000$W5RibUfmeFJa$6HgqQ7rDj/0CL9MOYMk4TqVl3iQTF7OXq8oN8S5Ml/M=	2018-11-07 16:46:12.848292+00	t	admin			admin@example.com	t	t	2018-06-03 16:17:44.788445+00
+1	pbkdf2_sha256$36000$W5RibUfmeFJa$6HgqQ7rDj/0CL9MOYMk4TqVl3iQTF7OXq8oN8S5Ml/M=	2019-06-08 15:18:24.788869+00	t	admin			admin@example.com	t	t	2018-06-03 16:17:44.788445+00
 \.
 
 
@@ -3781,17 +3781,17 @@ COPY public.dcim_device (id, created, last_updated, name, serial, "position", fa
 5	2018-06-08	2018-06-08 21:58:28.048198+00	spine01		\N	\N	1		2	1	\N	2	\N	\N	\N	\N	1	\N	\N	\N	\N
 6	2018-06-08	2018-06-08 22:35:21.708373+00	spine02		\N	\N	1		2	1	\N	2	\N	\N	\N	\N	1	\N	\N	\N	\N
 7	2018-06-08	2018-06-09 07:42:23.365687+00	leaf03		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	1	\N	\N	\N	\N
-9	2018-06-09	2018-06-09 08:14:35.463472+00	exit01		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N
-10	2018-06-09	2018-06-09 08:14:44.548963+00	exit02		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N
 11	2018-06-09	2018-06-09 08:15:21.61264+00	super01		\N	\N	1		2	1	\N	5	\N	\N	\N	\N	1	\N	\N	\N	\N
 12	2018-06-09	2018-06-09 08:15:35.44707+00	super02		\N	\N	1		2	1	\N	5	\N	\N	\N	\N	1	\N	\N	\N	\N
-13	2018-06-09	2018-06-09 10:56:18.07976+00	edge01		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
-14	2018-06-09	2018-06-09 10:56:18.10712+00	edge02		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
 15	2018-06-09	2018-06-09 10:56:18.130143+00	rtr01		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
 16	2018-06-09	2018-06-09 10:56:18.153524+00	rtr02		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
 1	2018-06-03	2018-11-07 16:57:09.294214+00	leaf01		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N
 4	2018-06-08	2018-11-07 16:57:09.324612+00	leaf02		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N
 8	2018-06-09	2018-11-08 18:52:42.84008+00	leaf04		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	1	\N	\N	\N	\N
+9	2018-06-09	2019-06-08 15:19:27.946342+00	service01		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N
+10	2018-06-09	2019-06-08 15:19:45.693987+00	service02		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N
+13	2018-06-09	2019-06-08 15:20:08.981553+00	exit01		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
+14	2018-06-09	2019-06-08 15:20:30.346048+00	exit02		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
 \.
 
 
@@ -3838,8 +3838,6 @@ COPY public.dcim_interface (id, name, form_factor, mgmt_only, description, devic
 2	swp1	1000	f		1	\N	1	t	\N	\N	\N	\N
 108	irb2501	0	f	bgp_external	13	\N	\N	t	\N	\N	100	7
 4	lo	0	f		1	\N	\N	t	\N	\N	\N	\N
-7	swp21	1000	f		1	\N	5	t	\N	\N	\N	\N
-6	swp20	1000	f		1	\N	5	t	\N	\N	\N	\N
 9	clagd-vxlan-anycast-ip	0	f		1	\N	\N	t	\N	\N	\N	\N
 109	irb2502	0	f	bgp_external	13	\N	\N	t	\N	\N	100	8
 87	peerlink.4094	0	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
@@ -3852,8 +3850,6 @@ COPY public.dcim_interface (id, name, form_factor, mgmt_only, description, devic
 137	irb1002	0	f		1	\N	\N	t	\N	\N	100	3
 5	peerlink	200	f		1	44:38:39:ff:01:02	\N	t	\N	\N	\N	\N
 8	peerlink.4094	0	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N
-10	swp49	1000	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N
-11	swp50	1000	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N
 16	bond02	200	f		4	\N	\N	t	\N	\N	200	\N
 69	bond02	200	f		9	\N	\N	t	\N	\N	200	\N
 17	clagd-vxlan-anycast-ip	0	f		4	\N	\N	t	\N	\N	\N	\N
@@ -3863,10 +3859,6 @@ COPY public.dcim_interface (id, name, form_factor, mgmt_only, description, devic
 20	peerlink	200	f		4	44:38:39:ff:01:02	\N	t	\N	\N	\N	\N
 22	swp1	1000	f		4	\N	15	t	\N	\N	\N	\N
 23	swp2	1000	f		4	\N	16	t	\N	\N	\N	\N
-24	swp20	1000	f		4	\N	20	t	\N	\N	\N	\N
-25	swp21	1000	f		4	\N	20	t	\N	\N	\N	\N
-26	swp49	1000	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N
-27	swp50	1000	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N
 18	irb1000	0	f		4	\N	\N	t	\N	\N	100	1
 28	lo	0	f		5	\N	\N	t	\N	\N	\N	\N
 29	swp1	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N
@@ -3884,10 +3876,6 @@ COPY public.dcim_interface (id, name, form_factor, mgmt_only, description, devic
 41	swp6	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N
 46	lo	0	f		7	\N	\N	t	\N	\N	\N	\N
 48	peerlink.4094	0	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
-51	swp20	1000	f		7	\N	47	t	\N	\N	\N	\N
-52	swp21	1000	f		7	\N	47	t	\N	\N	\N	\N
-53	swp49	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
-54	swp50	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
 81	bond01	200	f		10	\N	\N	t	\N	\N	200	\N
 70	clagd-vxlan-anycast-ip	0	f		9	\N	\N	t	\N	\N	\N	\N
 1	bond01	200	f		1	\N	\N	t	\N	\N	200	\N
@@ -3895,37 +3883,21 @@ COPY public.dcim_interface (id, name, form_factor, mgmt_only, description, devic
 60	peerlink	200	f		8	44:38:39:ff:01:34	\N	t	\N	\N	\N	\N
 47	peerlink	200	f		7	44:38:39:ff:01:34	\N	t	\N	\N	\N	\N
 61	peerlink.4094	0	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
-64	swp20	1000	f		8	\N	60	t	\N	\N	\N	\N
-65	swp21	1000	f		8	\N	60	t	\N	\N	\N	\N
-66	swp49	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
-67	swp50	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
 72	lo	0	f		9	\N	\N	t	\N	\N	\N	\N
 74	peerlink.4094	0	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N
 75	swp1	1000	f		9	\N	68	t	\N	\N	\N	\N
 76	swp2	1000	f		9	\N	69	t	\N	\N	\N	\N
-77	swp20	1000	f		9	\N	73	t	\N	\N	\N	\N
-78	swp21	1000	f		9	\N	73	t	\N	\N	\N	\N
-79	swp49	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N
-80	swp50	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N
 73	peerlink	200	f		9	44:38:39:ff:01:56	\N	t	\N	\N	\N	\N
 83	clagd-vxlan-anycast-ip	0	f		10	\N	\N	t	\N	\N	\N	\N
 85	lo	0	f		10	\N	\N	t	\N	\N	\N	\N
 88	swp1	1000	f		10	\N	81	t	\N	\N	\N	\N
 89	swp2	1000	f		10	\N	82	t	\N	\N	\N	\N
 86	peerlink	200	f		10	44:38:39:ff:01:56	\N	t	\N	\N	\N	\N
-90	swp20	1000	f		10	\N	86	t	\N	\N	\N	\N
-91	swp21	1000	f		10	\N	86	t	\N	\N	\N	\N
-92	swp49	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
-93	swp50	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
 99	lo	0	f		12	\N	\N	t	\N	\N	\N	\N
 100	swp1	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N
 101	swp2	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N
-102	swp49	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N
-103	swp50	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N
 95	swp1	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N
 96	swp2	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N
-97	swp49	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N
-98	swp50	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N
 104	swp1	1000	f	bgp_underlay	13	\N	\N	t	\N	\N	\N	\N
 105	swp2	1000	f	bgp_underlay	13	\N	\N	t	\N	\N	\N	\N
 12	bond02	200	f		1	\N	\N	t	\N	\N	200	1
@@ -3950,6 +3922,31 @@ COPY public.dcim_interface (id, name, form_factor, mgmt_only, description, devic
 141	irb1001	0	f		4	\N	\N	t	\N	\N	100	2
 128	swp1	1000	f		16	\N	\N	t	\N	\N	200	\N
 142	irb1002	0	f		4	\N	\N	t	\N	\N	100	3
+11	swp52	1000	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N
+6	swp49	1000	f		1	\N	5	t	\N	\N	\N	\N
+7	swp50	1000	f		1	\N	5	t	\N	\N	\N	\N
+27	swp52	1000	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N
+25	swp50	1000	f		4	\N	20	t	\N	\N	\N	\N
+24	swp49	1000	f		4	\N	20	t	\N	\N	\N	\N
+54	swp52	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
+53	swp51	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
+52	swp50	1000	f		7	\N	47	t	\N	\N	\N	\N
+51	swp49	1000	f		7	\N	47	t	\N	\N	\N	\N
+67	swp52	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
+66	swp51	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
+65	swp50	1000	f		8	\N	60	t	\N	\N	\N	\N
+64	swp49	1000	f		8	\N	60	t	\N	\N	\N	\N
+79	swp53	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N
+80	swp54	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N
+77	swp49	1000	f		9	\N	73	t	\N	\N	\N	\N
+78	swp50	1000	f		9	\N	73	t	\N	\N	\N	\N
+92	swp53	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
+93	swp54	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
+90	swp49	1000	f		10	\N	86	t	\N	\N	\N	\N
+91	swp50	1000	f		10	\N	86	t	\N	\N	\N	\N
+98	swp7	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N
+102	swp6	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N
+103	swp7	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N
 130	irb2503	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	9
 131	irb2504	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	10
 132	irb2507	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	13
@@ -3985,6 +3982,9 @@ COPY public.dcim_interface (id, name, form_factor, mgmt_only, description, devic
 169	swp52	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
 49	swp1	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
 50	swp2	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
+10	swp51	1000	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N
+26	swp51	1000	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N
+97	swp6	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N
 \.
 
 
@@ -4426,6 +4426,7 @@ COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 czyfvr6s07tikkqorkj3cpuefj8ggdh5	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2018-06-17 16:20:42.39863+00
 w0iodv1mnxosfpa14r1ci8g3q6r0smwc	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2018-06-23 08:06:39.472226+00
 4cq56ympmhiax6s49ruxg8k4uzlpdske	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2018-11-21 16:46:12.853948+00
+9h2c8w1m0snowc5woe4bj5jthfnp6v3x	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2019-06-22 15:18:24.791615+00
 \.
 
 
@@ -4477,12 +4478,8 @@ COPY public.extras_customfieldvalue (id, obj_id, serialized_value, field_id, obj
 15	27	192.168.200.20	4	38
 16	27	169.254.1.1	3	38
 11	7	65121	2	15
-17	9	65131	2	15
-18	10	65132	2	15
 19	11	65901	2	15
 20	12	65902	2	15
-21	13	65801	2	15
-22	14	65802	2	15
 23	15	65701	2	15
 24	16	65702	2	15
 25	36	192.168.200.29	4	38
@@ -4490,6 +4487,10 @@ COPY public.extras_customfieldvalue (id, obj_id, serialized_value, field_id, obj
 27	43	192.168.200.32	4	38
 28	43	169.254.1.1	3	38
 14	8	65122	2	15
+17	9	65131	2	15
+18	10	65132	2	15
+21	13	65801	2	15
+22	14	65802	2	15
 \.
 
 
@@ -5107,6 +5108,38 @@ COPY public.extras_useraction (id, "time", object_id, action, message, content_t
 567	2018-11-08 18:57:37.569131+00	\N	6	Deleted 9 interfaces	18	1
 568	2018-11-08 18:57:48.794184+00	62	3	Modified interface <a href="/dcim/devices/8/">swp1</a>	18	1
 569	2018-11-08 18:57:56.647329+00	63	3	Modified interface <a href="/dcim/devices/8/">swp2</a>	18	1
+570	2019-06-08 15:19:27.960789+00	9	3	Modified device <a href="/dcim/devices/9/">service01</a>	15	1
+571	2019-06-08 15:19:45.703224+00	10	3	Modified device <a href="/dcim/devices/10/">service02</a>	15	1
+572	2019-06-08 15:20:08.990854+00	13	3	Modified device <a href="/dcim/devices/13/">exit01</a>	15	1
+573	2019-06-08 15:20:30.354712+00	14	3	Modified device <a href="/dcim/devices/14/">exit02</a>	15	1
+574	2019-06-08 15:34:38.871934+00	10	3	Modified interface <a href="/dcim/devices/1/">swp51</a>	18	1
+575	2019-06-08 15:34:51.160196+00	11	3	Modified interface <a href="/dcim/devices/1/">swp52</a>	18	1
+576	2019-06-08 15:35:01.982155+00	6	3	Modified interface <a href="/dcim/devices/1/">swp49</a>	18	1
+577	2019-06-08 15:35:12.576769+00	7	3	Modified interface <a href="/dcim/devices/1/">swp50</a>	18	1
+578	2019-06-08 15:36:14.797436+00	26	3	Modified interface <a href="/dcim/devices/4/">swp51</a>	18	1
+579	2019-06-08 15:36:21.267022+00	27	3	Modified interface <a href="/dcim/devices/4/">swp52</a>	18	1
+580	2019-06-08 15:36:27.633597+00	25	3	Modified interface <a href="/dcim/devices/4/">swp50</a>	18	1
+581	2019-06-08 15:36:32.807575+00	24	3	Modified interface <a href="/dcim/devices/4/">swp49</a>	18	1
+582	2019-06-08 15:37:03.485245+00	54	3	Modified interface <a href="/dcim/devices/7/">swp52</a>	18	1
+583	2019-06-08 15:37:10.002075+00	53	3	Modified interface <a href="/dcim/devices/7/">swp51</a>	18	1
+584	2019-06-08 15:37:15.816029+00	52	3	Modified interface <a href="/dcim/devices/7/">swp50</a>	18	1
+585	2019-06-08 15:37:22.029922+00	51	3	Modified interface <a href="/dcim/devices/7/">swp49</a>	18	1
+586	2019-06-08 15:37:42.458886+00	67	3	Modified interface <a href="/dcim/devices/8/">swp52</a>	18	1
+587	2019-06-08 15:37:48.300058+00	66	3	Modified interface <a href="/dcim/devices/8/">swp51</a>	18	1
+588	2019-06-08 15:37:55.475567+00	65	3	Modified interface <a href="/dcim/devices/8/">swp50</a>	18	1
+589	2019-06-08 15:38:01.349244+00	64	3	Modified interface <a href="/dcim/devices/8/">swp49</a>	18	1
+590	2019-06-08 15:38:40.17388+00	79	3	Modified interface <a href="/dcim/devices/9/">swp53</a>	18	1
+591	2019-06-08 15:38:46.843267+00	80	3	Modified interface <a href="/dcim/devices/9/">swp54</a>	18	1
+592	2019-06-08 15:39:03.537314+00	77	3	Modified interface <a href="/dcim/devices/9/">swp49</a>	18	1
+593	2019-06-08 15:39:10.958658+00	78	3	Modified interface <a href="/dcim/devices/9/">swp50</a>	18	1
+594	2019-06-08 15:40:16.770317+00	92	3	Modified interface <a href="/dcim/devices/10/">swp53</a>	18	1
+595	2019-06-08 15:40:24.297766+00	93	3	Modified interface <a href="/dcim/devices/10/">swp54</a>	18	1
+596	2019-06-08 15:40:30.853322+00	90	3	Modified interface <a href="/dcim/devices/10/">swp49</a>	18	1
+597	2019-06-08 15:40:37.303802+00	91	3	Modified interface <a href="/dcim/devices/10/">swp50</a>	18	1
+598	2019-06-08 15:41:06.682685+00	97	3	Modified interface <a href="/dcim/devices/11/">swp6</a>	18	1
+599	2019-06-08 15:41:14.263791+00	98	3	Modified interface <a href="/dcim/devices/11/">swp7</a>	18	1
+600	2019-06-08 15:41:27.773939+00	102	3	Modified interface <a href="/dcim/devices/12/">swp6</a>	18	1
+601	2019-06-08 15:41:36.564566+00	103	3	Modified interface <a href="/dcim/devices/12/">swp7</a>	18	1
 \.
 
 
@@ -5782,7 +5815,7 @@ SELECT pg_catalog.setval('public.extras_topologymap_id_seq', 1, false);
 -- Name: extras_useraction_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.extras_useraction_id_seq', 569, true);
+SELECT pg_catalog.setval('public.extras_useraction_id_seq', 601, true);
 
 
 --
