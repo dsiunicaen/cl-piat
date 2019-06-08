@@ -11,7 +11,7 @@
   become: true
   roles:
   - setup-netq-ts
-    tags: [ 'never', 'netq' ] 
+  tags: [ 'never', 'netq' ] 
 
 - hosts: spines,superspine
   become: true
