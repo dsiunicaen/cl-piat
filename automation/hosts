@@ -92,6 +92,9 @@ superspine
 edge
 router
 
+[servers:vars]
+ansible_python_interpreter=/usr/bin/python3
+
 [all:vars]
 ansible_user=cumulus
 ansible_ssh_pass=CumulusLinux!
