@@ -104,8 +104,8 @@ SCRIPT
 
 Vagrant.configure("2") do |config|
 
-  wbid = 300 
-  offset = wbid * 100
+  wbid = 1
+  offset = wbid * 30000
 
 
   config.vm.provider :libvirt do |domain|
