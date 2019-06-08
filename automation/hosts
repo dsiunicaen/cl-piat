@@ -4,47 +4,47 @@
 #    using topology data from: cl-piat.dot
 
 [router]
-rtr01 ansible_host=192.168.200.33
-rtr02 ansible_host=192.168.200.7
+rtr01
+rtr02
 
 [edge]
-edge01 ansible_host=192.168.200.22
-edge02 ansible_host=192.168.200.23
+edge01
+edge02
 
 [superspine]
-super02 ansible_host=192.168.200.3
-super01 ansible_host=192.168.200.4
+super02
+super01
 
 [leafs-rack1]
-leaf02 ansible_host=192.168.200.19
-leaf01 ansible_host=192.168.200.21
+leaf02
+leaf01
 
 [servers-rack1]
-server01 ansible_host=192.168.200.8
-server02 ansible_host=192.168.200.10
+server01
+server02
 
 [leafs-rack2]
-leaf03 ansible_host=192.168.200.20
-leaf04 ansible_host=192.168.200.17
+leaf03
+leaf04
 
 [servers-rack2]
-server03 ansible_host=192.168.200.9
-server04 ansible_host=192.168.200.12
+server03
+server04
 
 [leafs-rack3]
-exit02 ansible_host=192.168.200.29
-exit01 ansible_host=192.168.200.32
+exit02
+exit01
 
 [servers-rack3]
-server05 ansible_host=192.168.200.11
-server06 ansible_host=192.168.200.14
+server05
+server06
 
 [spine-pod1]
-spine02 ansible_host=192.168.200.25
-spine01 ansible_host=192.168.200.28
+spine02
+spine01
 
 [netq-hosts]
-netq-ts ansible_host=192.168.200.250
+netq-ts
 
 [oob]
 localhost ansible_connection=local
