@@ -1,5 +1,5 @@
 node:
-  edge01:
+  exit01:
     routing:
       lo: 10.10.40.1/32
       bgp:
@@ -54,7 +54,7 @@ node:
         - 2503
         - 2504
         
-  edge02:
+  exit02:
     routing:
       lo: 10.10.40.2/32
       bgp:
