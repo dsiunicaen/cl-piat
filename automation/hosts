@@ -8,8 +8,8 @@ rtr01
 rtr02
 
 [edge]
-edge01
-edge02
+exit01
+exit02
 
 [superspine]
 super02
@@ -32,8 +32,8 @@ server03
 server04
 
 [leafs-rack3]
-exit02
-exit01
+service02
+service01
 
 [servers-rack3]
 server05
