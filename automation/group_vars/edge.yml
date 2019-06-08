@@ -41,13 +41,13 @@ node:
     ports:
       swp1:
       swp2:
-      swp49:
+      swp3:
         mlag: false
         trunk: true
         vlans:
         - 2500
         - 2501
-      swp50:
+      swp4:
         mlag: false
         trunk: true
         vlans:
@@ -96,13 +96,13 @@ node:
     ports:
       swp1:
       swp2:
-      swp49:
+      swp3:
         mlag: false
         trunk: true
         vlans:
         - 2506
         - 2507
-      swp50:
+      swp4:
         mlag: false
         trunk: true
         vlans:
