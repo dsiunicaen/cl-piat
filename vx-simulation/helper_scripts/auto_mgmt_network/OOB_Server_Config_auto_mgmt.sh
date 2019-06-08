@@ -135,6 +135,7 @@ EOT
 
 echo " ### Creating cumulus user ###"
 useradd -m cumulus /bin/bash
+echo "cumulus:CumulusLinux!" | chpasswd
 
 echo " ### Setting Up DHCP ###"
 mv /home/$username/dhcpd.conf /etc/dhcp/dhcpd.conf
