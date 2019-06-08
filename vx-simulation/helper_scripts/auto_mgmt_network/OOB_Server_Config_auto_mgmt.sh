@@ -21,7 +21,7 @@ REPONAME="dev"
 #Install Automation Tools
 puppet=0
 ansible=1
-ansible_version=2.6.3
+ansible_version=2.7.8
 
 #######################
 
