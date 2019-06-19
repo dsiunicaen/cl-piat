@@ -14,7 +14,7 @@ This demo will install Cumulus Linux (VX) in a 2-pod topology that was made with
 * Custom Ansible Jinja templates to deploy the above
 
 
-![cl-piat topology](diagrams/cl-piat-topology.png)
+![cl-piat topology](diagrams/cl-piat-v2-topology.png)
 
 
 Table of Contents
