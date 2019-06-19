@@ -47,4 +47,9 @@
     dest: /etc/frr/frr.conf
     backup: yes
   notify: reload frr
+
+- name: Reboot system
+  reboot:
+    reboot_timeout: 1200
+    test_command: mount  
 ...

@@ -37,4 +37,9 @@
     - { app: 'app3', prefix: '13', destination: '14'} 
     - { app: 'app3', prefix: '13', destination: '15'} 
     - { app: 'app3', prefix: '13', destination: '16'} 
+
+- name: Reboot system
+  reboot:
+    reboot_timeout: 1200
+    test_command: mount      
 ...
