@@ -40,6 +40,7 @@
 - name: Pip installs
   pip:
     name:
+      - setuptools
       - docker
 
 - name: Add Cumulus Apt Key
