@@ -10,14 +10,8 @@
    path: /etc/resolv.conf
    state: absent
 
-- name: Create resolve.conf
-  copy:
-    content: ""
-    dest: /etc/resolv.conf
-    force: no
-    group: sys
-    owner: root
-    mode: 0644
+- name: Create symlink
+  file: src=/run/systemd/resolve/stub-resolv.conf  dest=/etc/resolv.conf state=link
 
 - name: Add dns server
   lineinfile:
