@@ -38,8 +38,8 @@ service02
 service01
 
 [servers-rack3]
-server05
-server06
+server09
+server10
 
 [spine-pod1]
 spine02
