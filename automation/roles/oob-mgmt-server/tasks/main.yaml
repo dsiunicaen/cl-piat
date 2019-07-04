@@ -1,4 +1,21 @@
 ---
+- name: Sysctl ipv4 forward
+  sysctl:
+    name: net.ipv4.conf.default.forwarding
+    value: 1
+    state: present
+    reload: yes
+
+- name: Sysctl ipv6 forward
+  sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: 1
+    state: present
+    reload: yes
+
+- name: Enabling NAT on OOB
+  command: iptables -t nat -A POSTROUTING -o vagrant -j MASQUERADE
+
 - name: Disable systemd-resolved
   systemd:
     name: systemd-resolved.service
