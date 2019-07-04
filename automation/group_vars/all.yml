@@ -248,6 +248,8 @@ node:
       swp2: {}
       swp51: {}
       swp52: {}
+      swp53: {}
+      swp54: {}
     routing:
       bgp:
         underlay:
