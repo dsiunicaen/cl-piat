@@ -393,6 +393,10 @@ node:
         - 1003
         - 1004
         - 1005
+      swp25: {}
+      swp26: {}
+      swp27: {}
+      swp28: {}
       swp29: {}
       swp30: {}
       swp31: {}
@@ -403,6 +407,10 @@ node:
           asn: 65131
           peers:
           - peerlink.4094
+          - swp25
+          - swp26
+          - swp27
+          - swp28
           - swp29
           - swp30
           - swp31
@@ -509,6 +517,10 @@ node:
         - 1003
         - 1004
         - 1005
+      swp25: {}
+      swp26: {}
+      swp27: {}
+      swp28: {}
       swp29: {}
       swp30: {}
       swp31: {}
@@ -519,6 +531,10 @@ node:
           asn: 65132
           peers:
           - peerlink.4094
+          - swp25
+          - swp26
+          - swp27
+          - swp28
           - swp29
           - swp30
           - swp31
@@ -608,8 +624,6 @@ node:
     ports:
       swp9: {}
       swp10: {}
-      swp11: {}
-      swp12: {}
       swp31: {}
       swp32: {}
     routing:
@@ -619,8 +633,6 @@ node:
           peers:
           - swp9
           - swp10
-          - swp11
-          - swp12
           - swp31
           - swp32
       lo: 10.10.30.1/32
@@ -628,8 +640,6 @@ node:
     ports:
       swp9: {}
       swp10: {}
-      swp11: {}
-      swp12: {}
       swp31: {}
       swp32: {}
     routing:
@@ -639,8 +649,6 @@ node:
           peers:
           - swp9
           - swp10
-          - swp11
-          - swp12
           - swp31
           - swp32
       lo: 10.10.30.2/32
@@ -648,8 +656,6 @@ node:
     ports:
       swp9: {}
       swp10: {}
-      swp11: {}
-      swp12: {}
       swp31: {}
       swp32: {}
     routing:
@@ -659,8 +665,6 @@ node:
           peers:
           - swp9
           - swp10
-          - swp11
-          - swp12
           - swp31
           - swp32
       lo: 10.10.30.3/32
@@ -668,8 +672,8 @@ node:
     ports:
       swp9: {}
       swp10: {}
-      swp11: {}
-      swp12: {}
+      swp31: {}
+      swp32: {}
     routing:
       bgp:
         underlay:
@@ -677,8 +681,6 @@ node:
           peers:
           - swp9
           - swp10
-          - swp11
-          - swp12
           - swp31
           - swp32
       lo: 10.10.30.4/32
