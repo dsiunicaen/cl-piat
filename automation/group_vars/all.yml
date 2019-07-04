@@ -103,6 +103,8 @@ node:
         - 1005
       swp51: {}
       swp52: {}
+      swp53: {}
+      swp54: {}
     routing:
       bgp:
         underlay:
@@ -111,6 +113,8 @@ node:
           - peerlink.4094
           - swp51
           - swp52
+          - swp53
+          - swp54
       lo: 10.10.10.1/32
   leaf02:
     mlag:
@@ -215,6 +219,8 @@ node:
         - 1005
       swp51: {}
       swp52: {}
+      swp53: {}
+      swp54: {}
     routing:
       bgp:
         underlay:
@@ -223,6 +229,8 @@ node:
           - peerlink.4094
           - swp51
           - swp52
+          - swp53
+          - swp54
       lo: 10.10.10.2/32
   leaf03:
     mlag:
@@ -250,6 +258,8 @@ node:
           - swp2
           - swp51
           - swp52
+          - swp53
+          - swp54
       lo: 10.10.10.3/32
   leaf04:
     mlag:
@@ -267,6 +277,8 @@ node:
       swp2: {}
       swp51: {}
       swp52: {}
+      swp53: {}
+      swp54: {}
     routing:
       bgp:
         underlay:
@@ -277,14 +289,16 @@ node:
           - swp2
           - swp51
           - swp52
+          - swp53
+          - swp54
       lo: 10.10.10.4/32
   service01:
     mlag:
       address: 169.254.1.1/30
       backup-ip: 192.168.200.29
       members:
-      - swp49
-      - swp50
+      - swp20
+      - swp21
       peer-ip: 169.254.1.2
       sysmac: 44:38:39:FF:01:56
     overlay:
@@ -379,28 +393,28 @@ node:
         - 1003
         - 1004
         - 1005
-      swp51: {}
-      swp52: {}
-      swp53: {}
-      swp54: {}
+      swp29: {}
+      swp30: {}
+      swp31: {}
+      swp32: {}
     routing:
       bgp:
         underlay:
           asn: 65131
           peers:
           - peerlink.4094
-          - swp51
-          - swp52
-          - swp53
-          - swp54
+          - swp29
+          - swp30
+          - swp31
+          - swp32
       lo: 10.10.10.5/32
   service02:
     mlag:
       address: 169.254.1.2/30
       backup-ip: 192.168.200.32
       members:
-      - swp49
-      - swp50
+      - swp20
+      - swp21
       peer-ip: 169.254.1.1
       sysmac: 44:38:39:FF:01:56
     overlay:
@@ -495,20 +509,20 @@ node:
         - 1003
         - 1004
         - 1005
-      swp51: {}
-      swp52: {}
-      swp53: {}
-      swp54: {}
+      swp29: {}
+      swp30: {}
+      swp31: {}
+      swp32: {}
     routing:
       bgp:
         underlay:
           asn: 65132
           peers:
           - peerlink.4094
-          - swp51
-          - swp52
-          - swp53
-          - swp54
+          - swp29
+          - swp30
+          - swp31
+          - swp32
       lo: 10.10.10.6/32
   spine01:
     ports:
@@ -550,35 +564,121 @@ node:
           - swp5
           - swp6
       lo: 10.10.20.2/32
-  super01:
+  spine03:
     ports:
       swp1: {}
       swp2: {}
+      swp3: {}
+      swp4: {}
+      swp5: {}
       swp6: {}
-      swp7: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65103
+          peers:
+          - swp1
+          - swp2
+          - swp3
+          - swp4
+          - swp5
+          - swp6
+      lo: 10.10.20.3/32
+  spine04:
+    ports:
+      swp1: {}
+      swp2: {}
+      swp3: {}
+      swp4: {}
+      swp5: {}
+      swp6: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65104
+          peers:
+          - swp1
+          - swp2
+          - swp3
+          - swp4
+          - swp5
+          - swp6
+      lo: 10.10.20.4/32
+  super01:
+    ports:
+      swp9: {}
+      swp10: {}
+      swp11: {}
+      swp12: {}
+      swp31: {}
+      swp32: {}
     routing:
       bgp:
         underlay:
           asn: 65901
           peers:
-          - swp1
-          - swp2
-          - swp6
-          - swp7
+          - swp9
+          - swp10
+          - swp11
+          - swp12
+          - swp31
+          - swp32
       lo: 10.10.30.1/32
   super02:
     ports:
-      swp1: {}
-      swp2: {}
-      swp6: {}
-      swp7: {}
+      swp9: {}
+      swp10: {}
+      swp11: {}
+      swp12: {}
+      swp31: {}
+      swp32: {}
     routing:
       bgp:
         underlay:
           asn: 65902
           peers:
-          - swp1
-          - swp2
-          - swp6
-          - swp7
+          - swp9
+          - swp10
+          - swp11
+          - swp12
+          - swp31
+          - swp32
       lo: 10.10.30.2/32
+  super03:
+    ports:
+      swp9: {}
+      swp10: {}
+      swp11: {}
+      swp12: {}
+      swp31: {}
+      swp32: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65903
+          peers:
+          - swp9
+          - swp10
+          - swp11
+          - swp12
+          - swp31
+          - swp32
+      lo: 10.10.30.3/32
+  super04:
+    ports:
+      swp9: {}
+      swp10: {}
+      swp11: {}
+      swp12: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65904
+          peers:
+          - swp9
+          - swp10
+          - swp11
+          - swp12
+          - swp31
+          - swp32
+      lo: 10.10.30.4/32

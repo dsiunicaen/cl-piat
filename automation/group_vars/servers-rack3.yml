@@ -1,5 +1,5 @@
 node:
-  server05:
+  server09:
     id: 15
     ports:
       eth0:
@@ -32,7 +32,7 @@ node:
         prefix-id: 15
         vrf: app6
 
-  server06:
+  server10:
     id: 16
     ports:
       eth0:

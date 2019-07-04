@@ -14,6 +14,8 @@ exit02
 [superspine]
 super02
 super01
+super03
+super04
 
 [leafs-rack1]
 leaf02
@@ -28,8 +30,8 @@ leaf03
 leaf04
 
 [servers-rack2]
-server03
-server04
+server05
+server06
 
 [leafs-rack3]
 service02
@@ -42,6 +44,8 @@ server06
 [spine-pod1]
 spine02
 spine01
+spine03
+spine04
 
 [netq-hosts]
 netq-ts

@@ -1,6 +1,6 @@
 node:
-  server03:
-    id: 3
+  server05:
+    id: 5
     ports:
       eth0:
         dhcp:
@@ -34,8 +34,8 @@ node:
         prefix-id: 15
         tenant: tenant3
 
-  server04:
-    id: 4
+  server06:
+    id: 6
     ports:
       eth0:
         dhcp:

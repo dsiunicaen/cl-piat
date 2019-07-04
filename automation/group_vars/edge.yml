@@ -9,6 +9,8 @@ node:
           peers:
           - swp1
           - swp2
+          - swp3
+          - swp4
         external:
           tenant1:
             asn: 65401
@@ -42,12 +44,14 @@ node:
       swp1:
       swp2:
       swp3:
+      swp4:
+      swp6:
         mlag: false
         trunk: true
         vlans:
         - 2500
         - 2501
-      swp4:
+      swp7:
         mlag: false
         trunk: true
         vlans:
@@ -64,6 +68,8 @@ node:
           peers:
           - swp1
           - swp2
+          - swp3
+          - swp4
         external:
           tenant1:
             asn: 65402
@@ -97,12 +103,14 @@ node:
       swp1:
       swp2:
       swp3:
+      swp4:
+      swp6:
         mlag: false
         trunk: true
         vlans:
         - 2506
         - 2507
-      swp4:
+      swp7:
         mlag: false
         trunk: true
         vlans:
