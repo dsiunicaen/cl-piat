@@ -2,7 +2,7 @@ node:
   leaf01:
     mlag:
       address: 169.254.1.1/30
-      backup-ip: 192.168.200.19
+      backup-ip: 192.168.200.24 
       members:
       - swp49
       - swp50
@@ -119,7 +119,7 @@ node:
   leaf02:
     mlag:
       address: 169.254.1.2/30
-      backup-ip: 192.168.200.21
+      backup-ip: 192.168.200.23
       members:
       - swp49
       - swp50
@@ -235,7 +235,7 @@ node:
   leaf03:
     mlag:
       address: 169.254.1.1/30
-      backup-ip: 192.168.200.17
+      backup-ip: 192.168.200.26
       members:
       - swp49
       - swp50
@@ -266,7 +266,7 @@ node:
   leaf04:
     mlag:
       address: 169.254.1.2/30
-      backup-ip: 192.168.200.20
+      backup-ip: 192.168.200.25
       members:
       - swp49
       - swp50
@@ -297,7 +297,7 @@ node:
   service01:
     mlag:
       address: 169.254.1.1/30
-      backup-ip: 192.168.200.29
+      backup-ip: 192.168.200.32
       members:
       - swp20
       - swp21
@@ -421,7 +421,7 @@ node:
   service02:
     mlag:
       address: 169.254.1.2/30
-      backup-ip: 192.168.200.32
+      backup-ip: 192.168.200.31
       members:
       - swp20
       - swp21
