@@ -14,27 +14,27 @@
   - setup-netq-ts
   tags: [ 'netq' ] 
 
-- hosts: spines,superspine
+- hosts: pod1spine 
   become: true
   roles:
   - setup-switch
   - interfaces
   - frr 
 
-- hosts: leafs,edge,router
+- hosts: pod1leaf
   become: true 
   roles:
   - setup-switch
 #  - switch-leaf
 
-- hosts: servers-rack1,servers-rack3 
+- hosts: server01,server02,server09,server10
   become: true 
   roles:
   - setup-server
   - server-multitenant
   - app-netq
 
-- hosts: servers-rack2 
+- hosts: server05,server06
   become: true 
   roles:
   - setup-server
