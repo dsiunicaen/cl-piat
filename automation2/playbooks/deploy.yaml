@@ -25,7 +25,7 @@
   become: true 
   roles:
   - setup-switch
-  - switch-leaf
+#  - switch-leaf
 
 - hosts: servers-rack1,servers-rack3 
   become: true 
