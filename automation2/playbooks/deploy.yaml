@@ -25,7 +25,8 @@
   become: true 
   roles:
   - setup-switch
-#  - switch-leaf
+  - interfaces
+  - frr 
 
 - hosts: server01,server02,server09,server10
   become: true 
