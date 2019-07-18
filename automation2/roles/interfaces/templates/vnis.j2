@@ -1,7 +1,7 @@
 {% for vni in l2vnis %}
 auto vni{{ vni.id }}
 iface vni{{ vni.id }}
-    bridge-access {{ vni.vlan }}
+    bridge-access {{ vlan.id }}
     bridge-arp-nd-suppress on
     bridge-learning off
     mstpctl-bpduguard yes
