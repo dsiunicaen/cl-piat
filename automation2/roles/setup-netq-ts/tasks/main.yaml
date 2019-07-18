@@ -1,0 +1,58 @@
+---
+- name: Install additional host packages
+  apt:
+    name: ['git','screen','python-pip']
+    update_cache: yes
+    state: present
+    force: yes
+
+- name: Install python Influxdb
+  command: pip install influxdb
+
+- name: Install python Cassandra-driver 
+  command: pip install Cassandra-driver
+
+- name: Install python datetime
+  command: pip install datetime
+
+- name: Install python rfc3339
+  command: pip install rfc3339
+
+- name: Install python pprint
+  command: pip install pprint
+
+- name: Download Influxdb
+  get_url:
+    url: https://dl.influxdata.com/influxdb/releases/influxdb_1.7.6_amd64.deb
+    dest: /home/cumulus/influxdb_1.7.6_amd64.deb
+
+- name: Install Influxdb
+  apt:
+    deb: "{{item}}"
+    state: present
+  with_items:
+    - /home/cumulus/influxdb_1.7.6_amd64.deb
+
+- name: copy influx-import script
+  copy:
+    src: influx-import.py
+    dest: /home/cumulus/influx-import.py 
+    owner: cumulus
+    group: cumulus
+    
+
+- name: Systemctl enable influx
+  systemd:
+    state: started
+    enabled: yes
+    name: influxdb
+
+- name: Let influx start 
+  pause:
+    seconds: 30
+
+- name: Create NetQ influx DB
+  influxdb_database:
+    hostname: "localhost"
+    database_name: "netq"
+...

@@ -1,0 +1,19 @@
+{% for interface in peerlinks %}
+auto {{ interface }}
+iface {{ interface }}
+{% endfor %}
+
+auto peerlink
+iface peerlink
+    bond-slaves {% for interface in peerlinks %}{{ interface }} {% endfor %}
+
+auto peerlink.4094
+iface peerlink.4094
+{% for device in devices %}
+{%   if device != inventory_hostname and devices[device].rack == devices[inventory_hostname].rack %}
+    clagd-backup-ip {{ hostvars[device]['ansible_eth0']['ipv4']['address'] }} vrf mgmt
+{%   endif %}
+{% endfor %}
+    clagd-peer-ip linklocal
+    clagd-priority {{ "1000" if inventory_hostname[-1:]|int%2 != 0 else "32768" }}
+    clagd-sys-mac {{ racks[devices[inventory_hostname].rack].clag.sysmac }}

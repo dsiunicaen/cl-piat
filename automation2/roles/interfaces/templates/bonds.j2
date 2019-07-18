@@ -1,0 +1,10 @@
+{% for bond in racks[devices[inventory_hostname].rack].bonds %}
+auto bond{{ bond.interface[3:] }}
+iface bond{{ bond.interface[3:] }}
+    bond-slaves {{ bond.interface }}
+    clag-id {{ bond.interface[3:] }}
+    bond-lacp-bypass-allow yes
+auto {{ bond.interface }}
+iface {{ bond.interface }}
+
+{% endfor %}

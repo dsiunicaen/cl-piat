@@ -1,0 +1,45 @@
+---
+- include_role:
+    name: fact_collector
+  when:
+    - not ansible_check_mode
+    - '"common" not in role_names'
+  tags:
+    - interface_setup
+
+- name: Ensure Systemwide MTU
+  copy:
+    content: |
+      {
+       "address": {"defaults": { "mtu": "9216" },
+                   "iface_defaults": {"eth0": {"mtu": "1500"}}
+                  }
+      }
+    dest: /etc/network/ifupdown2/policy.d/mtu.json
+  notify: Apply Interface Changes
+
+- meta: flush_handlers
+
+- name: Configure Interfaces
+  template:
+    src: "{{ switch_role }}_interfaces.j2"
+    dest: /etc/network/interfaces
+    validate: ifup -a -s -i %s
+  notify: Apply Interface Changes
+  tags:
+    - interface_setup
+
+- meta: flush_handlers
+  tags:
+    - interface_setup
+
+- name: Create rendered flat-file /etc/network/interfaces locally
+  template:
+    src: "{{ switch_role }}_interfaces.j2"
+    dest: "config/{{ fabric_name }}/{{ inventory_hostname }}/interfaces"
+  delegate_to: localhost
+  become: false
+  tags:
+    - interface_setup
+    - local
+    - interface_render

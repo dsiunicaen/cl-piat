@@ -1,0 +1,30 @@
+switch_role: leaf
+peerlinks:
+  - swp49
+  - swp50
+fabric_links:
+  - swp51
+  - swp52
+  - swp53
+  - swp54
+devices:
+  leaf01:
+    rack: 01
+    loopback: 10.10.10.1/32
+    bgp:
+      asn: 65101
+  leaf02:
+    rack: 01
+    loopback: 10.10.10.2/32
+    bgp:
+      asn: 65102
+  leaf03:
+    rack: 02
+    loopback: 10.10.10.3/32
+    bgp:
+      asn: 65103
+  leaf04:
+    rack: 02
+    loopback: 10.10.10.4/32
+    bgp:
+      asn: 65104

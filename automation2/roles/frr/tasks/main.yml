@@ -1,0 +1,66 @@
+---
+- include_role:
+    name: fact_collector
+  when:
+    - not ansible_check_mode
+    - '"common" not in role_names'
+  tags:
+    - frr_setup
+    - local
+    - frr_render
+# The frr daemons file is a static file that specifies which subdaemons
+# are actually running (zebra, bgpd, ospf). This file is not required when
+# frr is being run using systemd.
+- name: Configure FRR daemons file
+  template:
+    src: daemons.j2
+    dest: /etc/frr/daemons
+  notify:
+    - enable frr
+    - restart frr
+  tags:
+    - frr_setup
+
+- meta: flush_handlers
+  tags:
+    - interface_setup
+
+- name: Create rendered flat-file /etc/frr/daemons locally
+  template:
+    src: daemons.j2
+    dest: "config/{{ fabric_name }}/{{ inventory_hostname }}/daemons"
+  delegate_to: localhost
+  become: false
+  tags:
+    - local
+    - frr_setup
+    - frr_render
+
+# This writes configuration to the frr configuration file using the
+# information in group_vars/all. The biggest difference between spine and
+# leaf configuration are the prefix lists - leafs should only advertise their
+# neighboring networks, but spines should advertise any networks they accept.
+- name: Configure FRR
+  template:
+    src: "{{switch_role}}_frr.conf.j2"
+    dest: /etc/frr/frr.conf
+    validate: vtysh -f %s --dryrun
+  notify:
+    - reload frr
+  tags:
+    - frr_setup
+
+- meta: flush_handlers
+  tags:
+    - interface_setup
+
+- name: Create /etc/frr/frr.conf locally
+  template:
+    src: "{{switch_role}}_frr.conf.j2"
+    dest: "config/{{ fabric_name }}/{{ inventory_hostname }}/frr.conf"
+  delegate_to: localhost
+  become: false
+  tags:
+    - local
+    - frr_setup
+    - frr_render

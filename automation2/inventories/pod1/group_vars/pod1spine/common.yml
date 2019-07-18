@@ -1,0 +1,13 @@
+switch_role: spine
+fabric_links:
+  - swp1
+  - swp2
+  - swp3
+  - swp4
+  - swp5
+  - swp6
+devices:
+  spine01:
+    loopback: 10.10.10.101/32
+  spine02:
+    loopback: 10.10.10.102/32

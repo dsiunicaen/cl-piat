@@ -1,0 +1,18 @@
+switch_role: exit
+peerlinks:
+  - swp49
+  - swp50
+fabric_links:
+  - swp51
+  - swp52
+  - swp53
+  - swp54
+devices:
+  exit01:
+    loopback: 10.10.10.63/32
+    bgp:
+      asn: 65105
+  exit02:
+    loopback: 10.10.10.64/32
+    bgp:
+      asn: 65106

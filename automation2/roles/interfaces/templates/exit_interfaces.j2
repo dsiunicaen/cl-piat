@@ -1,0 +1,21 @@
+{{ ansible_managed }}
+
+auto lo
+iface lo inet loopback
+    address {{ devices[inventory_hostname].loopback }}
+    clagd-vxlan-anycast-ip {{ racks[devices[inventory_hostname].rack].clag.loopback }}
+
+auto mgmt
+iface mgmt
+    vrf-table auto
+    address 127.0.0.1/8
+
+auto eth0
+iface eth0 inet dhcp
+    vrf mgmt
+
+{% include 'bonds.j2' %}
+{% include 'vnis.j2' %}
+{% include 'fabric_links.j2' %}
+{% include 'mlag.j2' %}
+{% include 'bridge.j2' %}

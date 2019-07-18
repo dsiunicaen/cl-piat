@@ -1,0 +1,21 @@
+---
+- name: Apply Interface Configuration Delta (Simulation)
+  become: true
+  shell: nohup bash -c 'sleep 2 && ifreload -a > /tmp/ifreload.out 2>&1' &
+  async: 1
+  poll: 0
+  changed_when: true
+  when: decode_syseeprom['tlv']['Product Name']['value'] == "VX"
+  listen: "Apply Interface Changes"
+
+- name: Apply Interface Configuration Delta (Production)
+  become: true
+  shell: ifreload -a
+  listen: "Apply Interface Changes"
+  when: decode_syseeprom['tlv']['Product Name']['value'] != "VX"
+
+- name: restart switchd
+  become: true
+  service:
+    name: switchd
+    state: restarted

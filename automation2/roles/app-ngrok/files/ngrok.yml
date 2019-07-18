@@ -1,0 +1,18 @@
+authtoken:  
+
+tunnels:
+    ssh:
+        proto: tcp
+        addr: localhost:22
+    grafana:
+        proto: http
+        addr: http://localhost:3000
+        bind_tls: false
+    netbox:
+        proto: http
+        addr: http://localhost:32768
+        bind_tls: false
+    netq-gui:
+        proto: http
+        addr: https://192.168.200.250:32666
+        bind_tls: true
