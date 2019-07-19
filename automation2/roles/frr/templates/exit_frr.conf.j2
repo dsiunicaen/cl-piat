@@ -7,6 +7,11 @@ service integrated-vtysh-config
 !
 log syslog informational
 !
+{% for vni in l3vnis %}
+vrf {{ vni.vrf }}
+ vni {{ vni.id }}
+{% endfor %}
+!
 router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
  bgp router-id {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address') }}
  neighbor underlay peer-group
