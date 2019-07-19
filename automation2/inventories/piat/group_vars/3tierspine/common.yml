@@ -1,0 +1,25 @@
+switch_role: spine
+fabric_links:
+  - swp9
+  - swp10
+  - swp11
+  - swp12
+  - swp31
+  - swp32
+devices:
+  super01:
+    loopback: 10.10.20.101/32
+    bgp:
+      asn: 65500
+  super02:
+    loopback: 10.10.20.102/32
+    bgp:
+      asn: 65500
+  super03:
+    loopback: 10.10.20.103/32
+    bgp:
+      asn: 65500
+  super04:
+    loopback: 10.10.20.104/32
+    bgp:
+      asn: 65500
