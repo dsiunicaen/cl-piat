@@ -7,7 +7,8 @@ auto bridge
 iface bridge
     bridge-ports peerlink dummy \
                  {% for bond in racks[devices[inventory_hostname].rack].bonds %}bond{{ bond.interface[3:] }} {% endfor %} \
-                 {% for vni in l2vnis %}vni{{ vni.id }} {% endfor %}
+                 {% for vni in l2vnis %}vni{{ vni.id }} {% endfor %} \
+                 {% for vni in l3vnis %}vni{{ vni.id }} {% endfor %}
 
     bridge-vids {% for vni in l2vnis %}{{ vni.vlan }} {% endfor %}
 
