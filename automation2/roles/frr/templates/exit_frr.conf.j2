@@ -7,14 +7,14 @@ service integrated-vtysh-config
 !
 log syslog informational
 !
-router bgp {{ exit_rack.routing.bgp.asn }}
+router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
  bgp router-id {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address') }}
  neighbor underlay peer-group
  neighbor underlay remote-as external
 {% for interface in fabric_links %}
  neighbor {{ interface }} interface peer-group underlay
 {% endfor %}
- neighbor peerlink.4094 interface remote-as internal
+ neighbor peerlink.4094 interface remote-as external 
  !
  address-family ipv4 unicast
   redistribute connected
