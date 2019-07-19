@@ -2,13 +2,15 @@
 ansible_user=cumulus
 ansible_ssh_pass=CumulusLinux!
 
-[edge]
+[edgeexit]
 exit01
 exit02
+
+[edgerouter]
 rtr01
 rtr02
 
-[super]
+[3tierspine]
 super01
 super02
 super03
