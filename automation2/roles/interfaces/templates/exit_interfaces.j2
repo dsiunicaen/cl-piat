@@ -9,7 +9,6 @@
 auto lo
 iface lo inet loopback
     address {{ devices[inventory_hostname].interfaces.loopback.ipv4 }}
-    clagd-vxlan-anycast-ip {{ racks[devices[inventory_hostname].rack].clag.loopback }}
 
 auto mgmt
 iface mgmt
@@ -22,10 +21,5 @@ iface eth0 inet dhcp
 
 {% include 'vrfs.j2' %}
 {% include 'fabric_links.j2' %}
-{% include 'mlag.j2' %}
-{% include 'bridge.j2' %}
 {% include 'vrfs.j2' %}
-{% include 'l2vnis.j2' %}
-{% include 'svis.j2' %}
-{% include 'bonds.j2' %}
 {% include 'routed.j2' %}
