@@ -1,0 +1,8 @@
+###############
+# Routed links 
+###############
+
+{% for interface in devices[inventory_hostname].interfaces.routed %}
+auto {{ interface }}
+iface {{ interface }}
+{% endfor %}

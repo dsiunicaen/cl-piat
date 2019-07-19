@@ -45,6 +45,9 @@ devices:
     routing:
       bgp:
         asn: 65103
+        roh:
+          swp1:
+          swp2:
     interfaces:
       loopback: 
         ipv4: 10.10.10.3/32
@@ -56,11 +59,19 @@ devices:
           ipv6_prefix: fc00:10::/64
           ipv6: fc00:10::2/64
           ipv6_vrr: fc00:10::1/64
+      routed:
+        swp1:
+          unnumbered: true
+        swp2:
+          unnumbered: true
   leaf04:
     rack: 02
     routing:
       bgp:
         asn: 65104
+        roh:
+          swp1:
+          swp2:
     interfaces:
       loopback:
         ipv4: 10.10.10.4/32
@@ -72,3 +83,8 @@ devices:
           ipv6_prefix: fc00:10::/64
           ipv6: fc00:10::3/64
           ipv6_vrr: fc00:10::1/64
+      routed:
+        swp1:
+          unnumbered: true
+        swp2:
+          unnumbered: true
