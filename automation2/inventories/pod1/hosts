@@ -1,6 +1,7 @@
 [all:vars]
 ansible_user=cumulus
 ansible_ssh_pass=CumulusLinux!
+ansible_python_interpreter=/usr/bin/python3
 
 [edge]
 exit01
@@ -55,28 +56,28 @@ spine07
 spine08
 
 [pod1host]
-server01 ansible_python_interpreter=/usr/bin/python3
-server02 ansible_python_interpreter=/usr/bin/python3
-server03 ansible_python_interpreter=/usr/bin/python3
-server04 ansible_python_interpreter=/usr/bin/python3
-server05 ansible_python_interpreter=/usr/bin/python3
-server06 ansible_python_interpreter=/usr/bin/python3
-server07 ansible_python_interpreter=/usr/bin/python3
-server08 ansible_python_interpreter=/usr/bin/python3
-server09 ansible_python_interpreter=/usr/bin/python3
-server10 ansible_python_interpreter=/usr/bin/python3
+server01
+server02
+server03
+server04
+server05
+server06
+server07
+server08
+server09
+server10
 
 [pod2host]
-server11 ansible_python_interpreter=/usr/bin/python3
-server12 ansible_python_interpreter=/usr/bin/python3
-server13 ansible_python_interpreter=/usr/bin/python3
-server14 ansible_python_interpreter=/usr/bin/python3
-server15 ansible_python_interpreter=/usr/bin/python3
-server16 ansible_python_interpreter=/usr/bin/python3
-server17 ansible_python_interpreter=/usr/bin/python3
-server18 ansible_python_interpreter=/usr/bin/python3
-server19 ansible_python_interpreter=/usr/bin/python3
-server20 ansible_python_interpreter=/usr/bin/python3
+server11
+server12
+server13
+server14
+server15
+server16
+server17
+server18
+server19
+server20
 
 [pod1:children]
 pod1fw
