@@ -1,6 +1,6 @@
 auto lo
 iface lo inet loopback
-   address 10.250.250.{{[inventory_hostname]["id"]}}/32
+   address 10.250.250.{{devices[inventory_hostname]["id"]}}/32
 
 auto mgmt
 iface mgmt
@@ -26,37 +26,37 @@ iface bridge
     mtu 9216
     bridge-ports vni404001 vni404002 vni404003 vni101000 vni101001 vni101002 vni101003 vni101004 vni101005
     bridge-vlan-aware yes
-    bridge-vids {{ [inventory_hostname]["l2domains"] | join(" ") }}
+    bridge-vids {{ devices[inventory_hostname]["l2domains"] | join(" ") }}
 
 
-{% for tenant in [inventory_hostname]["tenants"] %}
+{% for tenant in devices[inventory_hostname]["tenants"] %}
 auto {{tenant}}
 iface {{tenant}}
     vrf-table auto
 
-auto vni40{{[inventory_hostname]["tenants"][tenant]["id"]}}
-iface vni40{{[inventory_hostname]["tenants"][tenant]["id"]}}
+auto vni40{{devices[inventory_hostname]["tenants"][tenant]["id"]}}
+iface vni40{{devices[inventory_hostname]["tenants"][tenant]["id"]}}
     mtu 9216
-    bridge-access {{[inventory_hostname]["tenants"][tenant]["id"]}}
+    bridge-access {{devices[inventory_hostname]["tenants"][tenant]["id"]}}
     bridge-arp-nd-suppress on
     bridge-learning off
-    vxlan-id 40{{[inventory_hostname]["tenants"][tenant]["id"]}}
-    vxlan-local-tunnelip 10.250.250.{{[inventory_hostname]["id"]}} 
+    vxlan-id 40{{devices[inventory_hostname]["tenants"][tenant]["id"]}}
+    vxlan-local-tunnelip 10.250.250.{{devices[inventory_hostname]["id"]}} 
 
-auto dummysvi40{{[inventory_hostname]["tenants"][tenant]["id"]}}
-iface dummysvi40{{[inventory_hostname]["tenants"][tenant]["id"]}}
+auto dummysvi40{{devices[inventory_hostname]["tenants"][tenant]["id"]}}
+iface dummysvi40{{devices[inventory_hostname]["tenants"][tenant]["id"]}}
     mtu 9000
-    vlan-id {{[inventory_hostname]["tenants"][tenant]["id"]}} 
+    vlan-id {{devices[inventory_hostname]["tenants"][tenant]["id"]}} 
     vlan-raw-device bridge
     vrf {{tenant}} 
 {% endfor %}
 
-{% for l2domain in [inventory_hostname]["l2domains"] %}
+{% for l2domain in devices[inventory_hostname]["l2domains"] %}
 auto vni10{{l2domain}}
 iface vni10{{l2domain}}
   mtu 9000
   vxlan-id 10{{l2domain}}
-  vxlan-local-tunnelip 10.250.250.{{[inventory_hostname]["id"]}}
+  vxlan-local-tunnelip 10.250.250.{{devices[inventory_hostname]["id"]}}
   bridge-access {{l2domain}} 
   bridge-learning off
   mstpctl-bpduguard yes
@@ -66,29 +66,29 @@ iface vni10{{l2domain}}
 auto vlan{{l2domain}}
 iface vlan{{l2domain}}
     mtu 9000
-    address 192.168.{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.1/24
-    address fc00:{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::1/64
+    address 192.168.{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.1/24
+    address fc00:{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::1/64
     vlan-id {{l2domain}}
     vlan-raw-device bridge
-    vrf {{[inventory_hostname]["l2domains"][l2domain]["tenant"]}}
+    vrf {{devices[inventory_hostname]["l2domains"][l2domain]["tenant"]}}
 
-    post-up ip netns add vm{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}
-    post-up ip link add veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0 type veth peer name veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1
-    post-up ip link set veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0 mtu 9000
-    post-up ip link set veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1 mtu 9000
-    post-up ip link set veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1 netns vm{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}
-    post-up ip netns exec vm{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip address add 192.168.{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.{{[inventory_hostname]["id"]}}0/24 dev veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1
-    post-up ip netns exec vm{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip -6 address add fc00:{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::{{[inventory_hostname]["id"]}}0/64 dev veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1
-    post-up ip netns exec vm{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip link set veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1 up
-    post-up ip netns exec vm{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip route add default via 192.168.{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.1
-    post-up ip netns exec vm{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip -6 route add default via fc00:{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::1
+    post-up ip netns add vm{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}
+    post-up ip link add veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0 type veth peer name veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1
+    post-up ip link set veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0 mtu 9000
+    post-up ip link set veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1 mtu 9000
+    post-up ip link set veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1 netns vm{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}
+    post-up ip netns exec vm{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip address add 192.168.{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.{{devices[inventory_hostname]["id"]}}0/24 dev veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1
+    post-up ip netns exec vm{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip -6 address add fc00:{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::{{devices[inventory_hostname]["id"]}}0/64 dev veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1
+    post-up ip netns exec vm{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip link set veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1 up
+    post-up ip netns exec vm{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip route add default via 192.168.{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.1
+    post-up ip netns exec vm{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip -6 route add default via fc00:{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::1
 
-    post-up ip link set dev veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0 master bridge
-    post-up bridge vlan del vid 1 dev veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0
-    post-up bridge vlan del vid 1 untagged pvid dev veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0
-    post-up bridge vlan add vid {{l2domain}} dev veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0
-    post-up bridge vlan add vid {{l2domain}} untagged pvid dev veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0
+    post-up ip link set dev veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0 master bridge
+    post-up bridge vlan del vid 1 dev veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0
+    post-up bridge vlan del vid 1 untagged pvid dev veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0
+    post-up bridge vlan add vid {{l2domain}} dev veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0
+    post-up bridge vlan add vid {{l2domain}} untagged pvid dev veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0
 
-    post-up ip link set veth{{[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0 up
+    post-up ip link set veth{{devices[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0 up
     post-up sysctl -w net.ipv4.conf.$IFACE.forwarding=1
 {% endfor %}
