@@ -1,0 +1,11 @@
+
+###############
+# Bridge / Vlans
+###############
+
+auto bridge
+iface bridge
+    bridge-ports peerlink dummy \
+                 {% for vni in l3vnis %}vni{{ vni.id }} {% endfor %}
+    bridge-vids
+    bridge-vlan-aware yes
