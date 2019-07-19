@@ -97,7 +97,7 @@ pod1
 pod2
 edgeexit
 edgerouter
-super
+3tierspine
 
 [host:children]
 pod1host
