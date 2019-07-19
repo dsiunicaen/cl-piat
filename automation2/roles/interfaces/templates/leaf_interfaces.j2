@@ -21,6 +21,7 @@ iface eth0 inet dhcp
     vrf mgmt
 
 {% include 'vrfs.j2' %}
+{% include 'l3vnis.j2' %}
 {% include 'fabric_links.j2' %}
 {% include 'mlag.j2' %}
 {% include 'bridge.j2' %}
