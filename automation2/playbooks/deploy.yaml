@@ -42,6 +42,20 @@
   - interfaces
   - frr
 
+- hosts: edgeexit
+  become: true 
+  roles:
+  - setup-switch
+  - interfaces
+  - frr
+
+- hosts: edgerouter
+  become: true 
+  roles:
+  - setup-switch
+  - interfaces
+  - frr
+
 - hosts: server01,server02,server05,server06,server09,server10
   become: true 
   roles:
