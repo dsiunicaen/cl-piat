@@ -21,3 +21,5 @@ devices:
       asn: 65200
   spine04:
     loopback: 10.10.10.104/32
+    bgp:
+      asn: 65200
