@@ -8,7 +8,7 @@ service integrated-vtysh-config
 log syslog informational
 !
 router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
- bgp router-id {{ devices[inventory_hostname].loopback|ipaddr('address') }}
+ bgp router-id {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address') }}
  neighbor underlay peer-group
  neighbor underlay remote-as external
 {% for interface in fabric_links %}
