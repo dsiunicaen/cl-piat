@@ -1,46 +1,21 @@
 switch_role: exit
-peerlinks:
-  - swp20
-  - swp21
 fabric_links:
-  - swp25
-  - swp26
-  - swp27
-  - swp28
-  - swp29
-  - swp30
-  - swp31
-  - swp32
+  - swp1
+  - swp2
+  - swp3
+  - swp4
 devices:
-  service01:
-    rack: 03
+  exit01:
     routing:
       bgp:
-        asn: 65105
+        asn: 65601
     interfaces:
       loopback:
-        ipv4: 10.10.10.63/32
-      svis:
-        1000:
-          vrf: tenant1
-          ipv4: 192.168.10.2/24
-          ipv4_vrr: 192.168.10.1/24
-          ipv6_prefix: fc00:10::/64
-          ipv6: fc00:10::2/64
-          ipv6_vrr: fc00:10::1/64
-  service02:
-    rack: 03
+        ipv4: 10.10.40.1/32
+  exit02:
     routing:
       bgp:
-        asn: 65106
+        asn: 65602
     interfaces:
       loopback:
-        ipv4: 10.10.10.64/32
-      svis:
-        1000:
-          vrf: tenant1
-          ipv4: 192.168.10.3/24
-          ipv4_vrr: 192.168.10.1/24
-          ipv6_prefix: fc00:10::/64
-          ipv6: fc00:10::3/64
-          ipv6_vrr: fc00:10::1/64
+        ipv4: 10.10.40.2/32

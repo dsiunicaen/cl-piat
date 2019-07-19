@@ -1,4 +1,4 @@
-switch_role: exit
+switch_role: service 
 peerlinks:
   - swp20
   - swp21

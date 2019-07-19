@@ -95,7 +95,8 @@ pod2service
 [network:children]
 pod1
 pod2
-edge
+edgeexit
+edgerouter
 super
 
 [host:children]
