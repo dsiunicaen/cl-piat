@@ -10,21 +10,65 @@ fabric_links:
 devices:
   leaf01:
     rack: 01
-    loopback: 10.10.10.1/32
-    bgp:
-      asn: 65101
+    routing:
+      bgp:
+        asn: 65101
+    interfaces:
+      loopback: 
+        ipv4: 10.10.10.1/32
+      svis:
+        id: 1000
+          vrf: tenant1
+          ipv4: 192.168.10.2/24
+          ipv4_vrr: 192.168.10.1/24
+          ipv6_prefix: fc00:10::/64
+          ipv6: fc00:10::2/64
+          ipv6_vrr: fc00:10::1/64
   leaf02:
     rack: 01
-    loopback: 10.10.10.2/32
-    bgp:
-      asn: 65102
+    routing:
+      bgp:
+        asn: 65102
+    interfaces:
+      loopback: 
+        ipv4: 10.10.10.2/32
+      svis:
+        id: 1000
+          vrf: tenant1
+          ipv4: 192.168.10.3/24
+          ipv4_vrr: 192.168.10.1/24
+          ipv6_prefix: fc00:10::/64
+          ipv6: fc00:10::3/64
+          ipv6_vrr: fc00:10::1/64
   leaf03:
     rack: 02
-    loopback: 10.10.10.3/32
-    bgp:
-      asn: 65103
+    routing:
+      bgp:
+        asn: 65103
+    interfaces:
+      loopback: 
+        ipv4: 10.10.10.3/32
+      svis:
+        id: 1000
+          vrf: tenant1
+          ipv4: 192.168.10.2/24
+          ipv4_vrr: 192.168.10.1/24
+          ipv6_prefix: fc00:10::/64
+          ipv6: fc00:10::2/64
+          ipv6_vrr: fc00:10::1/64
   leaf04:
     rack: 02
-    loopback: 10.10.10.4/32
-    bgp:
-      asn: 65104
+    routing:
+      bgp:
+        asn: 65104
+    interfaces:
+      loopback:
+        ipv4: 10.10.10.4/32
+      svis:
+        id: 1000
+          vrf: tenant1
+          ipv4: 192.168.10.3/24
+          ipv4_vrr: 192.168.10.1/24
+          ipv6_prefix: fc00:10::/64
+          ipv6: fc00:10::3/64
+          ipv6_vrr: fc00:10::1/64

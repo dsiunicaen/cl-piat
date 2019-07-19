@@ -1,4 +1,12 @@
 fabric_name: pod1
+vrfs:
+  - { name: tenant1 }
+  - { name: tenant2 }
+  - { name: tenant3 }
+l3vnis:
+  - { id: 401001, vlan: 4001, vrf: tenant1 }
+  - { id: 401002, vlan: 4002, vrf: tenant2 }
+  - { id: 401003, vlan: 4003, vrf: tenant3 }
 l2vnis:
   - { id: 101000, vlan: 1000 }
   - { id: 101001, vlan: 1001 }
@@ -6,7 +14,6 @@ l2vnis:
   - { id: 101003, vlan: 1003 }
   - { id: 101004, vlan: 1004 }
   - { id: 101005, vlan: 1005 }
-spine_asn: 65200
 racks:
   01:
     clag:

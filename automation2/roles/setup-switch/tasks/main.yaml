@@ -14,11 +14,6 @@
     - systemctl enable ntp@mgmt
     - systemctl start ntp@mgmt
 
-- name: Remove NetQ1.4 
-  apt:
-    name: ['cumulus-netq','netq-agent','netq-apps']
-    state: absent
-
 - name: Add Cumulus Apt Key
   apt_key:
     url: "https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey"
@@ -30,7 +25,7 @@
     state: present
     update_cache: no
 
-- name: Install NetQ2.1
+- name: Install NetQ2.2
   apt:
     name: cumulus-netq
     update_cache: yes

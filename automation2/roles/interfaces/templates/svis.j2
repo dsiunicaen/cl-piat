@@ -1,0 +1,14 @@
+
+###############
+# SVIs 
+###############
+
+{% for vni in l2vnis %}
+auto vlan{{ vni.vlan }}
+iface vlan{{ vni.vlan }}
+    vlan-id {{ vni.vlan }}
+    vlan-raw-device bridge
+    ip-forward off
+    ip6-forward off
+
+{% endfor %}

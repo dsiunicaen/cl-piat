@@ -1,8 +1,14 @@
-{{ ansible_managed }}
+###############
+# Ansible generated config, will be overwritten!
+###############
+
+###############
+# General
+###############
 
 auto lo
 iface lo inet loopback
-    address {{ devices[inventory_hostname].loopback }}
+    address {{ devices[inventory_hostname].interfaces.loopback.ipv4 }}
     clagd-vxlan-anycast-ip {{ racks[devices[inventory_hostname].rack].clag.loopback }}
 
 auto mgmt

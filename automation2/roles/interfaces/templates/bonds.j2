@@ -1,3 +1,8 @@
+
+###############
+# Downlink Bonds 
+###############
+
 {% for bond in racks[devices[inventory_hostname].rack].bonds %}
 auto bond{{ bond.interface[3:] }}
 iface bond{{ bond.interface[3:] }}

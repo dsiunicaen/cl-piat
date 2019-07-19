@@ -1,3 +1,8 @@
+
+###############
+# L2 VNIs
+###############
+
 {% for vni in l2vnis %}
 auto vni{{ vni.id }}
 iface vni{{ vni.id }}
@@ -8,12 +13,5 @@ iface vni{{ vni.id }}
     mstpctl-portbpdufilter yes
     vxlan-id {{ vni.id }}
     vxlan-local-tunnelip {{ devices[inventory_hostname].loopback|ipaddr('address')}}
-
-auto vlan{{ vni.vlan }}
-iface vlan{{ vni.vlan }}
-    vlan-id {{ vni.vlan }}
-    vlan-raw-device bridge
-    ip-forward off
-    ip6-forward off
 
 {% endfor %}

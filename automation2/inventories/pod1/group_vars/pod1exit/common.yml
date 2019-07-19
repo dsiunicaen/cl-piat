@@ -9,10 +9,32 @@ fabric_links:
   - swp54
 devices:
   exit01:
-    loopback: 10.10.10.63/32
-    bgp:
-      asn: 65105
+    routing:
+      bgp:
+        asn: 65105
+    interfaces:
+      loopback:
+        ipv4: 10.10.10.63/32
+      svis:
+        id: 1000
+          vrf: tenant1
+          ipv4: 192.168.10.2/24
+          ipv4_vrr: 192.168.10.1/24
+          ipv6_prefix: fc00:10::/64
+          ipv6: fc00:10::2/64
+          ipv6_vrr: fc00:10::1/64
   exit02:
-    loopback: 10.10.10.64/32
-    bgp:
-      asn: 65106
+    routing:
+      bgp:
+        asn: 65106
+    interfaces:
+      loopback:
+        ipv4: 10.10.10.64/32
+      svis:
+        id: 1000
+          vrf: tenant1
+          ipv4: 192.168.10.3/24
+          ipv4_vrr: 192.168.10.1/24
+          ipv6_prefix: fc00:10::/64
+          ipv6: fc00:10::3/64
+          ipv6_vrr: fc00:10::1/64

@@ -9,9 +9,15 @@ fabric_links:
 devices:
   spine01:
     loopback: 10.10.10.101/32
+    bgp:
+      asn: 65200
   spine02:
     loopback: 10.10.10.102/32
+    bgp:
+      asn: 65200
   spine03:
     loopback: 10.10.10.103/32
+    bgp:
+      asn: 65200
   spine04:
     loopback: 10.10.10.104/32
