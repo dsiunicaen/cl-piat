@@ -33,8 +33,12 @@ racks:
       - interface: swp2
       - interface: swp3
       - interface: swp4
-exit_rack:
-  clag:
-    loopback: 10.100.100.3
-    sysmac: 44:38:39:FF:FF:FF
-  bonds:
+  03:
+    clag:
+      loopback: 10.100.100.3
+      sysmac: 44:38:39:FF:FF:FF
+    bonds:
+      - interface: swp1
+      - interface: swp2
+      - interface: swp3
+      - interface: swp4
