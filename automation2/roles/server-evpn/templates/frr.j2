@@ -6,9 +6,9 @@ service integrated-vtysh-config
 !
 log syslog informational
 !
-{% for tenant in node[inventory_hostname]["tenants"] -%}
+{% for tenant in devices[inventory_hostname]["tenants"] -%}
 vrf {{tenant}}
- vni 40{{node[inventory_hostname]["tenants"][tenant]["id"]}}
+ vni 40{{devices[inventory_hostname]["tenants"][tenant]["id"]}}
 {% endfor %}
 !
 interface eth1 
@@ -18,8 +18,8 @@ interface eth2
  ipv6 nd ra-interval 10
  no ipv6 nd suppress-ra
 
-router bgp 6550{{node[inventory_hostname]["id"]}}
- bgp router-id 10.250.250.{{node[inventory_hostname]["id"]}}
+router bgp 6550{{devices[inventory_hostname]["id"]}}
+ bgp router-id 10.250.250.{{devices[inventory_hostname]["id"]}}
  bgp bestpath as-path multipath-relax
  neighbor FABRIC peer-group
  neighbor FABRIC remote-as external
