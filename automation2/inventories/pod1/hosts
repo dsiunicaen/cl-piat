@@ -78,6 +78,12 @@ server18
 server19
 server20
 
+[pod1hosts:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+[pod2hosts:vars]
+ansible_python_interpreter=/usr/bin/python3
+
 [pod1:children]
 pod1fw
 pod1leaf
