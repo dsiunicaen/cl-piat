@@ -14,8 +14,8 @@ iface vni{{ vni.id }}
     vxlan-id {{ vni.id }}
     vxlan-local-tunnelip {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address')}}
 
-auto dummysvi40{{ vni.id }}
-iface dummysvi40{{ vni.id }}
+auto dummysvi{{ vni.id }}
+iface dummysvi{{ vni.id }}
     hwaddress {{ devices[inventory_hostname].sysmac }} 
     vlan-id {{ vni.vlan }}
     vlan-raw-device bridge
