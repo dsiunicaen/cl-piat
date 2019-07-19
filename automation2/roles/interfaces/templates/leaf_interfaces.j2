@@ -20,9 +20,9 @@ auto eth0
 iface eth0 inet dhcp
     vrf mgmt
 
-{% include 'bonds.j2' %}
-{% include 'vnis.j2' %}
 {% include 'fabric_links.j2' %}
 {% include 'mlag.j2' %}
-
 {% include 'bridge.j2' %}
+{% include 'vrfs.j2' %}
+{% include 'l2vnis.j2' %}
+{% include 'bonds.j2' %}

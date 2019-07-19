@@ -1,0 +1,11 @@
+
+###############
+# VRFs 
+###############
+
+{% for vrf in vrfs %}
+auto {{ vrf.name }}
+iface {{ vrf.name }}
+    vrf-table auto
+
+{% endfor %}
