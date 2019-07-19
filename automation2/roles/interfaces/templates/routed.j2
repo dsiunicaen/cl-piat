@@ -1,3 +1,4 @@
+{% if devices[inventory_hostname].interfaces.routed is defined %}
 ###############
 # Routed links 
 ###############
@@ -6,3 +7,4 @@
 auto {{ interface }}
 iface {{ interface }}
 {% endfor %}
+{% endif %}

@@ -14,7 +14,7 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
 {% for interface in fabric_links %}
  neighbor {{ interface }} interface peer-group underlay
 {% endfor %}
-{% for interface in {{ devices[inventory_hostname].routing.bgp.roh }} %}
+{% for interface in devices[inventory_hostname].routing.bgp.roh %}
  neighbor {{ interface }} interface peer-group underlay
 {% endfor %}
  neighbor peerlink.4094 interface remote-as external 
