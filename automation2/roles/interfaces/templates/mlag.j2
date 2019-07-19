@@ -21,4 +21,4 @@ iface peerlink.4094
 {% endfor %}
     clagd-peer-ip linklocal
     clagd-priority {{ "1000" if inventory_hostname[-1:]|int%2 != 0 else "32768" }}
-    clagd-sys-mac {{ racks[devices[inventory_hostname].rack].clag.sysmac }}
+    clagd-sys-mac {{ devices[inventory_hostname].sysmac }}

@@ -1,0 +1,24 @@
+
+###############
+# L3 VNIs
+###############
+
+{% for vni in l3vnis %}
+auto vni{{ vni.id }}
+iface vni{{ vni.id }}
+    bridge-access {{ vni.vlan }}
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id {{ vni.id }}
+    vxlan-local-tunnelip {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address')}}
+
+auto dummysvi40{{ vni.id }}
+iface dummysvi40{{ vni.id }}
+    hwaddress {{ devices[inventory_hostname].sysmac }} 
+    vlan-id {{ vni.vlan }}
+    vlan-raw-device bridge
+    vrf {{ vni.vrf }}
+    mtu 9000
+{% endfor %}

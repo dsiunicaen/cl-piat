@@ -18,7 +18,6 @@ racks:
   01:
     clag:
       loopback: 10.100.100.1
-      sysmac: 44:38:39:FF:01:01
     bonds:
       - interface: swp1
       - interface: swp2
@@ -27,14 +26,12 @@ racks:
   02:
     clag:
       loopback: 10.100.100.2
-      sysmac: 44:38:39:FF:01:02
     bonds:
       - interface: swp1
       - interface: swp2
   03:
     clag:
       loopback: 10.100.100.3
-      sysmac: 44:38:39:FF:FF:FF
     bonds:
       - interface: swp1
       - interface: swp2
