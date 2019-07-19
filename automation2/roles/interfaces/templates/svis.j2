@@ -4,15 +4,14 @@
 ###############
 
 {% for vni in l2vnis %}
-{% if devices[inventory_hostname].interfaces.svis.[vni.vlan] is defined %}
+{% if devices['leaf01'].interfaces.svis[vni.vlan] is defined %}
 auto vlan{{ vni.vlan }}
 iface vlan{{ vni.vlan }}
-    vrf {{ devices[inventory_hostname].interfaces.svis.[vni.vlan].vrf }}
+    vrf {{ devices['leaf01'].interfaces.svis[vni.vlan].vrf }}
     vlan-id {{ vni.vlan }}
     vlan-raw-device bridge
-    address {{ devices[inventory_hostname].interfaces.svis.[vni.vlan].ipv4 }}
-    address-virtual 00:00:5e:00:01:01 {{ devices[inventory_hostname].interfaces.svis.[vni.vlan].ipv4_vrr }} {{ devices[inventory_hostname].interfaces.svis.[vni.vlan].ipv6_vrr }} fe80::1/64
-
+    address {{ devices['leaf01'].interfaces.svis[vni.vlan].ipv4 }}
+    address-virtual 00:00:5e:00:01:01 {{ devices['leaf01'].interfaces.svis[vni.vlan].ipv4_vrr }} {{ devices['leaf01'].interfaces.svis[vni.vlan].ipv6_vrr }} fe80::1/64
 
 {% else %}
 auto vlan{{ vni.vlan }}
@@ -21,5 +20,6 @@ iface vlan{{ vni.vlan }}
     vlan-raw-device bridge
     ip-forward off
     ip6-forward off
+    
 {% endif %}
 {% endfor %}
