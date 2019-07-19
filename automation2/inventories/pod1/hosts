@@ -106,5 +106,5 @@ netq-ts
 [oob-switch]
 oob-mgmt-switch
 
-[oob-mgmt-server]
+[oob-server]
 oob-mgmt-server
