@@ -1,5 +1,5 @@
 ---
-- hosts: oob 
+- hosts: oob-mgmt-server 
   become: true
   roles:
   - oob-mgmt-server
