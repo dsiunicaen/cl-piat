@@ -9,7 +9,7 @@ fabric_links:
   - swp54
 devices:
   leaf01:
-    sysmac: 44:38:39:00:01:02
+    sysmac: "44:38:39:00:01:02"
     rack: 01
     routing:
       bgp:
@@ -26,7 +26,7 @@ devices:
           ipv6: fc00:10::2/64
           ipv6_vrr: fc00:10::1/64
   leaf02:
-    sysmac: 44:38:39:00:01:02
+    sysmac: "44:38:39:00:01:02"
     rack: 01
     routing:
       bgp:
@@ -43,7 +43,7 @@ devices:
           ipv6: fc00:10::3/64
           ipv6_vrr: fc00:10::1/64
   leaf03:
-    sysmac: 44:38:39:00:03:04
+    sysmac: "44:38:39:00:03:04"
     rack: 02
     routing:
       bgp:
@@ -68,7 +68,7 @@ devices:
         swp4:
           unnumbered: true
   leaf04:
-    sysmac: 44:38:39:00:03:04
+    sysmac: "44:38:39:00:03:04"
     rack: 02
     routing:
       bgp:

@@ -13,7 +13,7 @@ fabric_links:
   - swp32
 devices:
   service01:
-    sysmac: 44:38:39:00:05:06
+    sysmac: "44:38:39:00:05:06"
     rack: 03
     routing:
       bgp:
@@ -30,7 +30,7 @@ devices:
           ipv6: fc00:10::2/64
           ipv6_vrr: fc00:10::1/64
   service02:
-    sysmac: 44:38:39:00:05:06
+    sysmac: "44:38:39:00:05:06"
     rack: 03
     routing:
       bgp:

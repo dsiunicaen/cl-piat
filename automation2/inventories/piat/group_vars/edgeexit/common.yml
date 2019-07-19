@@ -6,7 +6,7 @@ fabric_links:
   - swp4
 devices:
   exit01:
-    sysmac: 44:38:39:FF:FF:01 
+    sysmac: "44:38:39:FF:FF:01"
     routing:
       bgp:
         asn: 65601
@@ -14,7 +14,7 @@ devices:
       loopback:
         ipv4: 10.10.40.1/32
   exit02:
-    sysmac: 44:38:39:FF:FF:02
+    sysmac: "44:38:39:FF:FF:02"
     routing:
       bgp:
         asn: 65602
