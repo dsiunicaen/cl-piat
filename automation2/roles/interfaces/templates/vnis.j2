@@ -12,6 +12,6 @@ iface vni{{ vni.id }}
     mstpctl-bpduguard yes
     mstpctl-portbpdufilter yes
     vxlan-id {{ vni.id }}
-    vxlan-local-tunnelip {{ devices[inventory_hostname].loopback|ipaddr('address')}}
+    vxlan-local-tunnelip {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address')}}
 
 {% endfor %}
