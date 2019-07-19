@@ -8,7 +8,7 @@ fabric_links:
   - swp53
   - swp54
 devices:
-  exit01:
+  service01:
     routing:
       bgp:
         asn: 65105
@@ -23,7 +23,7 @@ devices:
           ipv6_prefix: fc00:10::/64
           ipv6: fc00:10::2/64
           ipv6_vrr: fc00:10::1/64
-  exit02:
+  service02:
     routing:
       bgp:
         asn: 65106
