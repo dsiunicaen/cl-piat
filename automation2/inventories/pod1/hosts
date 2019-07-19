@@ -88,7 +88,7 @@ pod1service
 pod2fw
 pod2leaf
 pod2spine
-pod2exit
+pod2service
 
 [network:children]
 pod1
