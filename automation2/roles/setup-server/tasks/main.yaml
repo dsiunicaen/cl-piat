@@ -1,4 +1,7 @@
 ---
+- name: Apt clean
+  shell: apt-get -y clean && sudo apt-get -y autoclean
+
 - apt_repository:
     repo: ppa:ansible/ansible 
 
