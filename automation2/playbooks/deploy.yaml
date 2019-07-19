@@ -35,14 +35,14 @@
   - interfaces
   - frr 
 
-- hosts: server01,server02,server09,server10
+- hosts: server01,server02,server05,server06,server09,server10
   become: true 
   roles:
   - setup-server
   - server-multitenant
   - app-netq
 
-- hosts: server05,server06
+- hosts: server07,server08
   become: true 
   roles:
   - setup-server
