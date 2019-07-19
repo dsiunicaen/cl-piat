@@ -82,7 +82,7 @@ server20
 pod1fw
 pod1leaf
 pod1spine
-pod1exit
+pod1service
 
 [pod2:children]
 pod2fw
