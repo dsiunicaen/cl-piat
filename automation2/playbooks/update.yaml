@@ -26,6 +26,13 @@
   - interfaces
   - frr 
 
+- hosts: pod1service
+  become: true
+  roles:
+  - setup-switch
+  - interfaces
+  - frr
+
 - hosts: server01,server02,server09,server10
   become: true 
   roles:
