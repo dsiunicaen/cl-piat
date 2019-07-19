@@ -29,28 +29,24 @@
 - hosts: pod1service
   become: true
   roles:
-  - setup-switch
   - interfaces
   - frr
 
 - hosts: 3tierspine
   become: true
   roles:
-  - setup-switch
   - interfaces
   - frr
 
 - hosts: edgeexit
   become: true
   roles:
-  - setup-switch
   - interfaces
   - frr
 
 - hosts: edgerouter
   become: true
   roles:
-  - setup-switch
   - interfaces
   - frr
 
