@@ -32,16 +32,16 @@ devices:
       vrf:
           common:
             ipv4: 192.168.0.1/32
-            ipv6: fc00:AA::100:1/112
+            ipv6: fc00:AA::100:1/128
           tenant1:
             ipv4: 192.168.1.1/32
-            ipv6: fc00:AA::101:1/112
+            ipv6: fc00:AA::101:1/128
           tenant2:
             ipv4: 192.168.2.1/32
-            ipv6: fc00:AA::102:1/112
+            ipv6: fc00:AA::102:1/128
           tenant3:
             ipv4: 192.168.3.1/32
-            ipv6: fc00:AA::103:1/112
+            ipv6: fc00:AA::103:1/128
       routed:
         swp31:
           unnumbered: false
@@ -75,16 +75,16 @@ devices:
       vrf:
           common:
             ipv4: 192.168.0.2/32
-            ipv6: fc00:AA::100:2/112
+            ipv6: fc00:AA::100:2/128
           tenant1:
             ipv4: 192.168.1.2/32
-            ipv6: fc00:AA::101:2/112
+            ipv6: fc00:AA::101:2/128
           tenant2:
             ipv4: 192.168.2.2/32
-            ipv6: fc00:AA::102:2/112
+            ipv6: fc00:AA::102:2/128
           tenant3:
             ipv4: 192.168.3.2/32
-            ipv6: fc00:AA::103:2/112
+            ipv6: fc00:AA::103:2/128
       routed:
         swp31:
           unnumbered: false
