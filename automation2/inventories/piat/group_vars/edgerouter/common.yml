@@ -34,7 +34,7 @@ devices:
       bgp:
         asn: 100 
         vrf: 
-          common:
+          default:
             neighbor:
               172.30.101.1:
                 asn: 65601
