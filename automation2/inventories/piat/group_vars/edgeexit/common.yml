@@ -43,12 +43,12 @@ devices:
             ipv4: 192.168.3.1/32
             ipv6: fc00:AA::103:1/128
       routed:
-        swp31:
+        swp6:
           unnumbered: false
           vrf: common
           ipv4: 172.30.100.1/31
           ipv6: fc00:FF::100:2/112
-        swp32:
+        swp7:
           unnumbered: false
           vrf: common
           ipv4: 172.30.101.1/31
@@ -86,12 +86,12 @@ devices:
             ipv4: 192.168.3.2/32
             ipv6: fc00:AA::103:2/128
       routed:
-        swp31:
+        swp6:
           unnumbered: false
           vrf: common
           ipv4: 172.30.102.1/31
           ipv6: fc00:FF::102:2/112
-        swp32:
+        swp7:
           unnumbered: false
           vrf: common
           ipv4: 172.30.103.1/31
