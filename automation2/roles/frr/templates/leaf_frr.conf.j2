@@ -39,7 +39,7 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
  neighbor peerlink.4094 interface remote-as external 
  !
  address-family ipv4 unicast
-  redistribute connected
+  redistribute connected route-map loopbacks
  exit-address-family
  !
  address-family l2vpn evpn
@@ -47,6 +47,8 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
   advertise-all-vni
  exit-address-family
 !
+route-map loopbacks permit 10
+ match interface lo
 !
 line vty
 !
