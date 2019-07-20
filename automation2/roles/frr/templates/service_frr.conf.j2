@@ -68,8 +68,10 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
 !
 route-map loopbacks permit 10
  match interface lo
-route-map loopbacks permit 20
- match interface vrf 
+{% for vrf in vrfs %}
+route-map loopbacks permit 10{{ loop.index }}
+ match interface {{ vrf }} 
+{% endfor %}
 !
 line vty
 !
