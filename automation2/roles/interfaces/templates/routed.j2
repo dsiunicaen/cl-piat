@@ -6,5 +6,10 @@
 {% for interface in devices[inventory_hostname].interfaces.routed %}
 auto {{ interface }}
 iface {{ interface }}
+{% if devices[inventory_hostname].interfaces.routed.unnumbered == false %}
+    address {{ devices[inventory_hostname].interfaces.routed[interface].ipv4 }}
+    address {{ devices[inventory_hostname].interfaces.routed[interface].ipv6 }}
+    vrf {{ devices[inventory_hostname].interfaces.routed[interface].vrf }}
+{% endif %}
 {% endfor %}
 {% endif %}
