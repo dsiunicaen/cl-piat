@@ -7,6 +7,10 @@ fabric_links:
   - swp52
   - swp53
   - swp54
+vrfs:
+  - tenant1
+  - tenant2
+  - tenant3
 devices:
   leaf01:
     sysmac: "44:38:39:00:01:02"

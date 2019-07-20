@@ -11,6 +11,10 @@ fabric_links:
   - swp30
   - swp31
   - swp32
+vrfs:
+  - tenant1
+  - tenant2
+  - tenant3
 devices:
   service01:
     sysmac: "44:38:39:00:05:06"

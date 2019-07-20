@@ -1,8 +1,4 @@
 fabric_name: pod1
-vrfs:
-  - { name: tenant1 }
-  - { name: tenant2 }
-  - { name: tenant3 }
 l3vnis:
   - { id: 401001, vlan: 4001, vrf: tenant1 }
   - { id: 401002, vlan: 4002, vrf: tenant2 }

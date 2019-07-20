@@ -4,8 +4,11 @@
 ###############
 
 {% for vrf in vrfs %}
-auto {{ vrf.name }}
-iface {{ vrf.name }}
+auto {{ vrf }}
+iface {{ vrf }}
     vrf-table auto
-
+{% if devices[inventory_hostname].interfaces.vrf[vrf] is defined %}
+    address {{ devices[inventory_hostname].interfaces.vrf[vrf].ipv4 }} 
+    address {{ devices[inventory_hostname].interfaces.vrf[vrf].ipv6 }} 
+{% endif %}
 {% endfor %}
