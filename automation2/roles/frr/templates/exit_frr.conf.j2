@@ -41,7 +41,7 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
 {% if devices[inventory_hostname].routing.bgp.vrf[vrf] is defined %}
 {% if devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor is defined %}
 {% for peer in devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor %}
- {% set neighbor = devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor[neighbor] %}
+ {% set neighbor = devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor[peer] %}
  neighbor {{ peer }} remote-as {{ neighbor.asn }}
 {% endfor %}
 {% endif %}
