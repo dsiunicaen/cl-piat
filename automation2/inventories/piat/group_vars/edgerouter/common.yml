@@ -9,11 +9,11 @@ devices:
             neighbor:
               172.30.100.1:
                 asn: 65601
-              172.30.101.1:
+              172.30.102.1:
                 asn: 65602
               fc00:FF::100:2:
                 asn: 65601
-              fc00:FF::101:2:
+              fc00:FF::102:2:
                 asn: 65602
     interfaces:
       loopback:
@@ -36,14 +36,14 @@ devices:
         vrf: 
           common:
             neighbor:
-              172.30.102.1:
-                asn: 100
+              172.30.101.1:
+                asn: 65601
               172.30.103.1:
-                asn: 100
-              fc00:FF::102:2:
-                asn: 100
+                asn: 65602
+              fc00:FF::101:2:
+                asn: 65601
               fc00:FF::103:2:
-                asn: 100
+                asn: 65602
     interfaces:
       loopback:
         ipv4: 10.10.50.2/32
