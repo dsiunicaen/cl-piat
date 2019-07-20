@@ -18,6 +18,7 @@ devices:
     interfaces:
       loopback:
         ipv4: 10.10.50.1/32
+        ipv6: fc00:AA::1/128
       routed:
         swp1:
           unnumbered: false
@@ -47,6 +48,7 @@ devices:
     interfaces:
       loopback:
         ipv4: 10.10.50.2/32
+        ipv6: fc00:AA::2/128
       routed:
         swp1:
           unnumbered: false
