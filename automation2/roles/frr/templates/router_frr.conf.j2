@@ -1,0 +1,23 @@
+{{ ansible_managed }}
+frr defaults datacenter
+hostname {{ inventory_hostname }}
+username cumulus nopassword
+!
+service integrated-vtysh-config
+!
+log syslog informational
+!
+router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
+ bgp router-id {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address') }}
+ neighbor underlay peer-group
+ neighbor underlay remote-as external
+ !
+ address-family ipv4 unicast
+  redistribute connected route-map loopbacks
+ exit-address-family
+!
+route-map loopbacks permit 10
+ match interface lo
+!
+line vty
+!
