@@ -40,9 +40,9 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
  bgp router-id {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address') }}
 {% if devices[inventory_hostname].routing.bgp.vrf[vrf] is defined %}
 {% if devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor is defined %}
-{% for neighbor in devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor %}
+{% for peer in devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor %}
  {% set neighbor = devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor[neighbor] %}
- neighbor {{ neighbor }} remote-as {{ neighbor.asn }}
+ neighbor {{ peer }} remote-as {{ neighbor.asn }}
 {% endfor %}
 {% endif %}
 {% endif %}
