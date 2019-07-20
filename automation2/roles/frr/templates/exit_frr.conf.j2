@@ -38,10 +38,12 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
 {% for vrf in vrfs %}
 router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
  bgp router-id {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address') }}
+{% if devices[inventory_hostname].routing.bgp.vrf[vrf] is defined %}
 {% if devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor is defined %}
 {% for neighbor in devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor %}
  neighbor {{ devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor }} remote-as {{ devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor[neighbor].asn }}
 {% endfor %}
+{% endif %}
 {% endif %}
  !
  address-family ipv4 unicast
