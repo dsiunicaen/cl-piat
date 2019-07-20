@@ -15,16 +15,17 @@ devices:
     routing:
       bgp:
         asn: 65601
-      vrf: common
-        neighbor:
-          172.30.100.0:
-            asn: 100
-          172.30.101.0:
-            asn: 100
-          fc00:FF::100:1:
-            asn: 100
-          fc00:FF::101:1:
-            asn: 100
+      vrf: 
+        common:
+          neighbor:
+            172.30.100.0:
+              asn: 100
+            172.30.101.0:
+              asn: 100
+            fc00:FF::100:1:
+              asn: 100
+            fc00:FF::101:1:
+              asn: 100
     interfaces:
       loopback:
         ipv4: 10.10.40.1/32
