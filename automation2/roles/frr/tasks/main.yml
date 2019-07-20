@@ -40,6 +40,17 @@
 # information in group_vars/all. The biggest difference between spine and
 # leaf configuration are the prefix lists - leafs should only advertise their
 # neighboring networks, but spines should advertise any networks they accept.
+- name: Create /etc/frr/frr.conf locally
+  template:
+    src: "{{switch_role}}_frr.conf.j2"
+    dest: "config/{{ fabric_name }}/{{ inventory_hostname }}/frr.conf"
+  delegate_to: localhost
+  become: false
+  tags:
+    - local
+    - frr_setup
+    - frr_render
+
 - name: Configure FRR
   template:
     src: "{{switch_role}}_frr.conf.j2"
@@ -53,14 +64,3 @@
 - meta: flush_handlers
   tags:
     - interface_setup
-
-- name: Create /etc/frr/frr.conf locally
-  template:
-    src: "{{switch_role}}_frr.conf.j2"
-    dest: "config/{{ fabric_name }}/{{ inventory_hostname }}/frr.conf"
-  delegate_to: localhost
-  become: false
-  tags:
-    - local
-    - frr_setup
-    - frr_render
