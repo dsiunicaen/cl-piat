@@ -45,7 +45,6 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
  neighbor {{ peer }} remote-as {{ neighbor.asn }}
 {% endfor %}
 {% endif %}
-{% if devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor is defined %}
  !
  address-family ipv4 unicast
   redistribute connected route-map loopbacks
