@@ -53,7 +53,7 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
   {% for vrf in devices[inventory_hostname].routing.bgp.vrf[vrf].leak %}
   import vrf {{ vrf }} 
   {% endfor %}
-  {% endif }
+  {% endif %}
  exit-address-family
  !
  address-family ipv6 unicast
@@ -62,7 +62,7 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
   {% for vrf in devices[inventory_hostname].routing.bgp.vrf[vrf].leak %}
   import vrf {{ vrf }} 
   {% endfor %}
-  {% endif }
+  {% endif %}
  exit-address-family
  !
  address-family l2vpn evpn
