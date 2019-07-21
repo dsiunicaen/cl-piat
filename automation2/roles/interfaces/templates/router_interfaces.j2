@@ -20,4 +20,9 @@ auto eth0
 iface eth0 inet dhcp
     vrf mgmt
 
+auto vagrant
+iface vagrant inet dhcp
+    post-up iptables -t nat -A POSTROUTING -o vagrant -j MASQUERADE
+
+
 {% include 'routed.j2' %}

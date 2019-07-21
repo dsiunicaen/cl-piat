@@ -17,6 +17,10 @@ devices:
         asn: 65601
         vrf: 
           common:
+            leak:
+              - tenant1
+              - tenant2
+              - tenant3
             neighbor:
               172.30.100.0:
                 asn: 100
@@ -26,6 +30,15 @@ devices:
                 asn: 100
               fc00:FF::101:1:
                 asn: 100
+          tenant1:
+            leak:
+              - common 
+          tenant2:
+            leak:
+              - common 
+          tenant3:
+            leak:
+              - common 
     interfaces:
       loopback:
         ipv4: 10.10.40.1/32
