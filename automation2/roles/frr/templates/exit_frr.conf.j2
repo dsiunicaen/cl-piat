@@ -43,13 +43,13 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
 {% for peer in devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor %}
  {% set neighbor = devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor[peer] %}
  neighbor {{ peer }} remote-as {{ neighbor.asn }}
-{% endfor %}
 {% endif %}
+{% endfor %}
  !
  address-family ipv4 unicast
   redistribute connected route-map loopbacks
   {% if devices[inventory_hostname].routing.bgp.vrf[vrf].leak is defined %}
-  {% for leaf in devices[inventory_hostname].routing.bgp.vrf[vrf].leak %}
+  {% for leak in devices[inventory_hostname].routing.bgp.vrf[vrf].leak %}
   import vrf {{ leak }} 
   {% endfor %}
   {% endif %}
@@ -58,8 +58,8 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
  address-family ipv6 unicast
   redistribute connected route-map loopbacks
   {% if devices[inventory_hostname].routing.bgp.vrf[vrf].leak is defined %}
-  {% for vrf in devices[inventory_hostname].routing.bgp.vrf[vrf].leak %}
-  import vrf {{ vrf }} 
+  {% for leak in devices[inventory_hostname].routing.bgp.vrf[vrf].leak %}
+  import vrf {{ leak }} 
   {% endfor %}
   {% endif %}
  exit-address-family
