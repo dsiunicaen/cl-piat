@@ -21,6 +21,7 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
 {% endif %}
  !
  address-family ipv4 unicast
+  neighbor external default-originate
   redistribute connected route-map loopbacks
  exit-address-family
  !
