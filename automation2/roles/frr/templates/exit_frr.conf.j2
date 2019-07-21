@@ -35,16 +35,16 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
   advertise-all-vni
  exit-address-family
 !
-{% if devices[inventory_hostname].routing.bgp.vrf[vrf] is defined %}
 {% for vrf in vrfs %}
+{% if devices[inventory_hostname].routing.bgp.vrf[vrf] is defined %}
 router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
  bgp router-id {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address') }}
 {% if devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor is defined %}
 {% for peer in devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor %}
  {% set neighbor = devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor[peer] %}
  neighbor {{ peer }} remote-as {{ neighbor.asn }}
-{% endif %}
 {% endfor %}
+{% endif %}
  !
  address-family ipv4 unicast
   redistribute connected route-map loopbacks
@@ -68,8 +68,8 @@ router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
   advertise ipv4 unicast
   advertise ipv6 unicast
  exit-address-family
-{% endfor %}
 {% endif %}
+{% endfor %}
 !
 route-map loopbacks permit 10
  match interface lo
