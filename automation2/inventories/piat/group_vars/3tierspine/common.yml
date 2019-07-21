@@ -2,8 +2,6 @@ switch_role: spine
 fabric_links:
   - swp9
   - swp10
-  - swp11
-  - swp12
   - swp31
   - swp32
 devices:
