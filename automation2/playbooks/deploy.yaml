@@ -3,10 +3,10 @@
   become: true
   roles:
   - oob-mgmt-server
-  - app-grafana
+  - { role: app-grafana, tags: grafana }
   - app-netbox
   - app-ngrok
-  - { role: app-influxdb,  tags: influxdb }
+  - { role: app-influxdb, tags: influxdb }
   tags: [ 'oob-server' ] 
 
 - hosts: netq-ts
