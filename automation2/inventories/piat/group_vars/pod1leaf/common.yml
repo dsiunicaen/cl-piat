@@ -3,7 +3,6 @@ peerlinks:
   - swp49
   - swp50
 fabric_links:
-  - swp51
   - swp52
   - swp53
   - swp54
