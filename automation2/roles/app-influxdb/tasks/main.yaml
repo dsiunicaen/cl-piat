@@ -1,0 +1,19 @@
+---
+- name: Create Influxdb storage
+  docker_volume:
+    name: influxdb-storage
+
+- name: Influxdb container
+  docker_container:
+    name: influxdb
+    image: influxdb
+    state: started
+    ports:
+    - "8086:8086"
+    volumes:
+    - influxdb-storage:/var/lib/grafana
+
+- name: Pause to let container start 
+  pause:
+    seconds: 10 
+...

@@ -6,6 +6,7 @@
   - app-grafana
   - app-netbox
   - app-ngrok
+  - { role: app-influxdb,  tags: influxdb }
   tags: [ 'oob-server' ] 
 
 - hosts: netq-ts
