@@ -63,6 +63,7 @@
   - setup-server
   - server-multitenant
   - app-netq
+  - { role: server-keepalive, tags: keepalive }
 
 - hosts: server07,server08
   become: true 
