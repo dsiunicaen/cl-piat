@@ -11,62 +11,62 @@
 - hosts: netq-ts
   become: true
   roles:
-  - setup-netq-ts
+  - { role: setup-netq-ts, tags: ['deploy'] }
 
 - hosts: pod1spine 
   become: true
   roles:
-  - setup-switch
+  - { role: setup-switch, tags: ['deploy'] }
   - { role: interfaces, tags: ['deploy','update'] }
-  - frr 
+  - { role: frr, tags: ['deploy','update'] }
 
 - hosts: pod1leaf
   become: true 
   roles:
-  - setup-switch
-  - interfaces
-  - frr 
+  - { role: setup-switch, tags: ['deploy'] }
+  - { role: interfaces, tags: ['deploy','update'] }
+  - { role: frr, tags: ['deploy','update'] }
 
 - hosts: pod1service
   become: true 
   roles:
-  - setup-switch
-  - interfaces
-  - frr 
+  - { role: setup-switch, tags: ['deploy'] }
+  - { role: interfaces, tags: ['deploy','update'] }
+  - { role: frr, tags: ['deploy','update'] }
 
 - hosts: 3tierspine
   become: true 
   roles:
-  - setup-switch
-  - interfaces
-  - frr
+  - { role: setup-switch, tags: ['deploy'] }
+  - { role: interfaces, tags: ['deploy','update'] }
+  - { role: frr, tags: ['deploy','update'] }
 
 - hosts: edgeexit
   become: true 
   roles:
-  - setup-switch
-  - interfaces
-  - frr
+  - { role: setup-switch, tags: ['deploy'] }
+  - { role: interfaces, tags: ['deploy','update'] }
+  - { role: frr, tags: ['deploy','update'] }
 
 - hosts: edgerouter
   become: true 
   roles:
-  - setup-switch
-  - interfaces
-  - frr
+  - { role: setup-switch, tags: ['deploy'] }
+  - { role: interfaces, tags: ['deploy','update'] }
+  - { role: frr, tags: ['deploy','update'] }
 
 - hosts: server01,server02,server05,server06,server09,server10
   become: true 
   roles:
-  - setup-server
-  - server-multitenant
-  - app-netq
-  - { role: server-keepalive, tags: keepalive }
+  - { role: setup-server, tags: ['deploy'] }
+  - { role: server-multitenant, tags: ['deploy'] }
+  - { role: qpp-netq, tags: ['deploy', 'netq'] }
+  - { role: server-keepalive, tags: ['keepalive', 'update'] }
 
 - hosts: server07,server08
   become: true 
   roles:
-  - setup-server
-  - server-evpn
-  - app-netq
+  - { role: setup-server, tags: ['deploy'] }
+  - { role: server-multitenant, tags: ['deploy'] }
+  - { role: qpp-netq, tags: ['deploy', 'netq'] }
 ...
