@@ -6,20 +6,24 @@
   - { role: app-grafana, tags: grafana }
   - app-netbox
   - app-ngrok
-  - { role: app-influxdb, tags: influxdb }
-  tags: [ 'oob-server' ] 
+  - role: app-influxdb 
+      tags: 
+        - deploy
+        - influxdb
 
 - hosts: netq-ts
   become: true
   roles:
   - setup-netq-ts
-  tags: [ 'netq' ] 
 
 - hosts: pod1spine 
   become: true
   roles:
   - setup-switch
-  - interfaces
+  - role: interfaces 
+      tags: 
+        - deploy
+        - update 
   - frr 
 
 - hosts: pod1leaf
