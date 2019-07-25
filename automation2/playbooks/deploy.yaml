@@ -60,7 +60,7 @@
   roles:
   - { role: setup-server, tags: ['deploy'] }
   - { role: server-multitenant, tags: ['deploy'] }
-  - { role: qpp-netq, tags: ['deploy', 'netq'] }
+  - { role: app-netq, tags: ['deploy', 'netq'] }
   - { role: server-keepalive, tags: ['keepalive', 'update'] }
 
 - hosts: server07,server08
@@ -68,5 +68,5 @@
   roles:
   - { role: setup-server, tags: ['deploy'] }
   - { role: server-multitenant, tags: ['deploy'] }
-  - { role: qpp-netq, tags: ['deploy', 'netq'] }
+  - { role: app-netq, tags: ['deploy', 'netq'] }
 ...
