@@ -2,7 +2,7 @@
 - hosts: oob-mgmt-server 
   become: true
   roles:
-  - { role: oob-mgmt-server, ['deploy'] }
+  - { role: oob-mgmt-server, tags: ['deploy'] }
   - { role: app-grafana, tags: ['deploy','grafana'] }
   - { role: app-netbox, tags: ['deploy','netbox'] }
   - { role: app-ngrok, tags: ['deploy','ngrok'] }
