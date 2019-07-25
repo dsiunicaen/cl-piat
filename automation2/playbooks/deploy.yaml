@@ -2,14 +2,11 @@
 - hosts: oob-mgmt-server 
   become: true
   roles:
-  - oob-mgmt-server
-  - { role: app-grafana, tags: grafana }
-  - app-netbox
-  - app-ngrok
-  - role: app-influxdb 
-      tags: 
-        - deploy
-        - influxdb
+  - { role: oob-mgmt-server, ['deploy'] }
+  - { role: app-grafana, tags: ['deploy','grafana'] }
+  - { role: app-netbox, tags: ['deploy','netbox'] }
+  - { role: app-ngrok, tags: ['deploy','ngrok'] }
+  - { role: app-influxdb, tags: ['deploy','influxdb'] }
 
 - hosts: netq-ts
   become: true
@@ -20,10 +17,7 @@
   become: true
   roles:
   - setup-switch
-  - role: interfaces 
-      tags: 
-        - deploy
-        - update 
+  - { role: interfaces, tags: ['deploy','update'] }
   - frr 
 
 - hosts: pod1leaf
