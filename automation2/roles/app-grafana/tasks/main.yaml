@@ -15,7 +15,7 @@
     env:
       GF_SERVER_ROOT_URL: 'http://grafana.server.name'
       GF_SECURITY_ADMIN_PASSWORD: 'CumulusLinux!' 
-      GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource,https://cumulusnetworks.box.com/shared/static/q6txsmlpdv657s7ho092ral51t2e4zky.zip;netq-plugin'
+      GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource,https://netq-grafana-dsrc.s3-us-west-2.amazonaws.com/dist.zip;netq-dashboard'
 
 - name: Pause to let container start 
   pause:
