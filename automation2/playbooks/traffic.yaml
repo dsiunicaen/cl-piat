@@ -1,4 +1,4 @@
-- hosts: servers-rack1,servers-rack3 
+- hosts: server01, server02, server05, server06, server09, server10 
   become: yes
   tasks:
     - name: kill iperf 
@@ -8,44 +8,44 @@
     - name: Start Iperf daemon
       command: ip vrf exec "{{ item.app }}" iperf3 -p "{{ item.port }}" -s -D
       loop:
-        - { app: 'app2', port: '40001'} 
+        - { app: 'app2', port: '60001'} 
         - { app: 'app2', port: '50001'} 
-        - { app: 'app2', port: '40002'} 
+        - { app: 'app2', port: '60002'} 
         - { app: 'app2', port: '50002'} 
-        - { app: 'app2', port: '40003'} 
+        - { app: 'app2', port: '60003'} 
         - { app: 'app2', port: '50003'} 
-        - { app: 'app2', port: '40004'} 
+        - { app: 'app2', port: '60004'} 
         - { app: 'app2', port: '50004'} 
-        - { app: 'app2', port: '40005'} 
+        - { app: 'app2', port: '60005'} 
         - { app: 'app2', port: '50005'} 
-        - { app: 'app2', port: '40006'} 
+        - { app: 'app2', port: '60006'} 
         - { app: 'app2', port: '50006'} 
-        - { app: 'app4', port: '40001'} 
+        - { app: 'app4', port: '60001'} 
         - { app: 'app4', port: '50001'} 
-        - { app: 'app4', port: '40002'} 
+        - { app: 'app4', port: '60002'} 
         - { app: 'app4', port: '50002'} 
-        - { app: 'app4', port: '40003'} 
+        - { app: 'app4', port: '60003'} 
         - { app: 'app4', port: '50003'} 
-        - { app: 'app4', port: '40004'} 
+        - { app: 'app4', port: '60004'} 
         - { app: 'app4', port: '50004'} 
-        - { app: 'app4', port: '40005'} 
+        - { app: 'app4', port: '60005'} 
         - { app: 'app4', port: '50005'} 
-        - { app: 'app4', port: '40006'} 
+        - { app: 'app4', port: '60006'} 
         - { app: 'app4', port: '50006'} 
-        - { app: 'app6', port: '40001'} 
+        - { app: 'app6', port: '60001'} 
         - { app: 'app6', port: '50001'} 
-        - { app: 'app6', port: '40002'} 
+        - { app: 'app6', port: '60002'} 
         - { app: 'app6', port: '50002'} 
-        - { app: 'app6', port: '40003'} 
+        - { app: 'app6', port: '60003'} 
         - { app: 'app6', port: '50003'} 
-        - { app: 'app6', port: '40004'} 
+        - { app: 'app6', port: '60004'} 
         - { app: 'app6', port: '50004'} 
-        - { app: 'app6', port: '40005'} 
+        - { app: 'app6', port: '60005'} 
         - { app: 'app6', port: '50005'} 
-        - { app: 'app6', port: '40006'} 
+        - { app: 'app6', port: '60006'} 
         - { app: 'app6', port: '50006'} 
 
-- hosts: servers-rack2 
+- hosts: server07, server08
   become: yes
   tasks:
     - name: kill iperf 
@@ -55,66 +55,66 @@
     - name: Start Iperf daemon
       command: ip netns exec "{{ item.app }}" iperf3 -p "{{ item.port }}" -s -D
       loop:
-        - { app: 'vm11', port: '40001'} 
+        - { app: 'vm11', port: '60001'} 
         - { app: 'vm11', port: '50001'} 
-        - { app: 'vm11', port: '40002'} 
+        - { app: 'vm11', port: '60002'} 
         - { app: 'vm11', port: '50002'} 
-        - { app: 'vm11', port: '40003'} 
+        - { app: 'vm11', port: '60003'} 
         - { app: 'vm11', port: '50003'} 
-        - { app: 'vm11', port: '40004'} 
+        - { app: 'vm11', port: '60004'} 
         - { app: 'vm11', port: '50004'} 
-        - { app: 'vm11', port: '40005'} 
+        - { app: 'vm11', port: '60005'} 
         - { app: 'vm11', port: '50005'} 
-        - { app: 'vm11', port: '40006'} 
+        - { app: 'vm11', port: '60006'} 
         - { app: 'vm11', port: '50006'} 
-        - { app: 'vm13', port: '40001'} 
+        - { app: 'vm13', port: '60001'} 
         - { app: 'vm13', port: '50001'} 
-        - { app: 'vm13', port: '40002'} 
+        - { app: 'vm13', port: '60002'} 
         - { app: 'vm13', port: '50002'} 
-        - { app: 'vm13', port: '40003'} 
+        - { app: 'vm13', port: '60003'} 
         - { app: 'vm13', port: '50003'} 
-        - { app: 'vm13', port: '40004'} 
+        - { app: 'vm13', port: '60004'} 
         - { app: 'vm13', port: '50004'} 
-        - { app: 'vm13', port: '40005'} 
+        - { app: 'vm13', port: '60005'} 
         - { app: 'vm13', port: '50005'} 
-        - { app: 'vm13', port: '40006'} 
+        - { app: 'vm13', port: '60006'} 
         - { app: 'vm13', port: '50006'} 
-        - { app: 'vm15', port: '40001'} 
+        - { app: 'vm15', port: '60001'} 
         - { app: 'vm15', port: '50001'} 
-        - { app: 'vm15', port: '40002'} 
+        - { app: 'vm15', port: '60002'} 
         - { app: 'vm15', port: '50002'} 
-        - { app: 'vm15', port: '40003'} 
+        - { app: 'vm15', port: '60003'} 
         - { app: 'vm15', port: '50003'} 
-        - { app: 'vm15', port: '40004'} 
+        - { app: 'vm15', port: '60004'} 
         - { app: 'vm15', port: '50004'} 
-        - { app: 'vm15', port: '40005'} 
+        - { app: 'vm15', port: '60005'} 
         - { app: 'vm15', port: '50005'} 
-        - { app: 'vm15', port: '40006'} 
+        - { app: 'vm15', port: '60006'} 
         - { app: 'vm15', port: '50006'} 
 
 
-- hosts: servers-rack1,servers-rack3 
+- hosts: server01, server02, server05, server06, server09, server10 
   become: yes
   tasks:
     - name: IPv4 Iperf traffic 
-      command: screen -dm ip vrf exec "{{ item.app }}" iperf3 -p 400{{ inventory_hostname[-2:] }} -c 192.168."{{ item.prefix }}"."{{ item.destination }}" -P 20 -t 3600 -b 20k -Z -M 1350 -w 8192
+      command: screen -dm ip vrf exec "{{ item.app }}" iperf3 -p 600{{ inventory_hostname[-2:] }} -c 192.168."{{ item.prefix }}"."{{ item.destination }}" -P 3 -t 3600 -b 20k -Z -M 1350 -w 8192
       loop:
         - { app: 'app1', prefix: '11', destination: '11'} 
         - { app: 'app1', prefix: '11', destination: '12'} 
-        - { app: 'app1', prefix: '11', destination: '30'} 
-        - { app: 'app1', prefix: '11', destination: '40'} 
+        - { app: 'app1', prefix: '11', destination: '50'} 
+        - { app: 'app1', prefix: '11', destination: '60'} 
         - { app: 'app1', prefix: '11', destination: '15'} 
         - { app: 'app1', prefix: '11', destination: '16'} 
         - { app: 'app3', prefix: '13', destination: '11'} 
         - { app: 'app3', prefix: '13', destination: '12'} 
-        - { app: 'app3', prefix: '13', destination: '30'} 
-        - { app: 'app3', prefix: '13', destination: '40'} 
+        - { app: 'app3', prefix: '13', destination: '50'} 
+        - { app: 'app3', prefix: '13', destination: '60'} 
         - { app: 'app3', prefix: '13', destination: '15'} 
         - { app: 'app3', prefix: '13', destination: '16'} 
         - { app: 'app5', prefix: '15', destination: '11'} 
         - { app: 'app5', prefix: '15', destination: '12'} 
-        - { app: 'app5', prefix: '15', destination: '30'} 
-        - { app: 'app5', prefix: '15', destination: '40'} 
+        - { app: 'app5', prefix: '15', destination: '50'} 
+        - { app: 'app5', prefix: '15', destination: '60'} 
         - { app: 'app5', prefix: '15', destination: '15'} 
         - { app: 'app5', prefix: '15', destination: '16'} 
 
@@ -123,39 +123,39 @@
       loop:
         - { app: 'app1', prefix: '11', destination: '11'} 
         - { app: 'app1', prefix: '11', destination: '12'} 
-        - { app: 'app1', prefix: '11', destination: '30'} 
-        - { app: 'app1', prefix: '11', destination: '40'} 
+        - { app: 'app1', prefix: '11', destination: '50'} 
+        - { app: 'app1', prefix: '11', destination: '60'} 
         - { app: 'app1', prefix: '11', destination: '15'} 
         - { app: 'app1', prefix: '11', destination: '16'} 
         - { app: 'app3', prefix: '13', destination: '11'} 
         - { app: 'app3', prefix: '13', destination: '12'} 
-        - { app: 'app3', prefix: '13', destination: '30'} 
-        - { app: 'app3', prefix: '13', destination: '40'} 
+        - { app: 'app3', prefix: '13', destination: '50'} 
+        - { app: 'app3', prefix: '13', destination: '60'} 
         - { app: 'app3', prefix: '13', destination: '15'} 
         - { app: 'app3', prefix: '13', destination: '16'} 
 
-- hosts: servers-rack2 
+- hosts: server07, server08 
   become: yes
   tasks:
     - name: IPv4 Iperf traffic 
-      command: screen -dm ip netns exec "{{ item.app }}" iperf3 -p 400{{ inventory_hostname[-2:] }} -c 192.168."{{ item.prefix }}"."{{ item.destination }}" -P 20 -t 3600 -b 20k -Z -M 1350 -w 8192
+      command: screen -dm ip netns exec "{{ item.app }}" iperf3 -p 600{{ inventory_hostname[-2:] }} -c 192.168."{{ item.prefix }}"."{{ item.destination }}" -P 3 -t 3600 -b 20k -Z -M 1350 -w 8192
       loop:
         - { app: 'vm10', prefix: '11', destination: '11'} 
         - { app: 'vm10', prefix: '11', destination: '12'} 
-        - { app: 'vm10', prefix: '11', destination: '30'} 
-        - { app: 'vm10', prefix: '11', destination: '40'} 
+        - { app: 'vm10', prefix: '11', destination: '50'} 
+        - { app: 'vm10', prefix: '11', destination: '60'} 
         - { app: 'vm10', prefix: '11', destination: '15'} 
         - { app: 'vm10', prefix: '11', destination: '16'} 
         - { app: 'vm12', prefix: '13', destination: '11'} 
         - { app: 'vm12', prefix: '13', destination: '12'} 
-        - { app: 'vm12', prefix: '13', destination: '30'} 
-        - { app: 'vm12', prefix: '13', destination: '40'} 
+        - { app: 'vm12', prefix: '13', destination: '50'} 
+        - { app: 'vm12', prefix: '13', destination: '60'} 
         - { app: 'vm12', prefix: '13', destination: '15'} 
         - { app: 'vm12', prefix: '13', destination: '16'} 
         - { app: 'vm14', prefix: '15', destination: '11'} 
         - { app: 'vm14', prefix: '15', destination: '12'} 
-        - { app: 'vm14', prefix: '15', destination: '30'} 
-        - { app: 'vm14', prefix: '15', destination: '40'} 
+        - { app: 'vm14', prefix: '15', destination: '50'} 
+        - { app: 'vm14', prefix: '15', destination: '60'} 
         - { app: 'vm14', prefix: '15', destination: '15'} 
         - { app: 'vm14', prefix: '15', destination: '16'} 
 
@@ -164,13 +164,13 @@
       loop:
         - { app: 'vm10', prefix: '11', destination: '11'} 
         - { app: 'vm10', prefix: '11', destination: '12'} 
-        - { app: 'vm10', prefix: '11', destination: '30'} 
-        - { app: 'vm10', prefix: '11', destination: '40'} 
+        - { app: 'vm10', prefix: '11', destination: '50'} 
+        - { app: 'vm10', prefix: '11', destination: '60'} 
         - { app: 'vm10', prefix: '11', destination: '15'} 
         - { app: 'vm10', prefix: '11', destination: '16'} 
         - { app: 'vm12', prefix: '13', destination: '11'} 
         - { app: 'vm12', prefix: '13', destination: '12'} 
-        - { app: 'vm12', prefix: '13', destination: '30'} 
-        - { app: 'vm12', prefix: '13', destination: '40'} 
+        - { app: 'vm12', prefix: '13', destination: '50'} 
+        - { app: 'vm12', prefix: '13', destination: '60'} 
         - { app: 'vm12', prefix: '13', destination: '15'} 
         - { app: 'vm12', prefix: '13', destination: '16'} 

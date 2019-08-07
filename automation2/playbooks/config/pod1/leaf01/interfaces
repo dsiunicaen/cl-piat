@@ -1,0 +1,304 @@
+###############
+# Ansible generated config, will be overwritten!
+###############
+
+###############
+# General
+###############
+
+auto lo
+iface lo inet loopback
+    address 10.10.10.1/32
+    clagd-vxlan-anycast-ip 10.100.100.1
+
+auto mgmt
+iface mgmt
+    vrf-table auto
+    address 127.0.0.1/8
+
+auto eth0
+iface eth0 inet dhcp
+    vrf mgmt
+
+
+###############
+# VRFs 
+###############
+
+auto tenant1
+iface tenant1
+    vrf-table auto
+auto tenant2
+iface tenant2
+    vrf-table auto
+auto tenant3
+iface tenant3
+    vrf-table auto
+
+###############
+# L3 VNIs
+###############
+
+
+auto vni401001
+iface vni401001
+    bridge-access 4001
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 401001
+    vxlan-local-tunnelip 10.10.10.1
+
+auto dummysvi401001
+iface dummysvi401001
+    hwaddress 44:38:39:00:01:02 
+    vlan-id 4001
+    vlan-raw-device bridge
+    vrf tenant1
+    mtu 9000
+
+
+
+auto vni401002
+iface vni401002
+    bridge-access 4002
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 401002
+    vxlan-local-tunnelip 10.10.10.1
+
+auto dummysvi401002
+iface dummysvi401002
+    hwaddress 44:38:39:00:01:02 
+    vlan-id 4002
+    vlan-raw-device bridge
+    vrf tenant2
+    mtu 9000
+
+
+
+auto vni401003
+iface vni401003
+    bridge-access 4003
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 401003
+    vxlan-local-tunnelip 10.10.10.1
+
+auto dummysvi401003
+iface dummysvi401003
+    hwaddress 44:38:39:00:01:02 
+    vlan-id 4003
+    vlan-raw-device bridge
+    vrf tenant3
+    mtu 9000
+
+
+###############
+# Uplinks
+###############
+
+auto swp51
+iface swp51
+auto swp52
+iface swp52
+auto swp53
+iface swp53
+auto swp54
+iface swp54
+
+###############
+# MLAG
+###############
+
+auto swp49
+iface swp49
+auto swp50
+iface swp50
+
+auto peerlink
+iface peerlink
+    bond-slaves swp49 swp50 
+auto peerlink.4094
+iface peerlink.4094
+    clagd-backup-ip 192.168.200.24 vrf mgmt
+    clagd-peer-ip linklocal
+    clagd-priority 1000
+    clagd-sys-mac 44:38:39:00:01:02
+###############
+# Bridge / Vlans
+###############
+
+auto bridge
+iface bridge
+    bridge-ports peerlink dummy \
+                 bond1 bond2 bond3 bond4  \
+                 vni101000 vni101001 vni101002 vni101003 vni101004 vni101005  \
+                 vni401001 vni401002 vni401003 
+    bridge-vids 1000 1001 1002 1003 1004 1005 
+    bridge-vlan-aware yes
+###############
+# L2 VNIs
+###############
+
+auto vni101000
+iface vni101000
+    bridge-access 1000
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 101000
+    vxlan-local-tunnelip 10.10.10.1
+
+auto vni101001
+iface vni101001
+    bridge-access 1001
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 101001
+    vxlan-local-tunnelip 10.10.10.1
+
+auto vni101002
+iface vni101002
+    bridge-access 1002
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 101002
+    vxlan-local-tunnelip 10.10.10.1
+
+auto vni101003
+iface vni101003
+    bridge-access 1003
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 101003
+    vxlan-local-tunnelip 10.10.10.1
+
+auto vni101004
+iface vni101004
+    bridge-access 1004
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 101004
+    vxlan-local-tunnelip 10.10.10.1
+
+auto vni101005
+iface vni101005
+    bridge-access 1005
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 101005
+    vxlan-local-tunnelip 10.10.10.1
+
+
+###############
+# SVIs 
+###############
+
+auto vlan1000
+iface vlan1000
+    vrf tenant1
+    vlan-id 1000
+    vlan-raw-device bridge
+    address 192.168.10.2/24
+    address fc00:10::2/64
+    address-virtual 00:00:5e:00:01:01 192.168.10.1/24 fc00:10::1/64 fe80::1/64
+
+auto vlan1001
+iface vlan1001
+    vrf tenant1
+    vlan-id 1001
+    vlan-raw-device bridge
+    address 192.168.11.2/24
+    address fc00:11::2/64
+    address-virtual 00:00:5e:00:01:01 192.168.11.1/24 fc00:11::1/64 fe80::1/64
+
+auto vlan1002
+iface vlan1002
+    vrf tenant2
+    vlan-id 1002
+    vlan-raw-device bridge
+    address 192.168.12.2/24
+    address fc00:12::2/64
+    address-virtual 00:00:5e:00:01:01 192.168.12.1/24 fc00:12::1/64 fe80::1/64
+
+auto vlan1003
+iface vlan1003
+    vrf tenant2
+    vlan-id 1003
+    vlan-raw-device bridge
+    address 192.168.13.2/24
+    address fc00:13::2/64
+    address-virtual 00:00:5e:00:01:01 192.168.13.1/24 fc00:13::1/64 fe80::1/64
+
+auto vlan1004
+iface vlan1004
+    vrf tenant3
+    vlan-id 1004
+    vlan-raw-device bridge
+    address 192.168.14.2/24
+    address fc00:14::2/64
+    address-virtual 00:00:5e:00:01:01 192.168.14.1/24 fc00:14::1/64 fe80::1/64
+
+auto vlan1005
+iface vlan1005
+    vrf tenant3
+    vlan-id 1005
+    vlan-raw-device bridge
+    address 192.168.15.2/24
+    address fc00:15::2/64
+    address-virtual 00:00:5e:00:01:01 192.168.15.1/24 fc00:15::1/64 fe80::1/64
+
+
+###############
+# Downlink Bonds 
+###############
+
+auto bond1
+iface bond1
+    bond-slaves swp1
+    clag-id 1
+    bond-lacp-bypass-allow yes
+auto swp1
+iface swp1
+
+auto bond2
+iface bond2
+    bond-slaves swp2
+    clag-id 2
+    bond-lacp-bypass-allow yes
+auto swp2
+iface swp2
+
+auto bond3
+iface bond3
+    bond-slaves swp3
+    clag-id 3
+    bond-lacp-bypass-allow yes
+auto swp3
+iface swp3
+
+auto bond4
+iface bond4
+    bond-slaves swp4
+    clag-id 4
+    bond-lacp-bypass-allow yes
+auto swp4
+iface swp4
+

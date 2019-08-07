@@ -1,0 +1,148 @@
+###############
+# Ansible generated config, will be overwritten!
+###############
+
+###############
+# General
+###############
+
+auto lo
+iface lo inet loopback
+    address 10.10.40.1/32
+
+auto mgmt
+iface mgmt
+    vrf-table auto
+    address 127.0.0.1/8
+
+auto eth0
+iface eth0 inet dhcp
+    vrf mgmt
+
+
+###############
+# VRFs 
+###############
+
+auto common
+iface common
+    vrf-table auto
+    address 192.168.0.1/32 
+    address fc00:AA::100:1/128 
+auto tenant1
+iface tenant1
+    vrf-table auto
+    address 192.168.1.1/32 
+    address fc00:AA::101:1/128 
+auto tenant2
+iface tenant2
+    vrf-table auto
+    address 192.168.2.1/32 
+    address fc00:AA::102:1/128 
+auto tenant3
+iface tenant3
+    vrf-table auto
+    address 192.168.3.1/32 
+    address fc00:AA::103:1/128 
+
+###############
+# L3 VNIs
+###############
+
+
+auto vni401001
+iface vni401001
+    bridge-access 4001
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 401001
+    vxlan-local-tunnelip 10.10.40.1
+
+auto dummysvi401001
+iface dummysvi401001
+    hwaddress 44:38:39:FF:FF:01 
+    vlan-id 4001
+    vlan-raw-device bridge
+    vrf tenant1
+    mtu 9000
+
+
+
+auto vni401002
+iface vni401002
+    bridge-access 4002
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 401002
+    vxlan-local-tunnelip 10.10.40.1
+
+auto dummysvi401002
+iface dummysvi401002
+    hwaddress 44:38:39:FF:FF:01 
+    vlan-id 4002
+    vlan-raw-device bridge
+    vrf tenant2
+    mtu 9000
+
+
+
+auto vni401003
+iface vni401003
+    bridge-access 4003
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id 401003
+    vxlan-local-tunnelip 10.10.40.1
+
+auto dummysvi401003
+iface dummysvi401003
+    hwaddress 44:38:39:FF:FF:01 
+    vlan-id 4003
+    vlan-raw-device bridge
+    vrf tenant3
+    mtu 9000
+
+
+
+###############
+# Bridge / Vlans
+###############
+
+auto bridge
+iface bridge
+    bridge-ports vni401001 vni401002 vni401003 
+    bridge-vlan-aware yes
+
+
+###############
+# Uplinks
+###############
+
+auto swp1
+iface swp1
+auto swp2
+iface swp2
+auto swp3
+iface swp3
+auto swp4
+iface swp4
+###############
+# Routed links 
+###############
+
+auto swp6
+iface swp6
+    address 172.30.100.1/31
+    address fc00:FF::100:2/112
+    vrf common
+auto swp7
+iface swp7
+    address 172.30.101.1/31
+    address fc00:FF::101:2/112
+    vrf common
