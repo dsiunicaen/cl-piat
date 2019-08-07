@@ -13,7 +13,30 @@
     volumes:
     - influxdb-storage:/var/lib/influxdb
 
-- name: Pause to let container start 
-  pause:
-    seconds: 10 
+- name: Install python Influxdb
+  command: pip install influxdb
+
+- name: Install python Cassandra-driver
+  command: pip install Cassandra-driver
+
+- name: Install python datetime
+  command: pip install datetime
+
+- name: Install python rfc3339
+  command: pip install rfc3339
+
+- name: Install python pprint
+  command: pip install pprint
+
+- name: copy influx-import script
+  copy:
+    src: influx-import.py
+    dest: /home/cumulus/netq-import.py/
+    owner: cumulus
+    group: cumulus
+
+- name: Create NetQ influx DB
+  influxdb_database:
+    hostname: "localhost"
+    database_name: "netq"
 ...
