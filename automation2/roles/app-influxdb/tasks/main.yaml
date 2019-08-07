@@ -16,9 +16,6 @@
 - name: Install python Influxdb
   command: pip install influxdb
 
-- name: Install python Cassandra-driver
-  command: pip install Cassandra-driver
-
 - name: Install python datetime
   command: pip install datetime
 
@@ -30,8 +27,8 @@
 
 - name: copy influx-import script
   copy:
-    src: influx-import.py
-    dest: /home/cumulus/netq-import.py/
+    src: netq-import.py
+    dest: /home/cumulus/netq-import.py
     owner: cumulus
     group: cumulus
 
