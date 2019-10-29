@@ -1,10 +1,13 @@
 ---
+- name: Apt clean
+  shell: apt-get -y clean && sudo apt-get -y autoclean
+
 - apt_repository:
     repo: ppa:ansible/ansible 
 
 - name: Install additional host packages
   apt:
-    name: ['ansible','iperf3','libnl-route-3-200','libnl-route-3-dev','lldpd','libjson-c3','traceroute'] 
+    name: ['ansible','iperf','iperf3','libnl-route-3-200','libnl-route-3-dev','lldpd','libjson-c3','traceroute'] 
     update_cache: yes
     state: present
 
@@ -31,10 +34,11 @@
 - name: Remove netplan files
   shell: rm -vfr /usr/share/netplan /etc/netplan
 
-- name: Copy deb packages
+- name: Copy files
   copy: src={{ item }} dest=/home/cumulus/ owner=cumulus
   with_fileglob:
     - files/*.deb
+    - files/mcast-rx.py
 
 - name: Download 4.19 kernel headers
   get_url:

@@ -6,6 +6,17 @@
     state: present
     reload: yes
 
+- name: PTM topology file 
+  copy:
+    src: qhpoc-vx.dot
+    dest: /etc/ptm.d/topology.dot
+
+- name: Enable PTM 
+  systemd:
+    name: ptmd.service
+    enabled: yes
+    state: restarted
+
 - name: Configured NTP in management VRF
   command: "{{item}}"
   with_items:
@@ -14,11 +25,6 @@
     - systemctl enable ntp@mgmt
     - systemctl start ntp@mgmt
 
-- name: Remove NetQ1.4 
-  apt:
-    name: ['cumulus-netq','netq-agent','netq-apps']
-    state: absent
-
 - name: Add Cumulus Apt Key
   apt_key:
     url: "https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey"
@@ -26,33 +32,34 @@
 
 - name: Add Cumulus Repo
   apt_repository:
-    repo: deb https://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-2.2
+    repo: deb https://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-2.3
     state: present
-    update_cache: no
+    update_cache: yes 
 
-- name: Install NetQ2.1
+- name: Uninstall existing netq 
+  apt:
+    name: cumulus-netq
+    state: absent 
+
+- name: Install NetQ2.3
   apt:
     name: cumulus-netq
     update_cache: yes
 
-- name: copy netq config file
-  copy:
-    src: netq.yml
-    dest: /etc/netq/netq.yml 
+- name: NetQ credentials file
+  template:
+    src: netq_credentials.j2
+    dest: /home/cumulus/credentials.yml
 
-- name: Configure NetQ in management VRF
-  command: "{{item}}"
-  with_items:
-    - systemctl stop netqd.service
-    - systemctl disable netqd.service
-    - systemctl stop netq-agent.service
-    - systemctl disable netq-agent.service
-    - systemctl enable netqd@mgmt
-    - systemctl start netqd@mgmt
-    - systemctl enable netq-agent@mgmt
-    - systemctl start netq-agent@mgmt
+- name: Add NetQ server
+  command: netq config add agent server {{ netq.server }} port 31980 vrf mgmt
 
-- name: Restart Rsyslog
-  service:
-    name: rsyslog
-    state: restarted
+- name: Configure NetQ CLI
+  command: netq config add cli server {{ netq.server }} cli-keys-file /home/cumulus/credentials.yml premises "{{ netq_premise }}" vrf mgmt port 32708
+
+- name: Restart agent
+  command: netq config restart agent
+
+- name: Restart cli
+  command: netq config restart cli
+...

@@ -1,4 +1,9 @@
 ---
+- name: Set cumulus password
+  user:
+      name: cumulus
+      password: "{{ oob_mgmt_passwd | password_hash('sha512') }}"
+
 - name: Sysctl ipv4 forward
   sysctl:
     name: net.ipv4.conf.default.forwarding

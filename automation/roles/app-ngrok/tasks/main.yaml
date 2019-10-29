@@ -21,9 +21,9 @@
     path: /opt/ngrok/ngrok-stable-linux-amd64.zip
     state: absent
 
-- name: Copy ngrok config file 
-  copy:
-    src: ngrok.yml
+- name: Ngrok configuration file 
+  template:
+    src: ngrok.j2
     dest: /opt/ngrok/ngrok.yml
 
 - name: Copy Ngrok service
@@ -38,4 +38,5 @@
   systemd:
     name: ngrok
     enabled: yes
+    state: restarted
 ...

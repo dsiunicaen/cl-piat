@@ -1,0 +1,37 @@
+frr defaults datacenter
+hostname {{ inventory_hostname }}
+username cumulus nopassword
+!
+service integrated-vtysh-config
+!
+log syslog informational
+!
+router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
+ bgp router-id {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address') }}
+ bgp bestpath as-path multipath-relax
+ neighbor external peer-group
+{% if devices[inventory_hostname].routing.bgp.vrf.default is defined %}
+{% if devices[inventory_hostname].routing.bgp.vrf.default.neighbor is defined %}
+{% for peer in devices[inventory_hostname].routing.bgp.vrf.default.neighbor %}
+ {% set neighbor = devices[inventory_hostname].routing.bgp.vrf.default.neighbor[peer] %}
+ neighbor {{ peer }} remote-as {{ neighbor.asn }}
+ neighbor {{ peer }} peer-group external
+{% endfor %}
+{% endif %}
+{% endif %}
+ !
+ address-family ipv4 unicast
+  neighbor external default-originate
+  redistribute connected route-map loopbacks
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  neighbor external activate
+  redistribute connected route-map loopbacks
+ exit-address-family
+!
+route-map loopbacks permit 10
+ match interface lo
+!
+line vty
+!

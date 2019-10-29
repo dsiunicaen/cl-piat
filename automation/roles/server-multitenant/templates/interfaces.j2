@@ -16,11 +16,9 @@ iface eth0 inet dhcp
 
 auto eth1
 iface eth1 
-    link-autoneg off
 
 auto eth2
 iface eth2 
-    link-autoneg off
 
 auto uplink
 iface uplink 
@@ -40,20 +38,20 @@ auto bridge
 iface bridge
     bridge-ports uplink
     bridge-vlan-aware yes
-    bridge-vids {{ node[inventory_hostname]["apps"] | join(" ") }}
+    bridge-vids {{ devices[inventory_hostname]["apps"] | join(" ") }}
 
-{%- for app in node[inventory_hostname]["apps"] %} 
-auto {{node[inventory_hostname]["apps"][app]["vrf"]}}
-iface {{node[inventory_hostname]["apps"][app]["vrf"]}}
+{%- for app in devices[inventory_hostname]["apps"] %} 
+auto {{devices[inventory_hostname]["apps"][app]["vrf"]}}
+iface {{devices[inventory_hostname]["apps"][app]["vrf"]}}
     vrf-table auto
 
 auto vlan{{app}}
 iface vlan{{app}}
-    address 192.168.{{node[inventory_hostname]["apps"][app]["prefix-id"]}}.{{node[inventory_hostname]["id"]}}/24
-    gateway 192.168.{{node[inventory_hostname]["apps"][app]["prefix-id"]}}.1
-    address fc00:{{node[inventory_hostname]["apps"][app]["prefix-id"]}}::{{node[inventory_hostname]["id"]}}/64
+    address 192.168.{{devices[inventory_hostname]["apps"][app]["prefix-id"]}}.{{devices[inventory_hostname]["id"]}}/24
+    gateway 192.168.{{devices[inventory_hostname]["apps"][app]["prefix-id"]}}.1
+    address fc00:{{devices[inventory_hostname]["apps"][app]["prefix-id"]}}::{{devices[inventory_hostname]["id"]}}/64
     vlan-id {{app}}
     vlan-raw-device bridge
-    vrf {{node[inventory_hostname]["apps"][app]["vrf"]}}
+    vrf {{devices[inventory_hostname]["apps"][app]["vrf"]}}
     pre-up echo 1 > /proc/sys/net/ipv6/conf/$IFACE/accept_ra
 {% endfor %}

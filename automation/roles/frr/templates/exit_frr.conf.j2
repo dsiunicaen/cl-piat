@@ -1,0 +1,84 @@
+frr defaults datacenter
+hostname {{ inventory_hostname }}
+username cumulus nopassword
+!
+service integrated-vtysh-config
+!
+log syslog informational
+!
+{% for vni in l3vnis %}
+vrf {{ vni.vrf }}
+ vni {{ vni.id }}
+{% endfor %}
+!
+router bgp {{ devices[inventory_hostname].routing.bgp.asn }}
+ bgp router-id {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address') }}
+ bgp bestpath as-path multipath-relax
+ neighbor underlay peer-group
+ neighbor underlay remote-as external
+{% for interface in fabric_links %}
+ neighbor {{ interface }} interface peer-group underlay
+{% endfor %}
+{% if devices[inventory_hostname].routing.bgp.roh is defined %}
+{% for interface in devices[inventory_hostname].routing.bgp.roh %}
+ neighbor {{ interface }} interface peer-group underlay
+{% endfor %}
+{% endif %}
+ !
+ address-family ipv4 unicast
+  redistribute connected route-map loopbacks
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  neighbor underlay activate
+  advertise-all-vni
+ exit-address-family
+!
+{% for vrf in vrfs %}
+{% if devices[inventory_hostname].routing.bgp.vrf[vrf] is defined %}
+router bgp {{ devices[inventory_hostname].routing.bgp.asn }} vrf {{ vrf }}
+ bgp router-id {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address') }}
+ neighbor external peer-group
+{% if devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor is defined %}
+{% for peer in devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor %}
+ {% set neighbor = devices[inventory_hostname].routing.bgp.vrf[vrf].neighbor[peer] %}
+ neighbor {{ peer }} remote-as {{ neighbor.asn }}
+ neighbor {{ peer }} peer-group external
+{% endfor %}
+{% endif %}
+ !
+ address-family ipv4 unicast
+  redistribute connected route-map loopbacks
+  {% if devices[inventory_hostname].routing.bgp.vrf[vrf].leak is defined %}
+  {% for leak in devices[inventory_hostname].routing.bgp.vrf[vrf].leak %}
+  import vrf {{ leak }} 
+  {% endfor %}
+  {% endif %}
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  neighbor external activate
+  redistribute connected route-map loopbacks
+  {% if devices[inventory_hostname].routing.bgp.vrf[vrf].leak is defined %}
+  {% for leak in devices[inventory_hostname].routing.bgp.vrf[vrf].leak %}
+  import vrf {{ leak }} 
+  {% endfor %}
+  {% endif %}
+ exit-address-family
+ !
+ address-family l2vpn evpn
+  advertise ipv4 unicast
+  advertise ipv6 unicast
+ exit-address-family
+{% endif %}
+{% endfor %}
+!
+route-map loopbacks permit 10
+ match interface lo
+{% for vrf in vrfs %}
+route-map loopbacks permit 10{{ loop.index }}
+ match interface {{ vrf }}
+{% endfor %}
+!
+line vty
+!

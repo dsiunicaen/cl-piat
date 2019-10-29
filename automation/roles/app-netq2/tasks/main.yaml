@@ -1,0 +1,34 @@
+---
+- name: Add Cumulus Apt Key
+  apt_key:
+    url: "https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey"
+    state: present
+
+- name: Add Cumulus Repo
+  apt_repository:
+    repo: deb https://apps3.cumulusnetworks.com/repos/deb bionic netq-2.3
+    state: present
+    update_cache: yes 
+
+- name: Install NetQ
+  apt:
+    name: cumulus-netq
+    update_cache: yes
+
+- name: NetQ credentials file
+  template:
+    src: netq_credentials.j2
+    dest: /home/cumulus/credentials.yml
+
+- name: Add NetQ server
+  command: netq config add agent server 192.168.200.250 port 31980 
+
+- name: Configure NetQ CLI
+  command: netq config add cli server api.netq.cumulusnetworks.com cli-keys-file /home/cumulus/credentials.yml premises "{{ netq_premise }}" port 443
+
+- name: Restart agent
+  command: netq config restart agent
+
+- name: Restart cli
+  command: netq config restart cli
+...

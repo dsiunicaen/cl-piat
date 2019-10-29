@@ -1,0 +1,113 @@
+[all:vars]
+ansible_user=cumulus
+ansible_ssh_pass=CumulusLinux!
+
+[edgeexit]
+exit01 ansible_host=192.168.200.32
+exit02 ansible_host=192.168.200.15
+
+[edgerouter]
+rtr01 ansible_host=192.168.200.27
+rtr02 ansible_host=192.168.200.28
+
+[3tierspine]
+super01 ansible_host=192.168.200.22
+super02 ansible_host=192.168.200.9
+super03 ansible_host=192.168.200.42
+super04 ansible_host=192.168.200.19
+
+[pod1service]
+service01 ansible_host=192.168.200.25
+service02 ansible_host=192.168.200.16
+
+[pod1fw]
+fw1 ansible_host=192.168.200.54
+fw2 ansible_host=192.168.200.24
+
+[pod1leaf]
+leaf01 ansible_host=192.168.200.30
+leaf02 ansible_host=192.168.200.3
+leaf03 ansible_host=192.168.200.50
+leaf04 ansible_host=192.168.200.7
+
+[pod1spine]
+spine01 ansible_host=192.168.200.52
+spine02 ansible_host=192.168.200.46
+spine03 ansible_host=192.168.200.6
+spine04 ansible_host=192.168.200.14
+
+[pod2service]
+service03 ansible_host=192.168.200.4
+service04 ansible_host=192.168.200.31
+
+[pod2fw]
+fw3 ansible_host=192.168.200.34
+fw4 ansible_host=192.168.200.40
+
+[pod2leaf]
+leaf05 ansible_host=192.168.200.41
+leaf06 ansible_host=192.168.200.13
+leaf07 ansible_host=192.168.200.39
+leaf08 ansible_host=192.168.200.37
+
+[pod2spine]
+spine05 ansible_host=192.168.200.49
+spine06 ansible_host=192.168.200.36
+spine07 ansible_host=192.168.200.47
+spine08 ansible_host=192.168.200.48
+
+[pod1host]
+server01 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.35
+server02 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.44
+server03 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.5
+server04 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.17
+server05 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.38
+server06 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.45
+server07 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.10
+server08 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.23
+server09 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.33
+server10 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.12
+
+[pod2host]
+server11 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.43
+server12 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.29
+server13 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.11
+server14 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.51
+server15 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.18
+server16 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.20
+server17 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.21
+server18 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.8
+server19 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.53
+server20 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.26
+
+[pod1:children]
+pod1fw
+pod1leaf
+pod1spine
+pod1service
+
+[pod2:children]
+pod2fw
+pod2leaf
+pod2spine
+pod2service
+
+[network:children]
+pod1
+pod2
+edgeexit
+edgerouter
+3tierspine
+
+[host:children]
+pod1host
+pod2host
+
+[netq]
+netq-ts ansible_host=192.168.200.250
+
+[oob-switch]
+oob-mgmt-switch ansible_host=192.168.200.2
+
+[oob-server]
+oob-mgmt-server ansible_host=192.168.200.1

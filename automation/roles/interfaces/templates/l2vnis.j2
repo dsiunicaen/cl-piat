@@ -1,0 +1,18 @@
+
+###############
+# L2 VNIs
+###############
+
+{% for vni in l2vnis %}
+auto vni{{ vni.id }}
+iface vni{{ vni.id }}
+    bridge-access {{ vni.vlan }}
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    vxlan-id {{ vni.id }}
+    vxlan-local-tunnelip {{ devices[inventory_hostname].interfaces.loopback.ipv4|ipaddr('address')}}
+    mtu 9000
+
+{% endfor %}
