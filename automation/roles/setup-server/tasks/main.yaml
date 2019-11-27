@@ -7,9 +7,10 @@
 
 - name: Install additional host packages
   apt:
-    name: ['ansible','iperf','iperf3','libnl-route-3-200','libnl-route-3-dev','lldpd','libjson-c3','traceroute'] 
+    name: ['ansible','iperf','iperf3','libnl-route-3-200','libnl-route-3-dev','lldpd','libjson-c3','traceroute','chrony'] 
     update_cache: yes
     state: present
+
 
 - name: Correct LLDP Settings
   lineinfile:
@@ -73,6 +74,13 @@
     - /home/cumulus/linux-headers-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb
     - /home/cumulus/linux-modules-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb
     - /home/cumulus/linux-image-unsigned-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb
+
+- name: Add services to mgmt vrf
+  lineinfile:
+    dest: /etc/vrf/systemd.conf
+    line: "{{ item }}"
+  with_items:
+    - 'chrony'
 
 - name: Add apt FRR apt key 
   apt_key:
@@ -145,6 +153,7 @@
   lineinfile:
     path: /etc/resolv.conf 
     line: 'nameserver 192.168.200.1 # vrf mgmt'
+
 
 - name: Reboot system
   reboot:

@@ -10,4 +10,16 @@
   reboot:
     reboot_timeout: 1200
     test_command: mount      
+
+- name: Disable chrony in default vrf 
+  systemd:
+    name: chrony
+    state: stopped
+    enabled: no
+
+- name: Enable chrony in management vrf 
+  systemd:
+    name: chrony@mgmt
+    state: started
+    enabled: yes
 ...
