@@ -25,6 +25,7 @@ install_ansible(){
     apt-get install -qy sshpass libssh-dev python3-dev libssl-dev libffi-dev python3-pip
     /usr/bin/pip3 install setuptools --upgrade
     /usr/bin/pip3 install ansible==$ansible_version --upgrade
+    /usr/bin/pip3 install paramiko --upgrade
 }
 
 ## MOTD
