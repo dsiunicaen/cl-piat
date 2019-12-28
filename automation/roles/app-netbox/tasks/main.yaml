@@ -1,17 +1,6 @@
 ---
-- name: Netbox state 
-  shell: docker ps
-  register: netbox_state 
-
 - name: Netbox docker clone
-  command: 'git clone -b master https://github.com/ninech/netbox-docker.git /home/cumulus/netbox-docker'
-  when:
-    - netbox_state.stdout.find('netbox') == -1
-
-- name: Netbox ninech old version
-  shell: 'cd /home/cumulus/netbox-docker;git reset --hard 6b5a4cf1dbdabdcc840aa0b9ffb0dbe0e42b1361'
-  when:
-    - netbox_state.stdout.find('netbox') == -1
+  command: 'git clone -b release https://github.com/netbox-community/netbox-docker.git /home/cumulus/netbox-docker'
 
 - name: Netbox initial config
   copy:
