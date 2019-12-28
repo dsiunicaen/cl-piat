@@ -11,7 +11,7 @@
     dest: /home/cumulus/credentials.yml
 
 - name: Configure NetQ CLI
-  command: netq config add cli server api.netq.cumulusnetworks.com cli-keys-file /home/cumulus/credentials.yml port 443 premises demo-piat-live
+  command: netq config add cli server api.netq.cumulusnetworks.com cli-keys-file /home/cumulus/credentials.yml premises "{{ netq_premise }}" port 443
 
 - name: Restart NetQ CLI
   command: netq config restart cli
