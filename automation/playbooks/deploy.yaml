@@ -3,9 +3,9 @@
   become: true
   roles:
   - { role: oob-mgmt-server, tags: ['deploy'] }
+  - { role: app-ngrok, tags: ['deploy','ngrok'] }
   - { role: app-grafana, tags: ['deploy','grafana'] }
   - { role: app-netbox, tags: ['deploy','netbox'] }
-  - { role: app-ngrok, tags: ['deploy','ngrok'] }
   - { role: app-influxdb, tags: ['deploy','influxdb'] }
   - { role: app-netq2, tags: ['deploy', 'netq'] }
 
@@ -56,14 +56,14 @@
   - { role: interfaces, tags: ['deploy','update'] }
   - { role: frr, tags: ['deploy','update'] }
 
-- hosts: server01,server02,server05,server06,server09,server10
+- hosts: server01,server02,server03,server05,server06,server07,server09,server10
   become: true 
   roles:
   - { role: setup-server, tags: ['deploy'] }
   - { role: server-multitenant, tags: ['deploy'] }
   - { role: app-netq, tags: ['deploy', 'netq'] }
 
-- hosts: server07,server08
+- hosts: server04,server08
   become: true 
   roles:
   - { role: setup-server, tags: ['deploy'] }
