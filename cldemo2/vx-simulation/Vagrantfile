@@ -107,7 +107,7 @@ SCRIPT
 
 Vagrant.configure("2") do |config|
 
-  wbid = 1
+  wbid = 23 
   offset = wbid * 100
 
 
@@ -1033,7 +1033,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -1131,7 +1131,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -1229,7 +1229,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -1383,7 +1383,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -1537,7 +1537,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -1803,7 +1803,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -2069,7 +2069,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -2335,7 +2335,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -2601,7 +2601,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -2867,7 +2867,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -3133,7 +3133,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -3399,7 +3399,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -3665,7 +3665,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -3875,7 +3875,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -4085,7 +4085,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -4295,7 +4295,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -4505,7 +4505,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -4715,7 +4715,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -4925,7 +4925,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -5135,7 +5135,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -5345,7 +5345,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -5443,7 +5443,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -5541,7 +5541,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -5639,7 +5639,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -5737,7 +5737,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -5947,7 +5947,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -6157,7 +6157,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -6367,7 +6367,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -6577,7 +6577,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -6787,7 +6787,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -6997,7 +6997,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -7207,7 +7207,7 @@ end
     device.vm.box = "CumulusCommunity/cumulus-vx"
 
     device.vm.provider :libvirt do |v|
-      v.memory = 768
+      v.memory = 1024
     end
     #   see note here: https://github.com/pradels/vagrant-libvirt#synced-folders
     device.vm.synced_folder ".", "/vagrant", disabled: true
@@ -7414,7 +7414,7 @@ end
     
     device.vm.hostname = "netq-ts" 
     
-    device.vm.box = "cumulus/ts"
+    device.vm.box = "cumulus/tscloud"
 
     device.vm.provider :libvirt do |v|
       v.nic_model_type = 'e1000' 
