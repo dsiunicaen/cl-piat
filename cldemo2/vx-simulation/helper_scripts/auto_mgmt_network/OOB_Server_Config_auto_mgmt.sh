@@ -1,9 +1,3 @@
-#!/bin/bash
-# Created by Topology-Converter v4.7.0
-#    Template Revision: v4.7.0
-#    https://github.com/cumulusnetworks/topology_converter
-#    using topology data from: cl-piat.dot
-
 echo "################################################"
 echo "  Running Automatic Management Server Setup..."
 echo "################################################"
@@ -15,33 +9,15 @@ echo " Detected vagrant user is: $username"
 #       KNOBS
 #######################
 
-REPOSITORY="https://github.com/CumulusNetworks/dev"
-REPONAME="dev"
+REPOSITORY="https://github.com/CumulusNetworks/cl-piat.git"
 
 #Install Automation Tools
-puppet=0
 ansible=1
-ansible_version=2.7.8
+ansible_version=2.9.2
 
 #######################
 
 username=$(cat /tmp/normal_user)
-
-install_puppet(){
-    echo " ### Adding Puppet Repositories... ###"
-    wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb
-    dpkg -i puppetlabs-release-pc1-xenial.deb
-    echo " ### Updating APT Repository... ###"
-    apt-get update -y
-    echo " ### Installing Puppet ###"
-    apt-get install puppetserver -qy
-    echo " ### Setting up Puppet ###"
-    rm -rf /etc/puppetlabs/code/environments/production
-    sed -i 's/-Xms2g/-Xms512m/g' /etc/default/puppetserver
-    sed -i 's/-Xmx2g/-Xmx512m/g' /etc/default/puppetserver
-    echo "*" > /etc/puppetlabs/puppet/autosign.conf
-    sed -i 's/192.168.200.1/192.168.200.1 puppet /g'>> /etc/hosts
-}
 
 install_ansible(){
     echo " ### Installing Ansible... ###"
@@ -84,19 +60,14 @@ apt-get update -y
 
 echo " ### Installing Packages... ###"
 apt-get install -y htop isc-dhcp-server tree apache2 git python-pip dnsmasq apt-cacher-ng lldpd ntp ifupdown2
-#modprobe 8021q
-#modprobe bonding
-#echo "8021q" >> /etc/modules
 
 echo " ### Overwriting /etc/network/interfaces ###"
 cat <<EOT > /etc/network/interfaces
 auto lo
 iface lo inet loopback
 
-
 auto vagrant
 iface vagrant inet dhcp
-
 
 auto eth1
 iface eth1 inet static
@@ -106,10 +77,6 @@ EOT
 echo " ### Applying Network Configuration via IFUPDOWN2... ###"
 /sbin/ifreload -a
 
-if [ $puppet -eq 1 ]; then
-    echo " ### Installing Puppet ### "
-    install_puppet
-fi
 if [ $ansible -eq 1 ]; then
     echo " ### Installing Ansible ### "
     install_ansible
@@ -182,23 +149,11 @@ echo ' ### Setting UP NAT and Routing on MGMT server... ### '
 echo -e '#!/bin/bash \n/sbin/iptables -t nat -A POSTROUTING -o vagrant -j MASQUERADE' > /etc/rc.local
 echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/98-ipforward.conf
 
-
 echo " ### Creating turnup.sh script ###"
     cat <<EOT >> /home/cumulus/turnup.sh
 git clone $REPOSITORY
 EOT
 
-if [ $puppet -eq 1 ]; then
-    cat <<EOT >> /home/cumulus/turnup.sh
-sudo rm -rf /etc/puppetlabs/code/environments/production
-sudo ln -s  /home/cumulus/$REPONAME/puppet/ /etc/puppetlabs/code/environments/production
-sudo /opt/puppetlabs/bin/puppet module install puppetlabs-stdlib
-#sudo bash -c 'echo "certname = 192.168.200.1" >> /etc/puppetlabs/puppet/puppet.conf'
-echo " ### Starting PUPPET Master ###"
-echo "     (this may take a while 30 secs or so...)"
-sudo systemctl restart puppetserver.service
-EOT
-fi
 if [ $ansible -eq 1 ]; then
     cat <<EOT >> /home/cumulus/turnup.sh
 #Add any ansible specific steps here
