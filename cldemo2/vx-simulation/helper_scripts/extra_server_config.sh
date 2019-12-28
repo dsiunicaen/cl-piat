@@ -41,6 +41,9 @@ if [ "$HOSTNAME" != netq-ts ]; then
       echo -e "post-up wget -O /home/cumulus/.ssh/authorized_keys http://192.168.200.1/authorized_keys" >> /etc/network/interfaces.d/eth0.cfg
       echo -e "post-up chown -R cumulus:cumulus /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
 
+      echo -e "APT::Periodic::Update-Package-Lists "1";" > /etc/apt/apt.conf.d/10periodic
+      echo -e "APT::Periodic::Download-Upgradeable-Packages "0";" >> /etc/apt/apt.conf.d/10periodic
+      echo -e "APT::Periodic::AutocleanInterval "0";" >> /etc/apt/apt.conf.d/10periodic
   fi
 
   #Test for Fedora-Based Host
