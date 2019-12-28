@@ -32,7 +32,7 @@
 
 - name: Add Cumulus Repo
   apt_repository:
-    repo: deb https://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-2.3
+    repo: deb https://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-2.4
     state: present
     update_cache: yes 
 
@@ -41,7 +41,7 @@
     name: cumulus-netq
     state: absent 
 
-- name: Install NetQ2.3
+- name: Install NetQ2.4
   apt:
     name: cumulus-netq
     update_cache: yes
