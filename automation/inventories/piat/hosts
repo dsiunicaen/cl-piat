@@ -4,82 +4,82 @@ ansible_ssh_pass=CumulusLinux!
 ansible_sudo_pass=CumulusLinux!
 
 [edgeexit]
-exit01 ansible_host=192.168.200.32
-exit02 ansible_host=192.168.200.15
+exit01 
+exit02
 
 [edgerouter]
-rtr01 ansible_host=192.168.200.27
-rtr02 ansible_host=192.168.200.28
+rtr01
+rtr02
 
 [3tierspine]
-super01 ansible_host=192.168.200.22
-super02 ansible_host=192.168.200.9
-super03 ansible_host=192.168.200.42
-super04 ansible_host=192.168.200.19
+super01
+super02
+super03
+super04
 
 [pod1service]
-service01 ansible_host=192.168.200.25
-service02 ansible_host=192.168.200.16
+service01
+service02
 
 [pod1fw]
-fw1 ansible_host=192.168.200.54
-fw2 ansible_host=192.168.200.24
+fw1
+fw2
 
 [pod1leaf]
-leaf01 ansible_host=192.168.200.30
-leaf02 ansible_host=192.168.200.3
-leaf03 ansible_host=192.168.200.50
-leaf04 ansible_host=192.168.200.7
+leaf01
+leaf02
+leaf03
+leaf04
 
 [pod1spine]
-spine01 ansible_host=192.168.200.52
-spine02 ansible_host=192.168.200.46
-spine03 ansible_host=192.168.200.6
-spine04 ansible_host=192.168.200.14
+spine01
+spine02
+spine03
+spine04
 
 [pod2service]
-service03 ansible_host=192.168.200.4
-service04 ansible_host=192.168.200.31
+service03
+service04
 
 [pod2fw]
-fw3 ansible_host=192.168.200.34
-fw4 ansible_host=192.168.200.40
+fw3
+fw4
 
 [pod2leaf]
-leaf05 ansible_host=192.168.200.41
-leaf06 ansible_host=192.168.200.13
-leaf07 ansible_host=192.168.200.39
-leaf08 ansible_host=192.168.200.37
+leaf05
+leaf06
+leaf07
+leaf08
 
 [pod2spine]
-spine05 ansible_host=192.168.200.49
-spine06 ansible_host=192.168.200.36
-spine07 ansible_host=192.168.200.47
-spine08 ansible_host=192.168.200.48
+spine05 
+spine06
+spine07
+spine08
 
 [pod1host]
-server01 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.35
-server02 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.44
-server03 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.5
-server04 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.17
-server05 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.38
-server06 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.45
-server07 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.10
-server08 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.23
-server09 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.33
-server10 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.12
+server01 ansible_python_interpreter=/usr/bin/python3
+server02 ansible_python_interpreter=/usr/bin/python3
+server03 ansible_python_interpreter=/usr/bin/python3
+server04 ansible_python_interpreter=/usr/bin/python3
+server05 ansible_python_interpreter=/usr/bin/python3
+server06 ansible_python_interpreter=/usr/bin/python3
+server07 ansible_python_interpreter=/usr/bin/python3
+server08 ansible_python_interpreter=/usr/bin/python3
+server09 ansible_python_interpreter=/usr/bin/python3
+server10 ansible_python_interpreter=/usr/bin/python3
 
 [pod2host]
-server11 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.43
-server12 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.29
-server13 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.11
-server14 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.51
-server15 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.18
-server16 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.20
-server17 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.21
-server18 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.8
-server19 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.53
-server20 ansible_python_interpreter=/usr/bin/python3 ansible_host=192.168.200.26
+server11 ansible_python_interpreter=/usr/bin/python3
+server12 ansible_python_interpreter=/usr/bin/python3
+server13 ansible_python_interpreter=/usr/bin/python3
+server14 ansible_python_interpreter=/usr/bin/python3
+server15 ansible_python_interpreter=/usr/bin/python3
+server16 ansible_python_interpreter=/usr/bin/python3
+server17 ansible_python_interpreter=/usr/bin/python3
+server18 ansible_python_interpreter=/usr/bin/python3
+server19 ansible_python_interpreter=/usr/bin/python3
+server20 ansible_python_interpreter=/usr/bin/python3
 
 [pod1:children]
 pod1fw
