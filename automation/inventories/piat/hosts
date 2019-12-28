@@ -1,6 +1,7 @@
 [all:vars]
 ansible_user=cumulus
 ansible_ssh_pass=CumulusLinux!
+ansible_sudo_pass=CumulusLinux!
 
 [edgeexit]
 exit01 ansible_host=192.168.200.32
