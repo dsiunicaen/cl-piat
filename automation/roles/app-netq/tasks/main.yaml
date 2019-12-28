@@ -6,7 +6,7 @@
 
 - name: Add Cumulus Repo
   apt_repository:
-    repo: deb https://apps3.cumulusnetworks.com/repos/deb bionic netq-2.3
+    repo: deb https://apps3.cumulusnetworks.com/repos/deb bionic netq-2.4
     state: present
     update_cache: no
 
