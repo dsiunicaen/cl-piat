@@ -4,12 +4,12 @@ l3vnis:
   - { id: 401002, vlan: 4002, vrf: tenant2 }
   - { id: 401003, vlan: 4003, vrf: tenant3 }
 l2vnis:
-  - { id: 101000, vlan: 1000 }
   - { id: 101001, vlan: 1001 }
   - { id: 101002, vlan: 1002 }
   - { id: 101003, vlan: 1003 }
   - { id: 101004, vlan: 1004 }
   - { id: 101005, vlan: 1005 }
+  - { id: 101006, vlan: 1006 }
 racks:
   r01:
     clag:
@@ -18,18 +18,16 @@ racks:
       - interface: swp1
       - interface: swp2
       - interface: swp3
-      - interface: swp4
   r02:
     clag:
       loopback: 10.100.100.2
     bonds:
       - interface: swp1
       - interface: swp2
+      - interface: swp3
   r03:
     clag:
       loopback: 10.100.100.3
     bonds:
       - interface: swp1
       - interface: swp2
-      - interface: swp3
-      - interface: swp4
