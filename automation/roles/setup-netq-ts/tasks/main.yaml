@@ -1,6 +1,9 @@
 ---
+- name: Bootstrap OPTA
+  shell: netq bootstrap master interface eth0 tarball /mnt/installables/netq-bootstrap-2.4.0.tgz
+
 - name: Install NetQ OPTA
-  shell: netq install opta interface eth0 tarball download 2.2.2 config-key "{{ netq_config_key  }}"
+  shell: netq install opta standalone full interface eth0 bundle /mnt/installables/NetQ-2.4.0-opta.tgz config-key "{{ netq_config_key  }}"
 
 - name: NetQ credentials file
   template:

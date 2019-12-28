@@ -82,19 +82,6 @@
   with_items:
     - 'chrony'
 
-- name: Add apt FRR apt key 
-  apt_key:
-    url: https://deb.frrouting.org/frr/keys.asc 
-    state: present
-
-- apt_repository:
-    repo: deb https://deb.frrouting.org/frr bionic frr-stable 
-    state: present
-
-- name: Install Frrouting
-  apt: 
-    name: ['frr','frr-pythontools']
-    state: present
 
 - name: Sysctl l3mdev_accept
   sysctl:
