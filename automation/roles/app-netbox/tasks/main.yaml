@@ -11,7 +11,7 @@
   shell: 'cd /home/cumulus/netbox-docker;docker-compose pull;docker-compose up -d'
 
 - name: Copy DB backup
-- copy:
+  copy:
     src: netbox_postgres.sql
     dest: netbox_postgres.sql
     owner: cumulus
