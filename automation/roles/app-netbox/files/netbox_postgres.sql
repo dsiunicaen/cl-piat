@@ -1,57 +1,4 @@
 --
--- PostgreSQL database cluster dump
---
-
-SET default_transaction_read_only = off;
-
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-
---
--- Drop databases
---
-
-DROP DATABASE netbox;
-
-
-
-
---
--- Drop roles
---
-
-DROP ROLE netbox;
-DROP ROLE postgres;
-
-
---
--- Roles
---
-
-CREATE ROLE netbox;
-ALTER ROLE netbox WITH SUPERUSER INHERIT NOCREATEROLE NOCREATEDB LOGIN NOREPLICATION NOBYPASSRLS PASSWORD 'md5b59db012cd7590313bdee1d05ab3ab41';
-CREATE ROLE postgres;
-ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS;
-
-
-
-
-
-
---
--- Database creation
---
-
-CREATE DATABASE netbox WITH TEMPLATE = template0 OWNER = postgres;
-REVOKE CONNECT,TEMPORARY ON DATABASE template1 FROM PUBLIC;
-GRANT CONNECT ON DATABASE template1 TO PUBLIC;
-
-
-\connect netbox
-
-SET default_transaction_read_only = off;
-
---
 -- PostgreSQL database dump
 --
 
@@ -92,7 +39,7 @@ SET default_with_oids = false;
 
 CREATE TABLE public.auth_group (
     id integer NOT NULL,
-    name character varying(80) NOT NULL
+    name character varying(150) NOT NULL
 );
 
 
@@ -202,7 +149,7 @@ CREATE TABLE public.auth_user (
     is_superuser boolean NOT NULL,
     username character varying(150) NOT NULL,
     first_name character varying(30) NOT NULL,
-    last_name character varying(30) NOT NULL,
+    last_name character varying(150) NOT NULL,
     email character varying(254) NOT NULL,
     is_staff boolean NOT NULL,
     is_active boolean NOT NULL,
@@ -310,8 +257,8 @@ ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_use
 
 CREATE TABLE public.circuits_circuit (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     cid character varying(50) NOT NULL,
     install_date date,
     commit_rate integer,
@@ -362,8 +309,11 @@ CREATE TABLE public.circuits_circuittermination (
     xconnect_id character varying(50) NOT NULL,
     pp_info character varying(100) NOT NULL,
     circuit_id integer NOT NULL,
-    interface_id integer,
     site_id integer NOT NULL,
+    connected_endpoint_id integer,
+    connection_status boolean,
+    cable_id integer,
+    description character varying(100) NOT NULL,
     CONSTRAINT circuits_circuittermination_port_speed_check CHECK ((port_speed >= 0)),
     CONSTRAINT circuits_circuittermination_upstream_speed_check CHECK ((upstream_speed >= 0))
 );
@@ -400,7 +350,9 @@ ALTER SEQUENCE public.circuits_circuittermination_id_seq OWNED BY public.circuit
 CREATE TABLE public.circuits_circuittype (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
-    slug character varying(50) NOT NULL
+    slug character varying(50) NOT NULL,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -434,8 +386,8 @@ ALTER SEQUENCE public.circuits_circuittype_id_seq OWNED BY public.circuits_circu
 
 CREATE TABLE public.circuits_provider (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
     asn bigint,
@@ -472,6 +424,59 @@ ALTER SEQUENCE public.circuits_provider_id_seq OWNED BY public.circuits_provider
 
 
 --
+-- Name: dcim_cable; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.dcim_cable (
+    id integer NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
+    termination_a_id integer NOT NULL,
+    termination_b_id integer NOT NULL,
+    type smallint,
+    status boolean NOT NULL,
+    label character varying(100) NOT NULL,
+    color character varying(6) NOT NULL,
+    length smallint,
+    length_unit smallint,
+    _abs_length numeric(10,4),
+    termination_a_type_id integer NOT NULL,
+    termination_b_type_id integer NOT NULL,
+    _termination_a_device_id integer,
+    _termination_b_device_id integer,
+    CONSTRAINT dcim_cable_length_check CHECK ((length >= 0)),
+    CONSTRAINT dcim_cable_length_unit_check CHECK ((length_unit >= 0)),
+    CONSTRAINT dcim_cable_termination_a_id_check CHECK ((termination_a_id >= 0)),
+    CONSTRAINT dcim_cable_termination_b_id_check CHECK ((termination_b_id >= 0)),
+    CONSTRAINT dcim_cable_type_check CHECK ((type >= 0))
+);
+
+
+ALTER TABLE public.dcim_cable OWNER TO netbox;
+
+--
+-- Name: dcim_cable_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.dcim_cable_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dcim_cable_id_seq OWNER TO netbox;
+
+--
+-- Name: dcim_cable_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.dcim_cable_id_seq OWNED BY public.dcim_cable.id;
+
+
+--
 -- Name: dcim_consoleport; Type: TABLE; Schema: public; Owner: netbox
 --
 
@@ -479,8 +484,10 @@ CREATE TABLE public.dcim_consoleport (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     connection_status boolean,
-    cs_port_id integer,
-    device_id integer NOT NULL
+    connected_endpoint_id integer,
+    device_id integer NOT NULL,
+    cable_id integer,
+    description character varying(100) NOT NULL
 );
 
 
@@ -550,7 +557,10 @@ ALTER SEQUENCE public.dcim_consoleporttemplate_id_seq OWNED BY public.dcim_conso
 CREATE TABLE public.dcim_consoleserverport (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
-    device_id integer NOT NULL
+    device_id integer NOT NULL,
+    cable_id integer,
+    connection_status boolean,
+    description character varying(100) NOT NULL
 );
 
 
@@ -619,8 +629,8 @@ ALTER SEQUENCE public.dcim_consoleserverporttemplate_id_seq OWNED BY public.dcim
 
 CREATE TABLE public.dcim_device (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     name character varying(64),
     serial character varying(50) NOT NULL,
     "position" smallint,
@@ -640,6 +650,7 @@ CREATE TABLE public.dcim_device (
     virtual_chassis_id integer,
     vc_position smallint,
     vc_priority smallint,
+    local_context_data jsonb,
     CONSTRAINT dcim_device_face_check CHECK ((face >= 0)),
     CONSTRAINT dcim_device_position_check CHECK (("position" >= 0)),
     CONSTRAINT dcim_device_status_4f698226_check CHECK ((status >= 0)),
@@ -680,7 +691,8 @@ CREATE TABLE public.dcim_devicebay (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     device_id integer NOT NULL,
-    installed_device_id integer
+    installed_device_id integer,
+    description character varying(100) NOT NULL
 );
 
 
@@ -752,7 +764,9 @@ CREATE TABLE public.dcim_devicerole (
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
     color character varying(6) NOT NULL,
-    vm_role boolean NOT NULL
+    vm_role boolean NOT NULL,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -790,15 +804,12 @@ CREATE TABLE public.dcim_devicetype (
     slug character varying(50) NOT NULL,
     u_height smallint NOT NULL,
     is_full_depth boolean NOT NULL,
-    is_console_server boolean NOT NULL,
-    is_pdu boolean NOT NULL,
-    is_network_device boolean NOT NULL,
     manufacturer_id integer NOT NULL,
     subdevice_role boolean,
     part_number character varying(50) NOT NULL,
     comments text NOT NULL,
-    interface_ordering smallint NOT NULL,
-    CONSTRAINT dcim_devicetype_interface_ordering_check CHECK ((interface_ordering >= 0)),
+    created date,
+    last_updated timestamp with time zone,
     CONSTRAINT dcim_devicetype_u_height_check CHECK ((u_height >= 0))
 );
 
@@ -828,26 +839,112 @@ ALTER SEQUENCE public.dcim_devicetype_id_seq OWNED BY public.dcim_devicetype.id;
 
 
 --
+-- Name: dcim_frontport; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.dcim_frontport (
+    id integer NOT NULL,
+    name character varying(64) NOT NULL,
+    type smallint NOT NULL,
+    rear_port_position smallint NOT NULL,
+    description character varying(100) NOT NULL,
+    device_id integer NOT NULL,
+    rear_port_id integer NOT NULL,
+    cable_id integer,
+    CONSTRAINT dcim_frontport_rear_port_position_check CHECK ((rear_port_position >= 0)),
+    CONSTRAINT dcim_frontport_type_check CHECK ((type >= 0))
+);
+
+
+ALTER TABLE public.dcim_frontport OWNER TO netbox;
+
+--
+-- Name: dcim_frontport_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.dcim_frontport_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dcim_frontport_id_seq OWNER TO netbox;
+
+--
+-- Name: dcim_frontport_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.dcim_frontport_id_seq OWNED BY public.dcim_frontport.id;
+
+
+--
+-- Name: dcim_frontporttemplate; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.dcim_frontporttemplate (
+    id integer NOT NULL,
+    name character varying(64) NOT NULL,
+    type smallint NOT NULL,
+    rear_port_position smallint NOT NULL,
+    device_type_id integer NOT NULL,
+    rear_port_id integer NOT NULL,
+    CONSTRAINT dcim_frontporttemplate_rear_port_position_check CHECK ((rear_port_position >= 0)),
+    CONSTRAINT dcim_frontporttemplate_type_check CHECK ((type >= 0))
+);
+
+
+ALTER TABLE public.dcim_frontporttemplate OWNER TO netbox;
+
+--
+-- Name: dcim_frontporttemplate_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.dcim_frontporttemplate_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dcim_frontporttemplate_id_seq OWNER TO netbox;
+
+--
+-- Name: dcim_frontporttemplate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.dcim_frontporttemplate_id_seq OWNED BY public.dcim_frontporttemplate.id;
+
+
+--
 -- Name: dcim_interface; Type: TABLE; Schema: public; Owner: netbox
 --
 
 CREATE TABLE public.dcim_interface (
     id integer NOT NULL,
     name character varying(64) NOT NULL,
-    form_factor smallint NOT NULL,
+    type smallint NOT NULL,
     mgmt_only boolean NOT NULL,
     description character varying(100) NOT NULL,
     device_id integer,
     mac_address macaddr,
     lag_id integer,
     enabled boolean NOT NULL,
-    mtu smallint,
+    mtu integer,
     virtual_machine_id integer,
     mode smallint,
     untagged_vlan_id integer,
-    CONSTRAINT dcim_interface_form_factor_check CHECK ((form_factor >= 0)),
+    _connected_circuittermination_id integer,
+    _connected_interface_id integer,
+    connection_status boolean,
+    cable_id integer,
     CONSTRAINT dcim_interface_mode_check CHECK ((mode >= 0)),
-    CONSTRAINT dcim_interface_mtu_check CHECK ((mtu >= 0))
+    CONSTRAINT dcim_interface_mtu_check CHECK ((mtu >= 0)),
+    CONSTRAINT dcim_interface_type_b8044832_check CHECK ((type >= 0))
 );
 
 
@@ -911,52 +1008,16 @@ ALTER SEQUENCE public.dcim_interface_tagged_vlans_id_seq OWNED BY public.dcim_in
 
 
 --
--- Name: dcim_interfaceconnection; Type: TABLE; Schema: public; Owner: netbox
---
-
-CREATE TABLE public.dcim_interfaceconnection (
-    id integer NOT NULL,
-    connection_status boolean NOT NULL,
-    interface_a_id integer NOT NULL,
-    interface_b_id integer NOT NULL
-);
-
-
-ALTER TABLE public.dcim_interfaceconnection OWNER TO netbox;
-
---
--- Name: dcim_interfaceconnection_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
---
-
-CREATE SEQUENCE public.dcim_interfaceconnection_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.dcim_interfaceconnection_id_seq OWNER TO netbox;
-
---
--- Name: dcim_interfaceconnection_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
---
-
-ALTER SEQUENCE public.dcim_interfaceconnection_id_seq OWNED BY public.dcim_interfaceconnection.id;
-
-
---
 -- Name: dcim_interfacetemplate; Type: TABLE; Schema: public; Owner: netbox
 --
 
 CREATE TABLE public.dcim_interfacetemplate (
     id integer NOT NULL,
     name character varying(64) NOT NULL,
-    form_factor smallint NOT NULL,
+    type smallint NOT NULL,
     mgmt_only boolean NOT NULL,
     device_type_id integer NOT NULL,
-    CONSTRAINT dcim_interfacetemplate_form_factor_check CHECK ((form_factor >= 0))
+    CONSTRAINT dcim_interfacetemplate_type_ebd08d49_check CHECK ((type >= 0))
 );
 
 
@@ -1011,7 +1072,9 @@ ALTER TABLE public.dcim_inventoryitem OWNER TO netbox;
 CREATE TABLE public.dcim_manufacturer (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
-    slug character varying(50) NOT NULL
+    slug character varying(50) NOT NULL,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -1067,11 +1130,13 @@ ALTER SEQUENCE public.dcim_module_id_seq OWNED BY public.dcim_inventoryitem.id;
 
 CREATE TABLE public.dcim_platform (
     id integer NOT NULL,
-    name character varying(50) NOT NULL,
-    slug character varying(50) NOT NULL,
-    rpc_client character varying(30) NOT NULL,
+    name character varying(100) NOT NULL,
+    slug character varying(100) NOT NULL,
     napalm_driver character varying(50) NOT NULL,
-    manufacturer_id integer
+    manufacturer_id integer,
+    created date,
+    last_updated timestamp with time zone,
+    napalm_args jsonb
 );
 
 
@@ -1100,13 +1165,77 @@ ALTER SEQUENCE public.dcim_platform_id_seq OWNED BY public.dcim_platform.id;
 
 
 --
+-- Name: dcim_powerfeed; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.dcim_powerfeed (
+    id integer NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
+    name character varying(50) NOT NULL,
+    status smallint NOT NULL,
+    type smallint NOT NULL,
+    supply smallint NOT NULL,
+    phase smallint NOT NULL,
+    voltage smallint NOT NULL,
+    amperage smallint NOT NULL,
+    max_utilization smallint NOT NULL,
+    available_power smallint NOT NULL,
+    comments text NOT NULL,
+    cable_id integer,
+    power_panel_id integer NOT NULL,
+    rack_id integer,
+    connected_endpoint_id integer,
+    connection_status boolean,
+    CONSTRAINT dcim_powerfeed_amperage_check CHECK ((amperage >= 0)),
+    CONSTRAINT dcim_powerfeed_available_power_check CHECK ((available_power >= 0)),
+    CONSTRAINT dcim_powerfeed_max_utilization_check CHECK ((max_utilization >= 0)),
+    CONSTRAINT dcim_powerfeed_phase_check CHECK ((phase >= 0)),
+    CONSTRAINT dcim_powerfeed_status_check CHECK ((status >= 0)),
+    CONSTRAINT dcim_powerfeed_supply_check CHECK ((supply >= 0)),
+    CONSTRAINT dcim_powerfeed_type_check CHECK ((type >= 0)),
+    CONSTRAINT dcim_powerfeed_voltage_check CHECK ((voltage >= 0))
+);
+
+
+ALTER TABLE public.dcim_powerfeed OWNER TO netbox;
+
+--
+-- Name: dcim_powerfeed_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.dcim_powerfeed_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dcim_powerfeed_id_seq OWNER TO netbox;
+
+--
+-- Name: dcim_powerfeed_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.dcim_powerfeed_id_seq OWNED BY public.dcim_powerfeed.id;
+
+
+--
 -- Name: dcim_poweroutlet; Type: TABLE; Schema: public; Owner: netbox
 --
 
 CREATE TABLE public.dcim_poweroutlet (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
-    device_id integer NOT NULL
+    device_id integer NOT NULL,
+    cable_id integer,
+    connection_status boolean,
+    description character varying(100) NOT NULL,
+    feed_leg smallint,
+    power_port_id integer,
+    CONSTRAINT dcim_poweroutlet_feed_leg_check CHECK ((feed_leg >= 0))
 );
 
 
@@ -1141,7 +1270,10 @@ ALTER SEQUENCE public.dcim_poweroutlet_id_seq OWNED BY public.dcim_poweroutlet.i
 CREATE TABLE public.dcim_poweroutlettemplate (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
-    device_type_id integer NOT NULL
+    device_type_id integer NOT NULL,
+    feed_leg smallint,
+    power_port_id integer,
+    CONSTRAINT dcim_poweroutlettemplate_feed_leg_check CHECK ((feed_leg >= 0))
 );
 
 
@@ -1170,6 +1302,44 @@ ALTER SEQUENCE public.dcim_poweroutlettemplate_id_seq OWNED BY public.dcim_power
 
 
 --
+-- Name: dcim_powerpanel; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.dcim_powerpanel (
+    id integer NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
+    name character varying(50) NOT NULL,
+    rack_group_id integer,
+    site_id integer NOT NULL
+);
+
+
+ALTER TABLE public.dcim_powerpanel OWNER TO netbox;
+
+--
+-- Name: dcim_powerpanel_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.dcim_powerpanel_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dcim_powerpanel_id_seq OWNER TO netbox;
+
+--
+-- Name: dcim_powerpanel_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.dcim_powerpanel_id_seq OWNED BY public.dcim_powerpanel.id;
+
+
+--
 -- Name: dcim_powerport; Type: TABLE; Schema: public; Owner: netbox
 --
 
@@ -1178,7 +1348,14 @@ CREATE TABLE public.dcim_powerport (
     name character varying(50) NOT NULL,
     connection_status boolean,
     device_id integer NOT NULL,
-    power_outlet_id integer
+    _connected_poweroutlet_id integer,
+    cable_id integer,
+    description character varying(100) NOT NULL,
+    _connected_powerfeed_id integer,
+    allocated_draw smallint,
+    maximum_draw smallint,
+    CONSTRAINT dcim_powerport_allocated_draw_check CHECK ((allocated_draw >= 0)),
+    CONSTRAINT dcim_powerport_maximum_draw_check CHECK ((maximum_draw >= 0))
 );
 
 
@@ -1213,7 +1390,11 @@ ALTER SEQUENCE public.dcim_powerport_id_seq OWNED BY public.dcim_powerport.id;
 CREATE TABLE public.dcim_powerporttemplate (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
-    device_type_id integer NOT NULL
+    device_type_id integer NOT NULL,
+    allocated_draw smallint,
+    maximum_draw smallint,
+    CONSTRAINT dcim_powerporttemplate_allocated_draw_check CHECK ((allocated_draw >= 0)),
+    CONSTRAINT dcim_powerporttemplate_maximum_draw_check CHECK ((maximum_draw >= 0))
 );
 
 
@@ -1247,8 +1428,8 @@ ALTER SEQUENCE public.dcim_powerporttemplate_id_seq OWNED BY public.dcim_powerpo
 
 CREATE TABLE public.dcim_rack (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     name character varying(50) NOT NULL,
     facility_id character varying(50),
     u_height smallint NOT NULL,
@@ -1261,6 +1442,15 @@ CREATE TABLE public.dcim_rack (
     role_id integer,
     desc_units boolean NOT NULL,
     serial character varying(50) NOT NULL,
+    status smallint NOT NULL,
+    asset_tag character varying(50),
+    outer_depth smallint,
+    outer_unit smallint,
+    outer_width smallint,
+    CONSTRAINT dcim_rack_outer_depth_check CHECK ((outer_depth >= 0)),
+    CONSTRAINT dcim_rack_outer_unit_check CHECK ((outer_unit >= 0)),
+    CONSTRAINT dcim_rack_outer_width_check CHECK ((outer_width >= 0)),
+    CONSTRAINT dcim_rack_status_check CHECK ((status >= 0)),
     CONSTRAINT dcim_rack_type_check CHECK ((type >= 0)),
     CONSTRAINT dcim_rack_u_height_check CHECK ((u_height >= 0)),
     CONSTRAINT dcim_rack_width_check CHECK ((width >= 0))
@@ -1299,7 +1489,9 @@ CREATE TABLE public.dcim_rackgroup (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
-    site_id integer NOT NULL
+    site_id integer NOT NULL,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -1334,11 +1526,12 @@ ALTER SEQUENCE public.dcim_rackgroup_id_seq OWNED BY public.dcim_rackgroup.id;
 CREATE TABLE public.dcim_rackreservation (
     id integer NOT NULL,
     units smallint[] NOT NULL,
-    created timestamp with time zone NOT NULL,
+    created date,
     description character varying(100) NOT NULL,
     rack_id integer NOT NULL,
     user_id integer NOT NULL,
-    tenant_id integer
+    tenant_id integer,
+    last_updated timestamp with time zone
 );
 
 
@@ -1374,7 +1567,9 @@ CREATE TABLE public.dcim_rackrole (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
-    color character varying(6) NOT NULL
+    color character varying(6) NOT NULL,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -1403,6 +1598,86 @@ ALTER SEQUENCE public.dcim_rackrole_id_seq OWNED BY public.dcim_rackrole.id;
 
 
 --
+-- Name: dcim_rearport; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.dcim_rearport (
+    id integer NOT NULL,
+    name character varying(64) NOT NULL,
+    type smallint NOT NULL,
+    positions smallint NOT NULL,
+    description character varying(100) NOT NULL,
+    device_id integer NOT NULL,
+    cable_id integer,
+    CONSTRAINT dcim_rearport_positions_check CHECK ((positions >= 0)),
+    CONSTRAINT dcim_rearport_type_check CHECK ((type >= 0))
+);
+
+
+ALTER TABLE public.dcim_rearport OWNER TO netbox;
+
+--
+-- Name: dcim_rearport_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.dcim_rearport_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dcim_rearport_id_seq OWNER TO netbox;
+
+--
+-- Name: dcim_rearport_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.dcim_rearport_id_seq OWNED BY public.dcim_rearport.id;
+
+
+--
+-- Name: dcim_rearporttemplate; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.dcim_rearporttemplate (
+    id integer NOT NULL,
+    name character varying(64) NOT NULL,
+    type smallint NOT NULL,
+    positions smallint NOT NULL,
+    device_type_id integer NOT NULL,
+    CONSTRAINT dcim_rearporttemplate_positions_check CHECK ((positions >= 0)),
+    CONSTRAINT dcim_rearporttemplate_type_check CHECK ((type >= 0))
+);
+
+
+ALTER TABLE public.dcim_rearporttemplate OWNER TO netbox;
+
+--
+-- Name: dcim_rearporttemplate_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.dcim_rearporttemplate_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dcim_rearporttemplate_id_seq OWNER TO netbox;
+
+--
+-- Name: dcim_rearporttemplate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.dcim_rearporttemplate_id_seq OWNED BY public.dcim_rearporttemplate.id;
+
+
+--
 -- Name: dcim_region; Type: TABLE; Schema: public; Owner: netbox
 --
 
@@ -1415,6 +1690,8 @@ CREATE TABLE public.dcim_region (
     tree_id integer NOT NULL,
     level integer NOT NULL,
     parent_id integer,
+    created date,
+    last_updated timestamp with time zone,
     CONSTRAINT dcim_region_level_check CHECK ((level >= 0)),
     CONSTRAINT dcim_region_lft_check CHECK ((lft >= 0)),
     CONSTRAINT dcim_region_rght_check CHECK ((rght >= 0)),
@@ -1452,8 +1729,8 @@ ALTER SEQUENCE public.dcim_region_id_seq OWNED BY public.dcim_region.id;
 
 CREATE TABLE public.dcim_site (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
     facility character varying(50) NOT NULL,
@@ -1469,6 +1746,8 @@ CREATE TABLE public.dcim_site (
     description character varying(100) NOT NULL,
     status smallint NOT NULL,
     time_zone character varying(63) NOT NULL,
+    latitude numeric(8,6),
+    longitude numeric(9,6),
     CONSTRAINT dcim_site_status_check CHECK ((status >= 0))
 );
 
@@ -1504,7 +1783,9 @@ ALTER SEQUENCE public.dcim_site_id_seq OWNED BY public.dcim_site.id;
 CREATE TABLE public.dcim_virtualchassis (
     id integer NOT NULL,
     domain character varying(30) NOT NULL,
-    master_id integer NOT NULL
+    master_id integer NOT NULL,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -1656,6 +1937,255 @@ CREATE TABLE public.django_session (
 
 
 ALTER TABLE public.django_session OWNER TO netbox;
+
+--
+-- Name: extras_configcontext; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_configcontext (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    weight smallint NOT NULL,
+    description character varying(100) NOT NULL,
+    is_active boolean NOT NULL,
+    data jsonb NOT NULL,
+    CONSTRAINT extras_configcontext_weight_check CHECK ((weight >= 0))
+);
+
+
+ALTER TABLE public.extras_configcontext OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_configcontext_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_configcontext_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_configcontext_id_seq OWNED BY public.extras_configcontext.id;
+
+
+--
+-- Name: extras_configcontext_platforms; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_configcontext_platforms (
+    id integer NOT NULL,
+    configcontext_id integer NOT NULL,
+    platform_id integer NOT NULL
+);
+
+
+ALTER TABLE public.extras_configcontext_platforms OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_platforms_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_configcontext_platforms_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_configcontext_platforms_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_platforms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_configcontext_platforms_id_seq OWNED BY public.extras_configcontext_platforms.id;
+
+
+--
+-- Name: extras_configcontext_regions; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_configcontext_regions (
+    id integer NOT NULL,
+    configcontext_id integer NOT NULL,
+    region_id integer NOT NULL
+);
+
+
+ALTER TABLE public.extras_configcontext_regions OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_regions_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_configcontext_regions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_configcontext_regions_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_regions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_configcontext_regions_id_seq OWNED BY public.extras_configcontext_regions.id;
+
+
+--
+-- Name: extras_configcontext_roles; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_configcontext_roles (
+    id integer NOT NULL,
+    configcontext_id integer NOT NULL,
+    devicerole_id integer NOT NULL
+);
+
+
+ALTER TABLE public.extras_configcontext_roles OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_roles_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_configcontext_roles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_configcontext_roles_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_configcontext_roles_id_seq OWNED BY public.extras_configcontext_roles.id;
+
+
+--
+-- Name: extras_configcontext_sites; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_configcontext_sites (
+    id integer NOT NULL,
+    configcontext_id integer NOT NULL,
+    site_id integer NOT NULL
+);
+
+
+ALTER TABLE public.extras_configcontext_sites OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_sites_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_configcontext_sites_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_configcontext_sites_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_sites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_configcontext_sites_id_seq OWNED BY public.extras_configcontext_sites.id;
+
+
+--
+-- Name: extras_configcontext_tenant_groups; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_configcontext_tenant_groups (
+    id integer NOT NULL,
+    configcontext_id integer NOT NULL,
+    tenantgroup_id integer NOT NULL
+);
+
+
+ALTER TABLE public.extras_configcontext_tenant_groups OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_tenant_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_configcontext_tenant_groups_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_configcontext_tenant_groups_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_tenant_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_configcontext_tenant_groups_id_seq OWNED BY public.extras_configcontext_tenant_groups.id;
+
+
+--
+-- Name: extras_configcontext_tenants; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_configcontext_tenants (
+    id integer NOT NULL,
+    configcontext_id integer NOT NULL,
+    tenant_id integer NOT NULL
+);
+
+
+ALTER TABLE public.extras_configcontext_tenants OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_tenants_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_configcontext_tenants_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_configcontext_tenants_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_configcontext_tenants_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_configcontext_tenants_id_seq OWNED BY public.extras_configcontext_tenants.id;
+
 
 --
 -- Name: extras_customfield; Type: TABLE; Schema: public; Owner: netbox
@@ -1812,6 +2342,48 @@ ALTER SEQUENCE public.extras_customfieldvalue_id_seq OWNED BY public.extras_cust
 
 
 --
+-- Name: extras_customlink; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_customlink (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    text character varying(500) NOT NULL,
+    url character varying(500) NOT NULL,
+    weight smallint NOT NULL,
+    group_name character varying(50) NOT NULL,
+    button_class character varying(30) NOT NULL,
+    new_window boolean NOT NULL,
+    content_type_id integer NOT NULL,
+    CONSTRAINT extras_customlink_weight_check CHECK ((weight >= 0))
+);
+
+
+ALTER TABLE public.extras_customlink OWNER TO netbox;
+
+--
+-- Name: extras_customlink_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_customlink_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_customlink_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_customlink_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_customlink_id_seq OWNED BY public.extras_customlink.id;
+
+
+--
 -- Name: extras_exporttemplate; Type: TABLE; Schema: public; Owner: netbox
 --
 
@@ -1819,10 +2391,12 @@ CREATE TABLE public.extras_exporttemplate (
     id integer NOT NULL,
     name character varying(100) NOT NULL,
     template_code text NOT NULL,
-    mime_type character varying(15) NOT NULL,
+    mime_type character varying(50) NOT NULL,
     file_extension character varying(15) NOT NULL,
     content_type_id integer NOT NULL,
-    description character varying(200) NOT NULL
+    description character varying(200) NOT NULL,
+    template_language smallint NOT NULL,
+    CONSTRAINT extras_exporttemplate_template_language_check CHECK ((template_language >= 0))
 );
 
 
@@ -1934,6 +2508,53 @@ ALTER SEQUENCE public.extras_imageattachment_id_seq OWNED BY public.extras_image
 
 
 --
+-- Name: extras_objectchange; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_objectchange (
+    id integer NOT NULL,
+    "time" timestamp with time zone NOT NULL,
+    user_name character varying(150) NOT NULL,
+    request_id uuid NOT NULL,
+    action smallint NOT NULL,
+    changed_object_id integer NOT NULL,
+    related_object_id integer,
+    object_repr character varying(200) NOT NULL,
+    object_data jsonb NOT NULL,
+    changed_object_type_id integer NOT NULL,
+    related_object_type_id integer,
+    user_id integer,
+    CONSTRAINT extras_objectchange_action_check CHECK ((action >= 0)),
+    CONSTRAINT extras_objectchange_changed_object_id_check CHECK ((changed_object_id >= 0)),
+    CONSTRAINT extras_objectchange_related_object_id_check CHECK ((related_object_id >= 0))
+);
+
+
+ALTER TABLE public.extras_objectchange OWNER TO netbox;
+
+--
+-- Name: extras_objectchange_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_objectchange_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_objectchange_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_objectchange_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_objectchange_id_seq OWNED BY public.extras_objectchange.id;
+
+
+--
 -- Name: extras_reportresult; Type: TABLE; Schema: public; Owner: netbox
 --
 
@@ -1969,6 +2590,81 @@ ALTER TABLE public.extras_reportresult_id_seq OWNER TO netbox;
 --
 
 ALTER SEQUENCE public.extras_reportresult_id_seq OWNED BY public.extras_reportresult.id;
+
+
+--
+-- Name: extras_tag; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_tag (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    slug character varying(100) NOT NULL,
+    color character varying(6) NOT NULL,
+    comments text NOT NULL,
+    created date,
+    last_updated timestamp with time zone
+);
+
+
+ALTER TABLE public.extras_tag OWNER TO netbox;
+
+--
+-- Name: extras_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_tag_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_tag_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_tag_id_seq OWNED BY public.extras_tag.id;
+
+
+--
+-- Name: extras_taggeditem; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_taggeditem (
+    id integer NOT NULL,
+    object_id integer NOT NULL,
+    content_type_id integer NOT NULL,
+    tag_id integer NOT NULL
+);
+
+
+ALTER TABLE public.extras_taggeditem OWNER TO netbox;
+
+--
+-- Name: extras_taggeditem_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_taggeditem_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_taggeditem_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_taggeditem_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_taggeditem_id_seq OWNED BY public.extras_taggeditem.id;
 
 
 --
@@ -2012,29 +2708,33 @@ ALTER SEQUENCE public.extras_topologymap_id_seq OWNED BY public.extras_topologym
 
 
 --
--- Name: extras_useraction; Type: TABLE; Schema: public; Owner: netbox
+-- Name: extras_webhook; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE public.extras_useraction (
+CREATE TABLE public.extras_webhook (
     id integer NOT NULL,
-    "time" timestamp with time zone NOT NULL,
-    object_id integer,
-    action smallint NOT NULL,
-    message text NOT NULL,
-    content_type_id integer NOT NULL,
-    user_id integer NOT NULL,
-    CONSTRAINT extras_useraction_action_check CHECK ((action >= 0)),
-    CONSTRAINT extras_useraction_object_id_check CHECK ((object_id >= 0))
+    name character varying(150) NOT NULL,
+    type_create boolean NOT NULL,
+    type_update boolean NOT NULL,
+    type_delete boolean NOT NULL,
+    payload_url character varying(500) NOT NULL,
+    http_content_type smallint NOT NULL,
+    secret character varying(255) NOT NULL,
+    enabled boolean NOT NULL,
+    ssl_verification boolean NOT NULL,
+    ca_file_path character varying(4096),
+    additional_headers jsonb,
+    CONSTRAINT extras_webhook_http_content_type_check CHECK ((http_content_type >= 0))
 );
 
 
-ALTER TABLE public.extras_useraction OWNER TO netbox;
+ALTER TABLE public.extras_webhook OWNER TO netbox;
 
 --
--- Name: extras_useraction_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+-- Name: extras_webhook_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE public.extras_useraction_id_seq
+CREATE SEQUENCE public.extras_webhook_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2043,13 +2743,48 @@ CREATE SEQUENCE public.extras_useraction_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.extras_useraction_id_seq OWNER TO netbox;
+ALTER TABLE public.extras_webhook_id_seq OWNER TO netbox;
 
 --
--- Name: extras_useraction_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+-- Name: extras_webhook_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE public.extras_useraction_id_seq OWNED BY public.extras_useraction.id;
+ALTER SEQUENCE public.extras_webhook_id_seq OWNED BY public.extras_webhook.id;
+
+
+--
+-- Name: extras_webhook_obj_type; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.extras_webhook_obj_type (
+    id integer NOT NULL,
+    webhook_id integer NOT NULL,
+    contenttype_id integer NOT NULL
+);
+
+
+ALTER TABLE public.extras_webhook_obj_type OWNER TO netbox;
+
+--
+-- Name: extras_webhook_obj_type_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.extras_webhook_obj_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.extras_webhook_obj_type_id_seq OWNER TO netbox;
+
+--
+-- Name: extras_webhook_obj_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.extras_webhook_obj_type_id_seq OWNED BY public.extras_webhook_obj_type.id;
 
 
 --
@@ -2058,8 +2793,8 @@ ALTER SEQUENCE public.extras_useraction_id_seq OWNED BY public.extras_useraction
 
 CREATE TABLE public.ipam_aggregate (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     family smallint NOT NULL,
     prefix cidr NOT NULL,
     date_added date,
@@ -2099,8 +2834,8 @@ ALTER SEQUENCE public.ipam_aggregate_id_seq OWNED BY public.ipam_aggregate.id;
 
 CREATE TABLE public.ipam_ipaddress (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     family smallint NOT NULL,
     address inet NOT NULL,
     description character varying(100) NOT NULL,
@@ -2110,6 +2845,7 @@ CREATE TABLE public.ipam_ipaddress (
     tenant_id integer,
     status smallint NOT NULL,
     role smallint,
+    dns_name character varying(255) NOT NULL,
     CONSTRAINT ipam_ipaddress_family_check CHECK ((family >= 0)),
     CONSTRAINT ipam_ipaddress_role_check CHECK ((role >= 0)),
     CONSTRAINT ipam_ipaddress_status_check CHECK ((status >= 0))
@@ -2146,8 +2882,8 @@ ALTER SEQUENCE public.ipam_ipaddress_id_seq OWNED BY public.ipam_ipaddress.id;
 
 CREATE TABLE public.ipam_prefix (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     family smallint NOT NULL,
     prefix cidr NOT NULL,
     status smallint NOT NULL,
@@ -2195,7 +2931,9 @@ CREATE TABLE public.ipam_rir (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
-    is_private boolean NOT NULL
+    is_private boolean NOT NULL,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -2232,6 +2970,8 @@ CREATE TABLE public.ipam_role (
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
     weight smallint NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     CONSTRAINT ipam_role_weight_check CHECK ((weight >= 0))
 );
 
@@ -2266,8 +3006,8 @@ ALTER SEQUENCE public.ipam_role_id_seq OWNED BY public.ipam_role.id;
 
 CREATE TABLE public.ipam_service (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     name character varying(30) NOT NULL,
     protocol smallint NOT NULL,
     port integer NOT NULL,
@@ -2344,8 +3084,8 @@ ALTER SEQUENCE public.ipam_service_ipaddresses_id_seq OWNED BY public.ipam_servi
 
 CREATE TABLE public.ipam_vlan (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     vid smallint NOT NULL,
     name character varying(64) NOT NULL,
     status smallint NOT NULL,
@@ -2391,7 +3131,9 @@ CREATE TABLE public.ipam_vlangroup (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
-    site_id integer
+    site_id integer,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -2425,10 +3167,10 @@ ALTER SEQUENCE public.ipam_vlangroup_id_seq OWNED BY public.ipam_vlangroup.id;
 
 CREATE TABLE public.ipam_vrf (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     name character varying(50) NOT NULL,
-    rd character varying(21) NOT NULL,
+    rd character varying(21),
     description character varying(100) NOT NULL,
     enforce_unique boolean NOT NULL,
     tenant_id integer
@@ -2465,8 +3207,8 @@ ALTER SEQUENCE public.ipam_vrf_id_seq OWNED BY public.ipam_vrf.id;
 
 CREATE TABLE public.secrets_secret (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     name character varying(100) NOT NULL,
     ciphertext bytea NOT NULL,
     hash character varying(128) NOT NULL,
@@ -2506,7 +3248,9 @@ ALTER SEQUENCE public.secrets_secret_id_seq OWNED BY public.secrets_secret.id;
 CREATE TABLE public.secrets_secretrole (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
-    slug character varying(50) NOT NULL
+    slug character varying(50) NOT NULL,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -2680,13 +3424,84 @@ ALTER SEQUENCE public.secrets_userkey_id_seq OWNED BY public.secrets_userkey.id;
 
 
 --
+-- Name: taggit_tag; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.taggit_tag (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    slug character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.taggit_tag OWNER TO netbox;
+
+--
+-- Name: taggit_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.taggit_tag_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.taggit_tag_id_seq OWNER TO netbox;
+
+--
+-- Name: taggit_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.taggit_tag_id_seq OWNED BY public.taggit_tag.id;
+
+
+--
+-- Name: taggit_taggeditem; Type: TABLE; Schema: public; Owner: netbox
+--
+
+CREATE TABLE public.taggit_taggeditem (
+    id integer NOT NULL,
+    object_id integer NOT NULL,
+    content_type_id integer NOT NULL,
+    tag_id integer NOT NULL
+);
+
+
+ALTER TABLE public.taggit_taggeditem OWNER TO netbox;
+
+--
+-- Name: taggit_taggeditem_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
+--
+
+CREATE SEQUENCE public.taggit_taggeditem_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.taggit_taggeditem_id_seq OWNER TO netbox;
+
+--
+-- Name: taggit_taggeditem_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
+--
+
+ALTER SEQUENCE public.taggit_taggeditem_id_seq OWNED BY public.taggit_taggeditem.id;
+
+
+--
 -- Name: tenancy_tenant; Type: TABLE; Schema: public; Owner: netbox
 --
 
 CREATE TABLE public.tenancy_tenant (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     name character varying(30) NOT NULL,
     slug character varying(50) NOT NULL,
     description character varying(100) NOT NULL,
@@ -2726,7 +3541,9 @@ ALTER SEQUENCE public.tenancy_tenant_id_seq OWNED BY public.tenancy_tenant.id;
 CREATE TABLE public.tenancy_tenantgroup (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
-    slug character varying(50) NOT NULL
+    slug character varying(50) NOT NULL,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -2799,8 +3616,8 @@ ALTER SEQUENCE public.users_token_id_seq OWNED BY public.users_token.id;
 
 CREATE TABLE public.virtualization_cluster (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     name character varying(100) NOT NULL,
     comments text NOT NULL,
     group_id integer,
@@ -2840,7 +3657,9 @@ ALTER SEQUENCE public.virtualization_cluster_id_seq OWNED BY public.virtualizati
 CREATE TABLE public.virtualization_clustergroup (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
-    slug character varying(50) NOT NULL
+    slug character varying(50) NOT NULL,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -2875,7 +3694,9 @@ ALTER SEQUENCE public.virtualization_clustergroup_id_seq OWNED BY public.virtual
 CREATE TABLE public.virtualization_clustertype (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
-    slug character varying(50) NOT NULL
+    slug character varying(50) NOT NULL,
+    created date,
+    last_updated timestamp with time zone
 );
 
 
@@ -2909,8 +3730,8 @@ ALTER SEQUENCE public.virtualization_clustertype_id_seq OWNED BY public.virtuali
 
 CREATE TABLE public.virtualization_virtualmachine (
     id integer NOT NULL,
-    created date NOT NULL,
-    last_updated timestamp with time zone NOT NULL,
+    created date,
+    last_updated timestamp with time zone,
     name character varying(64) NOT NULL,
     vcpus smallint,
     memory integer,
@@ -2923,6 +3744,7 @@ CREATE TABLE public.virtualization_virtualmachine (
     tenant_id integer,
     status smallint NOT NULL,
     role_id integer,
+    local_context_data jsonb,
     CONSTRAINT virtualization_virtualmachine_disk_check CHECK ((disk >= 0)),
     CONSTRAINT virtualization_virtualmachine_memory_check CHECK ((memory >= 0)),
     CONSTRAINT virtualization_virtualmachine_status_check CHECK ((status >= 0)),
@@ -3025,6 +3847,13 @@ ALTER TABLE ONLY public.circuits_provider ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: dcim_cable id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_cable ALTER COLUMN id SET DEFAULT nextval('public.dcim_cable_id_seq'::regclass);
+
+
+--
 -- Name: dcim_consoleport id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
@@ -3088,6 +3917,20 @@ ALTER TABLE ONLY public.dcim_devicetype ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: dcim_frontport id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontport ALTER COLUMN id SET DEFAULT nextval('public.dcim_frontport_id_seq'::regclass);
+
+
+--
+-- Name: dcim_frontporttemplate id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontporttemplate ALTER COLUMN id SET DEFAULT nextval('public.dcim_frontporttemplate_id_seq'::regclass);
+
+
+--
 -- Name: dcim_interface id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
@@ -3099,13 +3942,6 @@ ALTER TABLE ONLY public.dcim_interface ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 ALTER TABLE ONLY public.dcim_interface_tagged_vlans ALTER COLUMN id SET DEFAULT nextval('public.dcim_interface_tagged_vlans_id_seq'::regclass);
-
-
---
--- Name: dcim_interfaceconnection id; Type: DEFAULT; Schema: public; Owner: netbox
---
-
-ALTER TABLE ONLY public.dcim_interfaceconnection ALTER COLUMN id SET DEFAULT nextval('public.dcim_interfaceconnection_id_seq'::regclass);
 
 
 --
@@ -3137,6 +3973,13 @@ ALTER TABLE ONLY public.dcim_platform ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: dcim_powerfeed id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerfeed ALTER COLUMN id SET DEFAULT nextval('public.dcim_powerfeed_id_seq'::regclass);
+
+
+--
 -- Name: dcim_poweroutlet id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
@@ -3148,6 +3991,13 @@ ALTER TABLE ONLY public.dcim_poweroutlet ALTER COLUMN id SET DEFAULT nextval('pu
 --
 
 ALTER TABLE ONLY public.dcim_poweroutlettemplate ALTER COLUMN id SET DEFAULT nextval('public.dcim_poweroutlettemplate_id_seq'::regclass);
+
+
+--
+-- Name: dcim_powerpanel id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerpanel ALTER COLUMN id SET DEFAULT nextval('public.dcim_powerpanel_id_seq'::regclass);
 
 
 --
@@ -3193,6 +4043,20 @@ ALTER TABLE ONLY public.dcim_rackrole ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: dcim_rearport id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rearport ALTER COLUMN id SET DEFAULT nextval('public.dcim_rearport_id_seq'::regclass);
+
+
+--
+-- Name: dcim_rearporttemplate id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rearporttemplate ALTER COLUMN id SET DEFAULT nextval('public.dcim_rearporttemplate_id_seq'::regclass);
+
+
+--
 -- Name: dcim_region id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
@@ -3235,6 +4099,55 @@ ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: extras_configcontext id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext ALTER COLUMN id SET DEFAULT nextval('public.extras_configcontext_id_seq'::regclass);
+
+
+--
+-- Name: extras_configcontext_platforms id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_platforms ALTER COLUMN id SET DEFAULT nextval('public.extras_configcontext_platforms_id_seq'::regclass);
+
+
+--
+-- Name: extras_configcontext_regions id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_regions ALTER COLUMN id SET DEFAULT nextval('public.extras_configcontext_regions_id_seq'::regclass);
+
+
+--
+-- Name: extras_configcontext_roles id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_roles ALTER COLUMN id SET DEFAULT nextval('public.extras_configcontext_roles_id_seq'::regclass);
+
+
+--
+-- Name: extras_configcontext_sites id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_sites ALTER COLUMN id SET DEFAULT nextval('public.extras_configcontext_sites_id_seq'::regclass);
+
+
+--
+-- Name: extras_configcontext_tenant_groups id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_tenant_groups ALTER COLUMN id SET DEFAULT nextval('public.extras_configcontext_tenant_groups_id_seq'::regclass);
+
+
+--
+-- Name: extras_configcontext_tenants id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_tenants ALTER COLUMN id SET DEFAULT nextval('public.extras_configcontext_tenants_id_seq'::regclass);
+
+
+--
 -- Name: extras_customfield id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
@@ -3263,6 +4176,13 @@ ALTER TABLE ONLY public.extras_customfieldvalue ALTER COLUMN id SET DEFAULT next
 
 
 --
+-- Name: extras_customlink id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_customlink ALTER COLUMN id SET DEFAULT nextval('public.extras_customlink_id_seq'::regclass);
+
+
+--
 -- Name: extras_exporttemplate id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
@@ -3284,10 +4204,31 @@ ALTER TABLE ONLY public.extras_imageattachment ALTER COLUMN id SET DEFAULT nextv
 
 
 --
+-- Name: extras_objectchange id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_objectchange ALTER COLUMN id SET DEFAULT nextval('public.extras_objectchange_id_seq'::regclass);
+
+
+--
 -- Name: extras_reportresult id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
 ALTER TABLE ONLY public.extras_reportresult ALTER COLUMN id SET DEFAULT nextval('public.extras_reportresult_id_seq'::regclass);
+
+
+--
+-- Name: extras_tag id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_tag ALTER COLUMN id SET DEFAULT nextval('public.extras_tag_id_seq'::regclass);
+
+
+--
+-- Name: extras_taggeditem id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_taggeditem ALTER COLUMN id SET DEFAULT nextval('public.extras_taggeditem_id_seq'::regclass);
 
 
 --
@@ -3298,10 +4239,17 @@ ALTER TABLE ONLY public.extras_topologymap ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
--- Name: extras_useraction id; Type: DEFAULT; Schema: public; Owner: netbox
+-- Name: extras_webhook id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY public.extras_useraction ALTER COLUMN id SET DEFAULT nextval('public.extras_useraction_id_seq'::regclass);
+ALTER TABLE ONLY public.extras_webhook ALTER COLUMN id SET DEFAULT nextval('public.extras_webhook_id_seq'::regclass);
+
+
+--
+-- Name: extras_webhook_obj_type id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_webhook_obj_type ALTER COLUMN id SET DEFAULT nextval('public.extras_webhook_obj_type_id_seq'::regclass);
 
 
 --
@@ -3414,6 +4362,20 @@ ALTER TABLE ONLY public.secrets_sessionkey ALTER COLUMN id SET DEFAULT nextval('
 --
 
 ALTER TABLE ONLY public.secrets_userkey ALTER COLUMN id SET DEFAULT nextval('public.secrets_userkey_id_seq'::regclass);
+
+
+--
+-- Name: taggit_tag id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.taggit_tag ALTER COLUMN id SET DEFAULT nextval('public.taggit_tag_id_seq'::regclass);
+
+
+--
+-- Name: taggit_taggeditem id; Type: DEFAULT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.taggit_taggeditem ALTER COLUMN id SET DEFAULT nextval('public.taggit_taggeditem_id_seq'::regclass);
 
 
 --
@@ -3542,9 +4504,6 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 54	Can add interface	18	add_interface
 55	Can change interface	18	change_interface
 56	Can delete interface	18	delete_interface
-57	Can add interface connection	19	add_interfaceconnection
-58	Can change interface connection	19	change_interfaceconnection
-59	Can delete interface connection	19	delete_interfaceconnection
 60	Can add interface template	20	add_interfacetemplate
 61	Can change interface template	20	change_interfacetemplate
 62	Can delete interface template	20	delete_interfacetemplate
@@ -3681,6 +4640,137 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 193	Can add virtual machine	65	add_virtualmachine
 194	Can change virtual machine	65	change_virtualmachine
 195	Can delete virtual machine	65	delete_virtualmachine
+196	Can view log entry	1	view_logentry
+197	Can view permission	2	view_permission
+198	Can view group	3	view_group
+199	Can view user	4	view_user
+200	Can view content type	5	view_contenttype
+201	Can view session	6	view_session
+202	Can add Tag	66	add_tag
+203	Can change Tag	66	change_tag
+204	Can delete Tag	66	delete_tag
+205	Can view Tag	66	view_tag
+206	Can add Tagged Item	67	add_taggeditem
+207	Can change Tagged Item	67	change_taggeditem
+208	Can delete Tagged Item	67	delete_taggeditem
+209	Can view Tagged Item	67	view_taggeditem
+210	Can view provider	9	view_provider
+211	Can view circuit type	8	view_circuittype
+212	Can view circuit	7	view_circuit
+213	Can view circuit termination	10	view_circuittermination
+214	Can view console port	11	view_consoleport
+215	Can view console port template	12	view_consoleporttemplate
+216	Can view console server port	13	view_consoleserverport
+217	Can view console server port template	14	view_consoleserverporttemplate
+218	Can view device	15	view_device
+219	Can view device role	16	view_devicerole
+220	Can view device type	17	view_devicetype
+221	Can view interface	18	view_interface
+222	Can view interface template	20	view_interfacetemplate
+223	Can view manufacturer	21	view_manufacturer
+224	Can view platform	22	view_platform
+225	Can view power outlet	23	view_poweroutlet
+226	Can view power outlet template	24	view_poweroutlettemplate
+227	Can view power port	25	view_powerport
+228	Can view power port template	26	view_powerporttemplate
+229	Can view rack	27	view_rack
+230	Can view rack group	28	view_rackgroup
+231	Can view site	29	view_site
+232	Can view device bay	30	view_devicebay
+233	Can view device bay template	31	view_devicebaytemplate
+234	Can view rack role	32	view_rackrole
+235	Can view rack reservation	33	view_rackreservation
+236	Can view region	34	view_region
+237	Can view inventory item	35	view_inventoryitem
+238	Can view virtual chassis	36	view_virtualchassis
+239	Can add front port	68	add_frontport
+240	Can change front port	68	change_frontport
+241	Can delete front port	68	delete_frontport
+242	Can view front port	68	view_frontport
+243	Can add front port template	69	add_frontporttemplate
+244	Can change front port template	69	change_frontporttemplate
+245	Can delete front port template	69	delete_frontporttemplate
+246	Can view front port template	69	view_frontporttemplate
+247	Can add rear port	70	add_rearport
+248	Can change rear port	70	change_rearport
+249	Can delete rear port	70	delete_rearport
+250	Can view rear port	70	view_rearport
+251	Can add rear port template	71	add_rearporttemplate
+252	Can change rear port template	71	change_rearporttemplate
+253	Can delete rear port template	71	delete_rearporttemplate
+254	Can view rear port template	71	view_rearporttemplate
+255	Can add cable	72	add_cable
+256	Can change cable	72	change_cable
+257	Can delete cable	72	delete_cable
+258	Can view cable	72	view_cable
+259	Can add power feed	73	add_powerfeed
+260	Can change power feed	73	change_powerfeed
+261	Can delete power feed	73	delete_powerfeed
+262	Can view power feed	73	view_powerfeed
+263	Can add power panel	74	add_powerpanel
+264	Can change power panel	74	change_powerpanel
+265	Can delete power panel	74	delete_powerpanel
+266	Can view power panel	74	view_powerpanel
+267	Can view aggregate	37	view_aggregate
+268	Can view IP address	38	view_ipaddress
+269	Can view prefix	39	view_prefix
+270	Can view RIR	40	view_rir
+271	Can view role	41	view_role
+272	Can view VLAN	42	view_vlan
+273	Can view VRF	43	view_vrf
+274	Can view VLAN group	44	view_vlangroup
+275	Can view service	45	view_service
+276	Can view export template	46	view_exporttemplate
+277	Can view graph	47	view_graph
+278	Can view topology map	48	view_topologymap
+279	Can view custom field	50	view_customfield
+280	Can view custom field choice	51	view_customfieldchoice
+281	Can view custom field value	52	view_customfieldvalue
+282	Can view image attachment	53	view_imageattachment
+283	Can view report result	54	view_reportresult
+284	Can add webhook	75	add_webhook
+285	Can change webhook	75	change_webhook
+286	Can delete webhook	75	delete_webhook
+287	Can view webhook	75	view_webhook
+288	Can add object change	76	add_objectchange
+289	Can change object change	76	change_objectchange
+290	Can delete object change	76	delete_objectchange
+291	Can view object change	76	view_objectchange
+292	Can add config context	77	add_configcontext
+293	Can change config context	77	change_configcontext
+294	Can delete config context	77	delete_configcontext
+295	Can view config context	77	view_configcontext
+296	Can add tag	78	add_tag
+297	Can change tag	78	change_tag
+298	Can delete tag	78	delete_tag
+299	Can view tag	78	view_tag
+300	Can add tagged item	79	add_taggeditem
+301	Can change tagged item	79	change_taggeditem
+302	Can delete tagged item	79	delete_taggeditem
+303	Can view tagged item	79	view_taggeditem
+304	Can add custom link	80	add_customlink
+305	Can change custom link	80	change_customlink
+306	Can delete custom link	80	delete_customlink
+307	Can view custom link	80	view_customlink
+308	Can add script	81	add_script
+309	Can change script	81	change_script
+310	Can delete script	81	delete_script
+311	Can view script	81	view_script
+312	Can run script	81	run_script
+313	Can view secret role	56	view_secretrole
+314	Can view secret	55	view_secret
+315	Can view user key	57	view_userkey
+316	Can view session key	58	view_sessionkey
+317	Can view tenant	59	view_tenant
+318	Can view tenant group	60	view_tenantgroup
+319	Can add token	61	add_token
+320	Can change token	61	change_token
+321	Can delete token	61	delete_token
+322	Can view token	61	view_token
+323	Can view cluster	62	view_cluster
+324	Can view cluster group	63	view_clustergroup
+325	Can view cluster type	64	view_clustertype
+326	Can view virtual machine	65	view_virtualmachine
 \.
 
 
@@ -3689,7 +4779,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$36000$W5RibUfmeFJa$6HgqQ7rDj/0CL9MOYMk4TqVl3iQTF7OXq8oN8S5Ml/M=	2019-06-08 15:18:24.788869+00	t	admin			admin@example.com	t	t	2018-06-03 16:17:44.788445+00
+1	pbkdf2_sha256$150000$q6Z1TSrq70NI$EYoSJjgAqqsgT7L/94/1UcLCuTl20cvJY0ht7dE4yOg=	2019-12-29 11:10:15.418679+00	t	admin			admin@example.com	t	t	2018-06-03 16:17:44.788445+00
 \.
 
 
@@ -3721,7 +4811,7 @@ COPY public.circuits_circuit (id, created, last_updated, cid, install_date, comm
 -- Data for Name: circuits_circuittermination; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.circuits_circuittermination (id, term_side, port_speed, upstream_speed, xconnect_id, pp_info, circuit_id, interface_id, site_id) FROM stdin;
+COPY public.circuits_circuittermination (id, term_side, port_speed, upstream_speed, xconnect_id, pp_info, circuit_id, site_id, connected_endpoint_id, connection_status, cable_id, description) FROM stdin;
 \.
 
 
@@ -3729,7 +4819,7 @@ COPY public.circuits_circuittermination (id, term_side, port_speed, upstream_spe
 -- Data for Name: circuits_circuittype; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.circuits_circuittype (id, name, slug) FROM stdin;
+COPY public.circuits_circuittype (id, name, slug, created, last_updated) FROM stdin;
 \.
 
 
@@ -3742,10 +4832,18 @@ COPY public.circuits_provider (id, created, last_updated, name, slug, asn, accou
 
 
 --
+-- Data for Name: dcim_cable; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.dcim_cable (id, created, last_updated, termination_a_id, termination_b_id, type, status, label, color, length, length_unit, _abs_length, termination_a_type_id, termination_b_type_id, _termination_a_device_id, _termination_b_device_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: dcim_consoleport; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_consoleport (id, name, connection_status, cs_port_id, device_id) FROM stdin;
+COPY public.dcim_consoleport (id, name, connection_status, connected_endpoint_id, device_id, cable_id, description) FROM stdin;
 \.
 
 
@@ -3761,7 +4859,7 @@ COPY public.dcim_consoleporttemplate (id, name, device_type_id) FROM stdin;
 -- Data for Name: dcim_consoleserverport; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_consoleserverport (id, name, device_id) FROM stdin;
+COPY public.dcim_consoleserverport (id, name, device_id, cable_id, connection_status, description) FROM stdin;
 \.
 
 
@@ -3777,21 +4875,21 @@ COPY public.dcim_consoleserverporttemplate (id, name, device_type_id) FROM stdin
 -- Data for Name: dcim_device; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_device (id, created, last_updated, name, serial, "position", face, status, comments, device_role_id, device_type_id, platform_id, rack_id, primary_ip4_id, primary_ip6_id, tenant_id, asset_tag, site_id, cluster_id, virtual_chassis_id, vc_position, vc_priority) FROM stdin;
-5	2018-06-08	2018-06-08 21:58:28.048198+00	spine01		\N	\N	1		2	1	\N	2	\N	\N	\N	\N	1	\N	\N	\N	\N
-6	2018-06-08	2018-06-08 22:35:21.708373+00	spine02		\N	\N	1		2	1	\N	2	\N	\N	\N	\N	1	\N	\N	\N	\N
-7	2018-06-08	2018-06-09 07:42:23.365687+00	leaf03		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	1	\N	\N	\N	\N
-11	2018-06-09	2018-06-09 08:15:21.61264+00	super01		\N	\N	1		2	1	\N	5	\N	\N	\N	\N	1	\N	\N	\N	\N
-12	2018-06-09	2018-06-09 08:15:35.44707+00	super02		\N	\N	1		2	1	\N	5	\N	\N	\N	\N	1	\N	\N	\N	\N
-15	2018-06-09	2018-06-09 10:56:18.130143+00	rtr01		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
-16	2018-06-09	2018-06-09 10:56:18.153524+00	rtr02		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
-1	2018-06-03	2018-11-07 16:57:09.294214+00	leaf01		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N
-4	2018-06-08	2018-11-07 16:57:09.324612+00	leaf02		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N
-8	2018-06-09	2018-11-08 18:52:42.84008+00	leaf04		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	1	\N	\N	\N	\N
-9	2018-06-09	2019-06-08 15:19:27.946342+00	service01		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N
-10	2018-06-09	2019-06-08 15:19:45.693987+00	service02		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N
-13	2018-06-09	2019-06-08 15:20:08.981553+00	exit01		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
-14	2018-06-09	2019-06-08 15:20:30.346048+00	exit02		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
+COPY public.dcim_device (id, created, last_updated, name, serial, "position", face, status, comments, device_role_id, device_type_id, platform_id, rack_id, primary_ip4_id, primary_ip6_id, tenant_id, asset_tag, site_id, cluster_id, virtual_chassis_id, vc_position, vc_priority, local_context_data) FROM stdin;
+5	2018-06-08	2018-06-08 21:58:28.048198+00	spine01		\N	\N	1		2	1	\N	2	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+6	2018-06-08	2018-06-08 22:35:21.708373+00	spine02		\N	\N	1		2	1	\N	2	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+7	2018-06-08	2018-06-09 07:42:23.365687+00	leaf03		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+11	2018-06-09	2018-06-09 08:15:21.61264+00	super01		\N	\N	1		2	1	\N	5	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+12	2018-06-09	2018-06-09 08:15:35.44707+00	super02		\N	\N	1		2	1	\N	5	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+15	2018-06-09	2018-06-09 10:56:18.130143+00	rtr01		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+16	2018-06-09	2018-06-09 10:56:18.153524+00	rtr02		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+1	2018-06-03	2018-11-07 16:57:09.294214+00	leaf01		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+4	2018-06-08	2018-11-07 16:57:09.324612+00	leaf02		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+8	2018-06-09	2018-11-08 18:52:42.84008+00	leaf04		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+9	2018-06-09	2019-06-08 15:19:27.946342+00	service01		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+10	2018-06-09	2019-06-08 15:19:45.693987+00	service02		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+13	2018-06-09	2019-06-08 15:20:08.981553+00	exit01		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+14	2018-06-09	2019-06-08 15:20:30.346048+00	exit02		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
 \.
 
 
@@ -3799,7 +4897,7 @@ COPY public.dcim_device (id, created, last_updated, name, serial, "position", fa
 -- Data for Name: dcim_devicebay; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_devicebay (id, name, device_id, installed_device_id) FROM stdin;
+COPY public.dcim_devicebay (id, name, device_id, installed_device_id, description) FROM stdin;
 \.
 
 
@@ -3815,9 +4913,9 @@ COPY public.dcim_devicebaytemplate (id, name, device_type_id) FROM stdin;
 -- Data for Name: dcim_devicerole; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_devicerole (id, name, slug, color, vm_role) FROM stdin;
-1	Leaf	leaf	aa1409	f
-2	Spine	spine	aa1409	f
+COPY public.dcim_devicerole (id, name, slug, color, vm_role, created, last_updated) FROM stdin;
+1	Leaf	leaf	aa1409	f	2019-12-29	2019-12-29 11:09:41.654834+00
+2	Spine	spine	aa1409	f	2019-12-29	2019-12-29 11:09:41.654834+00
 \.
 
 
@@ -3825,8 +4923,24 @@ COPY public.dcim_devicerole (id, name, slug, color, vm_role) FROM stdin;
 -- Data for Name: dcim_devicetype; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_devicetype (id, model, slug, u_height, is_full_depth, is_console_server, is_pdu, is_network_device, manufacturer_id, subdevice_role, part_number, comments, interface_ordering) FROM stdin;
-1	Cumulus VX	cumulus-vx	0	f	f	f	t	1	\N			1
+COPY public.dcim_devicetype (id, model, slug, u_height, is_full_depth, manufacturer_id, subdevice_role, part_number, comments, created, last_updated) FROM stdin;
+1	Cumulus VX	cumulus-vx	0	f	1	\N			2019-12-29	2019-12-29 11:09:41.772023+00
+\.
+
+
+--
+-- Data for Name: dcim_frontport; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.dcim_frontport (id, name, type, rear_port_position, description, device_id, rear_port_id, cable_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: dcim_frontporttemplate; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.dcim_frontporttemplate (id, name, type, rear_port_position, device_type_id, rear_port_id) FROM stdin;
 \.
 
 
@@ -3834,157 +4948,157 @@ COPY public.dcim_devicetype (id, model, slug, u_height, is_full_depth, is_consol
 -- Data for Name: dcim_interface; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_interface (id, name, form_factor, mgmt_only, description, device_id, mac_address, lag_id, enabled, mtu, virtual_machine_id, mode, untagged_vlan_id) FROM stdin;
-2	swp1	1000	f		1	\N	1	t	\N	\N	\N	\N
-108	irb2501	0	f	bgp_external	13	\N	\N	t	\N	\N	100	7
-4	lo	0	f		1	\N	\N	t	\N	\N	\N	\N
-9	clagd-vxlan-anycast-ip	0	f		1	\N	\N	t	\N	\N	\N	\N
-109	irb2502	0	f	bgp_external	13	\N	\N	t	\N	\N	100	8
-87	peerlink.4094	0	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
-94	lo	0	f		11	\N	\N	t	\N	\N	\N	\N
-68	bond01	200	f		9	\N	\N	t	\N	\N	200	\N
-110	irb2503	0	f	bgp_external	13	\N	\N	t	\N	\N	100	9
-13	swp2	1000	f		1	\N	12	t	\N	\N	\N	\N
-111	irb2504	0	f	bgp_external	13	\N	\N	t	\N	\N	100	19
-3	irb1000	0	f		1	\N	\N	t	\N	\N	100	1
-137	irb1002	0	f		1	\N	\N	t	\N	\N	100	3
-5	peerlink	200	f		1	44:38:39:ff:01:02	\N	t	\N	\N	\N	\N
-8	peerlink.4094	0	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N
-16	bond02	200	f		4	\N	\N	t	\N	\N	200	\N
-69	bond02	200	f		9	\N	\N	t	\N	\N	200	\N
-17	clagd-vxlan-anycast-ip	0	f		4	\N	\N	t	\N	\N	\N	\N
-71	irb1000	0	f		9	\N	\N	t	\N	\N	100	1
-19	lo	0	f		4	\N	\N	t	\N	\N	\N	\N
-21	peerlink.4094	0	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N
-20	peerlink	200	f		4	44:38:39:ff:01:02	\N	t	\N	\N	\N	\N
-22	swp1	1000	f		4	\N	15	t	\N	\N	\N	\N
-23	swp2	1000	f		4	\N	16	t	\N	\N	\N	\N
-18	irb1000	0	f		4	\N	\N	t	\N	\N	100	1
-28	lo	0	f		5	\N	\N	t	\N	\N	\N	\N
-29	swp1	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N
-30	swp2	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N
-31	swp3	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N
-32	swp4	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N
-33	swp5	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N
-34	swp6	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N
-35	lo	0	f		6	\N	\N	t	\N	\N	\N	\N
-36	swp1	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N
-37	swp2	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N
-38	swp3	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N
-39	swp4	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N
-40	swp5	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N
-41	swp6	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N
-46	lo	0	f		7	\N	\N	t	\N	\N	\N	\N
-48	peerlink.4094	0	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
-81	bond01	200	f		10	\N	\N	t	\N	\N	200	\N
-70	clagd-vxlan-anycast-ip	0	f		9	\N	\N	t	\N	\N	\N	\N
-1	bond01	200	f		1	\N	\N	t	\N	\N	200	\N
-59	lo	0	f		8	\N	\N	t	\N	\N	\N	\N
-60	peerlink	200	f		8	44:38:39:ff:01:34	\N	t	\N	\N	\N	\N
-47	peerlink	200	f		7	44:38:39:ff:01:34	\N	t	\N	\N	\N	\N
-61	peerlink.4094	0	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
-72	lo	0	f		9	\N	\N	t	\N	\N	\N	\N
-74	peerlink.4094	0	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N
-75	swp1	1000	f		9	\N	68	t	\N	\N	\N	\N
-76	swp2	1000	f		9	\N	69	t	\N	\N	\N	\N
-73	peerlink	200	f		9	44:38:39:ff:01:56	\N	t	\N	\N	\N	\N
-83	clagd-vxlan-anycast-ip	0	f		10	\N	\N	t	\N	\N	\N	\N
-85	lo	0	f		10	\N	\N	t	\N	\N	\N	\N
-88	swp1	1000	f		10	\N	81	t	\N	\N	\N	\N
-89	swp2	1000	f		10	\N	82	t	\N	\N	\N	\N
-86	peerlink	200	f		10	44:38:39:ff:01:56	\N	t	\N	\N	\N	\N
-99	lo	0	f		12	\N	\N	t	\N	\N	\N	\N
-100	swp1	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N
-101	swp2	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N
-95	swp1	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N
-96	swp2	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N
-104	swp1	1000	f	bgp_underlay	13	\N	\N	t	\N	\N	\N	\N
-105	swp2	1000	f	bgp_underlay	13	\N	\N	t	\N	\N	\N	\N
-12	bond02	200	f		1	\N	\N	t	\N	\N	200	1
-15	bond01	200	f		4	\N	\N	t	\N	\N	200	\N
-82	bond02	200	f		10	\N	\N	t	\N	\N	200	\N
-106	swp49	1000	f		13	\N	\N	t	\N	\N	200	\N
-107	swp50	1000	f		13	\N	\N	t	\N	\N	200	\N
-115	irb2508	0	f	bgp_external	14	\N	\N	t	\N	\N	100	14
-116	swp1	1000	f	bgp_underlay	14	\N	\N	t	\N	\N	\N	\N
-117	swp2	1000	f	bgp_underlay	14	\N	\N	t	\N	\N	\N	\N
-129	swp2	1000	f		16	\N	\N	t	\N	\N	200	\N
-120	swp1	1000	f		15	\N	\N	t	\N	\N	200	\N
-121	swp2	1000	f		15	\N	\N	t	\N	\N	200	\N
-62	swp1	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
-63	swp2	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
-122	irb2501	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	7
-123	irb2502	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	8
-124	irb2505	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	11
-125	irb2506	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	12
-126	irb2701	0	f	bgp_external	15	\N	\N	t	\N	\N	100	16
-127	irb2702	0	f	bgp_external	15	\N	\N	t	\N	\N	100	17
-141	irb1001	0	f		4	\N	\N	t	\N	\N	100	2
-128	swp1	1000	f		16	\N	\N	t	\N	\N	200	\N
-142	irb1002	0	f		4	\N	\N	t	\N	\N	100	3
-11	swp52	1000	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N
-6	swp49	1000	f		1	\N	5	t	\N	\N	\N	\N
-7	swp50	1000	f		1	\N	5	t	\N	\N	\N	\N
-27	swp52	1000	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N
-25	swp50	1000	f		4	\N	20	t	\N	\N	\N	\N
-24	swp49	1000	f		4	\N	20	t	\N	\N	\N	\N
-54	swp52	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
-53	swp51	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
-52	swp50	1000	f		7	\N	47	t	\N	\N	\N	\N
-51	swp49	1000	f		7	\N	47	t	\N	\N	\N	\N
-67	swp52	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
-66	swp51	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
-65	swp50	1000	f		8	\N	60	t	\N	\N	\N	\N
-64	swp49	1000	f		8	\N	60	t	\N	\N	\N	\N
-79	swp53	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N
-80	swp54	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N
-77	swp49	1000	f		9	\N	73	t	\N	\N	\N	\N
-78	swp50	1000	f		9	\N	73	t	\N	\N	\N	\N
-92	swp53	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
-93	swp54	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
-90	swp49	1000	f		10	\N	86	t	\N	\N	\N	\N
-91	swp50	1000	f		10	\N	86	t	\N	\N	\N	\N
-98	swp7	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N
-102	swp6	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N
-103	swp7	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N
-130	irb2503	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	9
-131	irb2504	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	10
-132	irb2507	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	13
-133	irb2508	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	14
-134	irb2703	0	f	bgp_external	16	\N	\N	t	\N	\N	100	18
-135	irb2704	0	f	bgp_external	16	\N	\N	t	\N	\N	100	19
-143	irb1003	0	f		4	\N	\N	t	\N	\N	100	4
-118	swp49	1000	f		14	\N	\N	t	\N	\N	200	\N
-144	irb1004	0	f		4	\N	\N	t	\N	\N	100	5
-119	swp50	1000	f		14	\N	\N	t	\N	\N	200	\N
-112	irb2505	0	f	bgp_external	14	\N	\N	t	\N	\N	100	11
-145	irb1005	0	f		4	\N	\N	t	\N	\N	100	6
-113	irb2506	0	f	bgp_external	14	\N	\N	t	\N	\N	100	12
-114	irb2507	0	f	bgp_external	14	\N	\N	t	\N	\N	100	13
-156	irb1001	0	f		9	\N	\N	t	\N	\N	100	2
-157	irb1002	0	f		9	\N	\N	t	\N	\N	100	3
-158	irb1003	0	f		9	\N	\N	t	\N	\N	100	4
-159	irb1004	0	f		9	\N	\N	t	\N	\N	100	5
-160	irb1005	0	f		9	\N	\N	t	\N	\N	100	6
-136	irb1001	0	f		1	\N	\N	t	\N	\N	100	2
-138	irb1003	0	f		1	\N	\N	t	\N	\N	100	4
-139	irb1004	0	f		1	\N	\N	t	\N	\N	100	5
-140	irb1005	0	f		1	\N	\N	t	\N	\N	100	6
-161	irb1001	0	f		10	\N	\N	t	\N	\N	100	2
-162	irb1002	0	f		10	\N	\N	t	\N	\N	100	3
-163	irb1003	0	f		10	\N	\N	t	\N	\N	100	4
-164	irb1004	0	f		10	\N	\N	t	\N	\N	100	5
-165	irb1005	0	f		10	\N	\N	t	\N	\N	100	6
-84	irb1000	0	f		10	\N	\N	t	\N	\N	100	1
-166	swp51	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N
-167	swp52	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N
-168	swp51	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
-169	swp52	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
-49	swp1	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
-50	swp2	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
-10	swp51	1000	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N
-26	swp51	1000	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N
-97	swp6	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N
+COPY public.dcim_interface (id, name, type, mgmt_only, description, device_id, mac_address, lag_id, enabled, mtu, virtual_machine_id, mode, untagged_vlan_id, _connected_circuittermination_id, _connected_interface_id, connection_status, cable_id) FROM stdin;
+2	swp1	1000	f		1	\N	1	t	\N	\N	\N	\N	\N	\N	\N	\N
+108	irb2501	0	f	bgp_external	13	\N	\N	t	\N	\N	100	7	\N	\N	\N	\N
+4	lo	0	f		1	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+9	clagd-vxlan-anycast-ip	0	f		1	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+109	irb2502	0	f	bgp_external	13	\N	\N	t	\N	\N	100	8	\N	\N	\N	\N
+87	peerlink.4094	0	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+94	lo	0	f		11	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+68	bond01	200	f		9	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+110	irb2503	0	f	bgp_external	13	\N	\N	t	\N	\N	100	9	\N	\N	\N	\N
+13	swp2	1000	f		1	\N	12	t	\N	\N	\N	\N	\N	\N	\N	\N
+111	irb2504	0	f	bgp_external	13	\N	\N	t	\N	\N	100	19	\N	\N	\N	\N
+3	irb1000	0	f		1	\N	\N	t	\N	\N	100	1	\N	\N	\N	\N
+137	irb1002	0	f		1	\N	\N	t	\N	\N	100	3	\N	\N	\N	\N
+5	peerlink	200	f		1	44:38:39:ff:01:02	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+8	peerlink.4094	0	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+16	bond02	200	f		4	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+69	bond02	200	f		9	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+17	clagd-vxlan-anycast-ip	0	f		4	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+71	irb1000	0	f		9	\N	\N	t	\N	\N	100	1	\N	\N	\N	\N
+19	lo	0	f		4	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+21	peerlink.4094	0	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+20	peerlink	200	f		4	44:38:39:ff:01:02	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+22	swp1	1000	f		4	\N	15	t	\N	\N	\N	\N	\N	\N	\N	\N
+23	swp2	1000	f		4	\N	16	t	\N	\N	\N	\N	\N	\N	\N	\N
+18	irb1000	0	f		4	\N	\N	t	\N	\N	100	1	\N	\N	\N	\N
+28	lo	0	f		5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+29	swp1	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+30	swp2	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+31	swp3	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+32	swp4	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+33	swp5	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+34	swp6	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+35	lo	0	f		6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+36	swp1	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+37	swp2	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+38	swp3	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+39	swp4	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+40	swp5	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+41	swp6	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+46	lo	0	f		7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+48	peerlink.4094	0	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+81	bond01	200	f		10	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+70	clagd-vxlan-anycast-ip	0	f		9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1	bond01	200	f		1	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+59	lo	0	f		8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+60	peerlink	200	f		8	44:38:39:ff:01:34	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+47	peerlink	200	f		7	44:38:39:ff:01:34	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+61	peerlink.4094	0	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+72	lo	0	f		9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+74	peerlink.4094	0	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+75	swp1	1000	f		9	\N	68	t	\N	\N	\N	\N	\N	\N	\N	\N
+76	swp2	1000	f		9	\N	69	t	\N	\N	\N	\N	\N	\N	\N	\N
+73	peerlink	200	f		9	44:38:39:ff:01:56	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+83	clagd-vxlan-anycast-ip	0	f		10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+85	lo	0	f		10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+88	swp1	1000	f		10	\N	81	t	\N	\N	\N	\N	\N	\N	\N	\N
+89	swp2	1000	f		10	\N	82	t	\N	\N	\N	\N	\N	\N	\N	\N
+86	peerlink	200	f		10	44:38:39:ff:01:56	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+99	lo	0	f		12	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+100	swp1	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+101	swp2	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+95	swp1	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+96	swp2	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+104	swp1	1000	f	bgp_underlay	13	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+105	swp2	1000	f	bgp_underlay	13	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+12	bond02	200	f		1	\N	\N	t	\N	\N	200	1	\N	\N	\N	\N
+15	bond01	200	f		4	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+82	bond02	200	f		10	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+106	swp49	1000	f		13	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+107	swp50	1000	f		13	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+115	irb2508	0	f	bgp_external	14	\N	\N	t	\N	\N	100	14	\N	\N	\N	\N
+116	swp1	1000	f	bgp_underlay	14	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+117	swp2	1000	f	bgp_underlay	14	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+129	swp2	1000	f		16	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+120	swp1	1000	f		15	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+121	swp2	1000	f		15	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+62	swp1	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+63	swp2	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+122	irb2501	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	7	\N	\N	\N	\N
+123	irb2502	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	8	\N	\N	\N	\N
+124	irb2505	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	11	\N	\N	\N	\N
+125	irb2506	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	12	\N	\N	\N	\N
+126	irb2701	0	f	bgp_external	15	\N	\N	t	\N	\N	100	16	\N	\N	\N	\N
+127	irb2702	0	f	bgp_external	15	\N	\N	t	\N	\N	100	17	\N	\N	\N	\N
+141	irb1001	0	f		4	\N	\N	t	\N	\N	100	2	\N	\N	\N	\N
+128	swp1	1000	f		16	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+142	irb1002	0	f		4	\N	\N	t	\N	\N	100	3	\N	\N	\N	\N
+11	swp52	1000	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+6	swp49	1000	f		1	\N	5	t	\N	\N	\N	\N	\N	\N	\N	\N
+7	swp50	1000	f		1	\N	5	t	\N	\N	\N	\N	\N	\N	\N	\N
+27	swp52	1000	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+25	swp50	1000	f		4	\N	20	t	\N	\N	\N	\N	\N	\N	\N	\N
+24	swp49	1000	f		4	\N	20	t	\N	\N	\N	\N	\N	\N	\N	\N
+54	swp52	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+53	swp51	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+52	swp50	1000	f		7	\N	47	t	\N	\N	\N	\N	\N	\N	\N	\N
+51	swp49	1000	f		7	\N	47	t	\N	\N	\N	\N	\N	\N	\N	\N
+67	swp52	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+66	swp51	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+65	swp50	1000	f		8	\N	60	t	\N	\N	\N	\N	\N	\N	\N	\N
+64	swp49	1000	f		8	\N	60	t	\N	\N	\N	\N	\N	\N	\N	\N
+79	swp53	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+80	swp54	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+77	swp49	1000	f		9	\N	73	t	\N	\N	\N	\N	\N	\N	\N	\N
+78	swp50	1000	f		9	\N	73	t	\N	\N	\N	\N	\N	\N	\N	\N
+92	swp53	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+93	swp54	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+90	swp49	1000	f		10	\N	86	t	\N	\N	\N	\N	\N	\N	\N	\N
+91	swp50	1000	f		10	\N	86	t	\N	\N	\N	\N	\N	\N	\N	\N
+98	swp7	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+102	swp6	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+103	swp7	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+130	irb2503	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	9	\N	\N	\N	\N
+131	irb2504	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	10	\N	\N	\N	\N
+132	irb2507	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	13	\N	\N	\N	\N
+133	irb2508	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	14	\N	\N	\N	\N
+134	irb2703	0	f	bgp_external	16	\N	\N	t	\N	\N	100	18	\N	\N	\N	\N
+135	irb2704	0	f	bgp_external	16	\N	\N	t	\N	\N	100	19	\N	\N	\N	\N
+143	irb1003	0	f		4	\N	\N	t	\N	\N	100	4	\N	\N	\N	\N
+118	swp49	1000	f		14	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+144	irb1004	0	f		4	\N	\N	t	\N	\N	100	5	\N	\N	\N	\N
+119	swp50	1000	f		14	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
+112	irb2505	0	f	bgp_external	14	\N	\N	t	\N	\N	100	11	\N	\N	\N	\N
+145	irb1005	0	f		4	\N	\N	t	\N	\N	100	6	\N	\N	\N	\N
+113	irb2506	0	f	bgp_external	14	\N	\N	t	\N	\N	100	12	\N	\N	\N	\N
+114	irb2507	0	f	bgp_external	14	\N	\N	t	\N	\N	100	13	\N	\N	\N	\N
+156	irb1001	0	f		9	\N	\N	t	\N	\N	100	2	\N	\N	\N	\N
+157	irb1002	0	f		9	\N	\N	t	\N	\N	100	3	\N	\N	\N	\N
+158	irb1003	0	f		9	\N	\N	t	\N	\N	100	4	\N	\N	\N	\N
+159	irb1004	0	f		9	\N	\N	t	\N	\N	100	5	\N	\N	\N	\N
+160	irb1005	0	f		9	\N	\N	t	\N	\N	100	6	\N	\N	\N	\N
+136	irb1001	0	f		1	\N	\N	t	\N	\N	100	2	\N	\N	\N	\N
+138	irb1003	0	f		1	\N	\N	t	\N	\N	100	4	\N	\N	\N	\N
+139	irb1004	0	f		1	\N	\N	t	\N	\N	100	5	\N	\N	\N	\N
+140	irb1005	0	f		1	\N	\N	t	\N	\N	100	6	\N	\N	\N	\N
+161	irb1001	0	f		10	\N	\N	t	\N	\N	100	2	\N	\N	\N	\N
+162	irb1002	0	f		10	\N	\N	t	\N	\N	100	3	\N	\N	\N	\N
+163	irb1003	0	f		10	\N	\N	t	\N	\N	100	4	\N	\N	\N	\N
+164	irb1004	0	f		10	\N	\N	t	\N	\N	100	5	\N	\N	\N	\N
+165	irb1005	0	f		10	\N	\N	t	\N	\N	100	6	\N	\N	\N	\N
+84	irb1000	0	f		10	\N	\N	t	\N	\N	100	1	\N	\N	\N	\N
+166	swp51	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+167	swp52	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+168	swp51	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+169	swp52	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+49	swp1	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+50	swp2	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+10	swp51	1000	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+26	swp51	1000	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+97	swp6	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 \.
 
 
@@ -4061,18 +5175,10 @@ COPY public.dcim_interface_tagged_vlans (id, interface_id, vlan_id) FROM stdin;
 
 
 --
--- Data for Name: dcim_interfaceconnection; Type: TABLE DATA; Schema: public; Owner: netbox
---
-
-COPY public.dcim_interfaceconnection (id, connection_status, interface_a_id, interface_b_id) FROM stdin;
-\.
-
-
---
 -- Data for Name: dcim_interfacetemplate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_interfacetemplate (id, name, form_factor, mgmt_only, device_type_id) FROM stdin;
+COPY public.dcim_interfacetemplate (id, name, type, mgmt_only, device_type_id) FROM stdin;
 \.
 
 
@@ -4088,8 +5194,8 @@ COPY public.dcim_inventoryitem (id, name, part_id, serial, discovered, device_id
 -- Data for Name: dcim_manufacturer; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_manufacturer (id, name, slug) FROM stdin;
-1	Cumulus Networks	cumulus-networks
+COPY public.dcim_manufacturer (id, name, slug, created, last_updated) FROM stdin;
+1	Cumulus Networks	cumulus-networks	2019-12-29	2019-12-29 11:09:41.8681+00
 \.
 
 
@@ -4097,8 +5203,16 @@ COPY public.dcim_manufacturer (id, name, slug) FROM stdin;
 -- Data for Name: dcim_platform; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_platform (id, name, slug, rpc_client, napalm_driver, manufacturer_id) FROM stdin;
-1	Cumulus VX	cumulus-vx			1
+COPY public.dcim_platform (id, name, slug, napalm_driver, manufacturer_id, created, last_updated, napalm_args) FROM stdin;
+1	Cumulus VX	cumulus-vx		1	2019-12-29	2019-12-29 11:09:41.953044+00	\N
+\.
+
+
+--
+-- Data for Name: dcim_powerfeed; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.dcim_powerfeed (id, created, last_updated, name, status, type, supply, phase, voltage, amperage, max_utilization, available_power, comments, cable_id, power_panel_id, rack_id, connected_endpoint_id, connection_status) FROM stdin;
 \.
 
 
@@ -4106,7 +5220,7 @@ COPY public.dcim_platform (id, name, slug, rpc_client, napalm_driver, manufactur
 -- Data for Name: dcim_poweroutlet; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_poweroutlet (id, name, device_id) FROM stdin;
+COPY public.dcim_poweroutlet (id, name, device_id, cable_id, connection_status, description, feed_leg, power_port_id) FROM stdin;
 \.
 
 
@@ -4114,7 +5228,15 @@ COPY public.dcim_poweroutlet (id, name, device_id) FROM stdin;
 -- Data for Name: dcim_poweroutlettemplate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_poweroutlettemplate (id, name, device_type_id) FROM stdin;
+COPY public.dcim_poweroutlettemplate (id, name, device_type_id, feed_leg, power_port_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: dcim_powerpanel; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.dcim_powerpanel (id, created, last_updated, name, rack_group_id, site_id) FROM stdin;
 \.
 
 
@@ -4122,7 +5244,7 @@ COPY public.dcim_poweroutlettemplate (id, name, device_type_id) FROM stdin;
 -- Data for Name: dcim_powerport; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_powerport (id, name, connection_status, device_id, power_outlet_id) FROM stdin;
+COPY public.dcim_powerport (id, name, connection_status, device_id, _connected_poweroutlet_id, cable_id, description, _connected_powerfeed_id, allocated_draw, maximum_draw) FROM stdin;
 \.
 
 
@@ -4130,7 +5252,7 @@ COPY public.dcim_powerport (id, name, connection_status, device_id, power_outlet
 -- Data for Name: dcim_powerporttemplate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_powerporttemplate (id, name, device_type_id) FROM stdin;
+COPY public.dcim_powerporttemplate (id, name, device_type_id, allocated_draw, maximum_draw) FROM stdin;
 \.
 
 
@@ -4138,14 +5260,14 @@ COPY public.dcim_powerporttemplate (id, name, device_type_id) FROM stdin;
 -- Data for Name: dcim_rack; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_rack (id, created, last_updated, name, facility_id, u_height, comments, group_id, site_id, tenant_id, type, width, role_id, desc_units, serial) FROM stdin;
-1	2018-06-03	2018-06-09 00:29:07.362749+00	Rack1-pod1	\N	42		1	1	\N	\N	19	\N	f	
-2	2018-06-08	2018-06-09 00:29:24.68451+00	Spine-pod1	\N	42		1	1	\N	\N	19	\N	f	
-3	2018-06-09	2018-06-09 07:40:04.44653+00	Rack2-pod1	\N	42		1	1	\N	\N	19	\N	f	
-4	2018-06-09	2018-06-09 07:40:04.458497+00	Rack3-pod1	\N	42		1	1	\N	\N	19	\N	f	
-5	2018-06-09	2018-06-09 07:41:25.050604+00	Superspine	\N	42		3	1	\N	\N	19	\N	f	
-6	2018-06-09	2018-06-09 07:41:44.847313+00	Edge	\N	42		2	1	\N	\N	19	\N	f	
-7	2018-06-09	2018-06-09 07:44:02.190232+00	exit02	\N	42		1	1	\N	\N	19	\N	f	
+COPY public.dcim_rack (id, created, last_updated, name, facility_id, u_height, comments, group_id, site_id, tenant_id, type, width, role_id, desc_units, serial, status, asset_tag, outer_depth, outer_unit, outer_width) FROM stdin;
+1	2018-06-03	2018-06-09 00:29:07.362749+00	Rack1-pod1	\N	42		1	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
+2	2018-06-08	2018-06-09 00:29:24.68451+00	Spine-pod1	\N	42		1	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
+3	2018-06-09	2018-06-09 07:40:04.44653+00	Rack2-pod1	\N	42		1	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
+4	2018-06-09	2018-06-09 07:40:04.458497+00	Rack3-pod1	\N	42		1	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
+5	2018-06-09	2018-06-09 07:41:25.050604+00	Superspine	\N	42		3	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
+6	2018-06-09	2018-06-09 07:41:44.847313+00	Edge	\N	42		2	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
+7	2018-06-09	2018-06-09 07:44:02.190232+00	exit02	\N	42		1	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
 \.
 
 
@@ -4153,10 +5275,10 @@ COPY public.dcim_rack (id, created, last_updated, name, facility_id, u_height, c
 -- Data for Name: dcim_rackgroup; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_rackgroup (id, name, slug, site_id) FROM stdin;
-1	Pod1	pod1	1
-2	Edge	edge	1
-3	Superspine	superspine	1
+COPY public.dcim_rackgroup (id, name, slug, site_id, created, last_updated) FROM stdin;
+1	Pod1	pod1	1	2019-12-29	2019-12-29 11:09:42.04854+00
+2	Edge	edge	1	2019-12-29	2019-12-29 11:09:42.04854+00
+3	Superspine	superspine	1	2019-12-29	2019-12-29 11:09:42.04854+00
 \.
 
 
@@ -4164,7 +5286,7 @@ COPY public.dcim_rackgroup (id, name, slug, site_id) FROM stdin;
 -- Data for Name: dcim_rackreservation; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_rackreservation (id, units, created, description, rack_id, user_id, tenant_id) FROM stdin;
+COPY public.dcim_rackreservation (id, units, created, description, rack_id, user_id, tenant_id, last_updated) FROM stdin;
 \.
 
 
@@ -4172,7 +5294,23 @@ COPY public.dcim_rackreservation (id, units, created, description, rack_id, user
 -- Data for Name: dcim_rackrole; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_rackrole (id, name, slug, color) FROM stdin;
+COPY public.dcim_rackrole (id, name, slug, color, created, last_updated) FROM stdin;
+\.
+
+
+--
+-- Data for Name: dcim_rearport; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.dcim_rearport (id, name, type, positions, description, device_id, cable_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: dcim_rearporttemplate; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.dcim_rearporttemplate (id, name, type, positions, device_type_id) FROM stdin;
 \.
 
 
@@ -4180,7 +5318,7 @@ COPY public.dcim_rackrole (id, name, slug, color) FROM stdin;
 -- Data for Name: dcim_region; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_region (id, name, slug, lft, rght, tree_id, level, parent_id) FROM stdin;
+COPY public.dcim_region (id, name, slug, lft, rght, tree_id, level, parent_id, created, last_updated) FROM stdin;
 \.
 
 
@@ -4188,8 +5326,8 @@ COPY public.dcim_region (id, name, slug, lft, rght, tree_id, level, parent_id) F
 -- Data for Name: dcim_site; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_site (id, created, last_updated, name, slug, facility, asn, physical_address, shipping_address, comments, tenant_id, contact_email, contact_name, contact_phone, region_id, description, status, time_zone) FROM stdin;
-1	2018-06-03	2018-06-03 16:38:35.013009+00	Virtual Topology	virtual-topology		\N				\N				\N		1	
+COPY public.dcim_site (id, created, last_updated, name, slug, facility, asn, physical_address, shipping_address, comments, tenant_id, contact_email, contact_name, contact_phone, region_id, description, status, time_zone, latitude, longitude) FROM stdin;
+1	2018-06-03	2018-06-03 16:38:35.013009+00	Virtual Topology	virtual-topology		\N				\N				\N		1		\N	\N
 \.
 
 
@@ -4197,7 +5335,7 @@ COPY public.dcim_site (id, created, last_updated, name, slug, facility, asn, phy
 -- Data for Name: dcim_virtualchassis; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.dcim_virtualchassis (id, domain, master_id) FROM stdin;
+COPY public.dcim_virtualchassis (id, domain, master_id, created, last_updated) FROM stdin;
 \.
 
 
@@ -4239,7 +5377,6 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 16	dcim	devicerole
 17	dcim	devicetype
 18	dcim	interface
-19	dcim	interfaceconnection
 20	dcim	interfacetemplate
 21	dcim	manufacturer
 22	dcim	platform
@@ -4286,6 +5423,22 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 63	virtualization	clustergroup
 64	virtualization	clustertype
 65	virtualization	virtualmachine
+66	taggit	tag
+67	taggit	taggeditem
+68	dcim	frontport
+69	dcim	frontporttemplate
+70	dcim	rearport
+71	dcim	rearporttemplate
+72	dcim	cable
+73	dcim	powerfeed
+74	dcim	powerpanel
+75	extras	webhook
+76	extras	objectchange
+77	extras	configcontext
+78	extras	tag
+79	extras	taggeditem
+80	extras	customlink
+81	extras	script
 \.
 
 
@@ -4415,6 +5568,84 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 119	virtualization	0002_virtualmachine_add_status	2018-06-03 16:17:41.159908+00
 120	virtualization	0003_cluster_add_site	2018-06-03 16:17:41.29214+00
 121	virtualization	0004_virtualmachine_add_role	2018-06-03 16:17:41.404554+00
+122	admin	0003_logentry_add_action_flag_choices	2019-12-29 11:09:39.430005+00
+123	auth	0009_alter_user_last_name_max_length	2019-12-29 11:09:39.451182+00
+124	auth	0010_alter_group_name_max_length	2019-12-29 11:09:39.468087+00
+125	auth	0011_update_proxy_permissions	2019-12-29 11:09:39.529037+00
+126	taggit	0001_initial	2019-12-29 11:09:39.561795+00
+127	taggit	0002_auto_20150616_2121	2019-12-29 11:09:39.590578+00
+128	tenancy	0004_tags	2019-12-29 11:09:39.744639+00
+129	tenancy	0005_change_logging	2019-12-29 11:09:39.823149+00
+130	extras	0011_django2	2019-12-29 11:09:40.032989+00
+131	extras	0012_webhooks	2019-12-29 11:09:40.124234+00
+132	extras	0013_objectchange	2019-12-29 11:09:40.226621+00
+133	dcim	0056_django2	2019-12-29 11:09:40.409317+00
+134	dcim	0057_tags	2019-12-29 11:09:41.451608+00
+135	dcim	0058_relax_rack_naming_constraints	2019-12-29 11:09:41.534207+00
+136	dcim	0059_site_latitude_longitude	2019-12-29 11:09:41.603434+00
+137	dcim	0060_change_logging	2019-12-29 11:09:42.729807+00
+138	dcim	0061_platform_napalm_args	2019-12-29 11:09:42.75398+00
+139	extras	0014_configcontexts	2019-12-29 11:09:43.068475+00
+140	extras	0015_remove_useraction	2019-12-29 11:09:43.3428+00
+141	extras	0016_exporttemplate_add_cable	2019-12-29 11:09:43.571428+00
+142	extras	0017_exporttemplate_mime_type_length	2019-12-29 11:09:43.594135+00
+143	extras	0018_exporttemplate_add_jinja2	2019-12-29 11:09:43.709202+00
+144	extras	0019_tag_taggeditem	2019-12-29 11:09:43.805301+00
+145	dcim	0062_interface_mtu	2019-12-29 11:09:43.937129+00
+146	dcim	0063_device_local_context_data	2019-12-29 11:09:43.971013+00
+147	dcim	0064_remove_platform_rpc_client	2019-12-29 11:09:43.988708+00
+148	dcim	0065_front_rear_ports	2019-12-29 11:09:44.734306+00
+149	dcim	0066_cables	2019-12-29 11:09:47.200293+00
+150	circuits	0011_tags	2019-12-29 11:09:47.547983+00
+151	circuits	0012_change_logging	2019-12-29 11:09:47.738473+00
+152	circuits	0013_cables	2019-12-29 11:09:48.048914+00
+153	circuits	0014_circuittermination_description	2019-12-29 11:09:48.113247+00
+154	circuits	0015_custom_tag_models	2019-12-29 11:09:48.40512+00
+155	virtualization	0005_django2	2019-12-29 11:09:48.477065+00
+156	virtualization	0006_tags	2019-12-29 11:09:48.605912+00
+157	virtualization	0007_change_logging	2019-12-29 11:09:48.8883+00
+158	virtualization	0008_virtualmachine_local_context_data	2019-12-29 11:09:48.927548+00
+159	virtualization	0009_custom_tag_models	2019-12-29 11:09:49.069739+00
+160	tenancy	0006_custom_tag_models	2019-12-29 11:09:49.369364+00
+161	secrets	0004_tags	2019-12-29 11:09:49.443368+00
+162	secrets	0005_change_logging	2019-12-29 11:09:49.595149+00
+163	secrets	0006_custom_tag_models	2019-12-29 11:09:49.661392+00
+164	ipam	0022_tags	2019-12-29 11:09:50.309986+00
+165	ipam	0023_change_logging	2019-12-29 11:09:50.908553+00
+166	ipam	0024_vrf_allow_null_rd	2019-12-29 11:09:50.943427+00
+167	ipam	0025_custom_tag_models	2019-12-29 11:09:51.475889+00
+168	dcim	0067_device_type_remove_qualifiers	2019-12-29 11:09:51.555497+00
+169	dcim	0068_rack_new_fields	2019-12-29 11:09:51.755026+00
+170	dcim	0069_deprecate_nullablecharfield	2019-12-29 11:09:52.097556+00
+171	dcim	0070_custom_tag_models	2019-12-29 11:09:53.362702+00
+172	extras	0020_tag_data	2019-12-29 11:09:53.84232+00
+173	extras	0021_add_color_comments_changelog_to_tag	2019-12-29 11:09:54.132555+00
+174	dcim	0071_device_components_add_description	2019-12-29 11:09:54.614342+00
+175	dcim	0072_powerfeeds	2019-12-29 11:09:55.769476+00
+176	dcim	0073_interface_form_factor_to_type	2019-12-29 11:09:55.9561+00
+177	dcim	0074_increase_field_length_platform_name_slug	2019-12-29 11:09:56.001294+00
+178	dcim	0075_cable_devices	2019-12-29 11:09:56.477052+00
+179	extras	0022_custom_links	2019-12-29 11:09:56.854751+00
+180	extras	0023_fix_tag_sequences	2019-12-29 11:09:56.878661+00
+181	extras	0024_scripts	2019-12-29 11:09:56.887558+00
+182	extras	0025_objectchange_time_index	2019-12-29 11:09:56.919924+00
+183	extras	0026_webhook_ca_file_path	2019-12-29 11:09:56.940257+00
+184	extras	0027_webhook_additional_headers	2019-12-29 11:09:56.958968+00
+185	ipam	0026_prefix_ordering_vrf_nulls_first	2019-12-29 11:09:57.191347+00
+186	ipam	0027_ipaddress_add_dns_name	2019-12-29 11:09:57.275965+00
+187	taggit	0003_taggeditem_add_unique_index	2019-12-29 11:09:57.298029+00
+188	users	0003_token_permissions	2019-12-29 11:09:57.319783+00
+189	circuits	0001_initial_squashed_0010_circuit_status	2019-12-29 11:09:57.330047+00
+190	dcim	0023_devicetype_comments_squashed_0043_device_component_name_lengths	2019-12-29 11:09:57.332216+00
+191	dcim	0002_auto_20160622_1821_squashed_0022_color_names_to_rgb	2019-12-29 11:09:57.333963+00
+192	dcim	0044_virtualization_squashed_0055_virtualchassis_ordering	2019-12-29 11:09:57.335687+00
+193	ipam	0002_vrf_add_enforce_unique_squashed_0018_remove_service_uniqueness_constraint	2019-12-29 11:09:57.337267+00
+194	ipam	0019_virtualization_squashed_0020_ipaddress_add_role_carp	2019-12-29 11:09:57.339175+00
+195	extras	0001_initial_squashed_0010_customfield_filter_logic	2019-12-29 11:09:57.340786+00
+196	secrets	0001_initial_squashed_0003_unicode_literals	2019-12-29 11:09:57.34259+00
+197	tenancy	0002_tenant_group_optional_squashed_0003_unicode_literals	2019-12-29 11:09:57.344239+00
+198	users	0001_api_tokens_squashed_0002_unicode_literals	2019-12-29 11:09:57.345907+00
+199	virtualization	0002_virtualmachine_add_status_squashed_0004_virtualmachine_add_role	2019-12-29 11:09:57.349484+00
 \.
 
 
@@ -4427,6 +5658,63 @@ czyfvr6s07tikkqorkj3cpuefj8ggdh5	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjd
 w0iodv1mnxosfpa14r1ci8g3q6r0smwc	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2018-06-23 08:06:39.472226+00
 4cq56ympmhiax6s49ruxg8k4uzlpdske	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2018-11-21 16:46:12.853948+00
 9h2c8w1m0snowc5woe4bj5jthfnp6v3x	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2019-06-22 15:18:24.791615+00
+cfap2t1gcwkc3os14v1p81uwib2r14jf	NDgxYTU0NGE3Y2ZhNDYzMzIzM2ZkZWIyNTUzMDlkMDBiMWM0Yjg2MDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoidXRpbGl0aWVzLmF1dGhfYmFja2VuZHMuVmlld0V4ZW1wdE1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IjE2MDY2MmY4N2IyMDM3NzdkNjA3NDE1OGZiNTZkYjI2NTE0OGNlMjkifQ==	2020-01-12 11:10:15.42396+00
+\.
+
+
+--
+-- Data for Name: extras_configcontext; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_configcontext (id, name, weight, description, is_active, data) FROM stdin;
+\.
+
+
+--
+-- Data for Name: extras_configcontext_platforms; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_configcontext_platforms (id, configcontext_id, platform_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: extras_configcontext_regions; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_configcontext_regions (id, configcontext_id, region_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: extras_configcontext_roles; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_configcontext_roles (id, configcontext_id, devicerole_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: extras_configcontext_sites; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_configcontext_sites (id, configcontext_id, site_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: extras_configcontext_tenant_groups; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_configcontext_tenant_groups (id, configcontext_id, tenantgroup_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: extras_configcontext_tenants; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_configcontext_tenants (id, configcontext_id, tenant_id) FROM stdin;
 \.
 
 
@@ -4495,10 +5783,18 @@ COPY public.extras_customfieldvalue (id, obj_id, serialized_value, field_id, obj
 
 
 --
+-- Data for Name: extras_customlink; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_customlink (id, name, text, url, weight, group_name, button_class, new_window, content_type_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: extras_exporttemplate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.extras_exporttemplate (id, name, template_code, mime_type, file_extension, content_type_id, description) FROM stdin;
+COPY public.extras_exporttemplate (id, name, template_code, mime_type, file_extension, content_type_id, description, template_language) FROM stdin;
 \.
 
 
@@ -4519,10 +5815,34 @@ COPY public.extras_imageattachment (id, object_id, image, image_height, image_wi
 
 
 --
+-- Data for Name: extras_objectchange; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_objectchange (id, "time", user_name, request_id, action, changed_object_id, related_object_id, object_repr, object_data, changed_object_type_id, related_object_type_id, user_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: extras_reportresult; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
 COPY public.extras_reportresult (id, report, created, failed, data, user_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: extras_tag; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_tag (id, name, slug, color, comments, created, last_updated) FROM stdin;
+\.
+
+
+--
+-- Data for Name: extras_taggeditem; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_taggeditem (id, object_id, content_type_id, tag_id) FROM stdin;
 \.
 
 
@@ -4535,611 +5855,18 @@ COPY public.extras_topologymap (id, name, slug, device_patterns, description, si
 
 
 --
--- Data for Name: extras_useraction; Type: TABLE DATA; Schema: public; Owner: netbox
+-- Data for Name: extras_webhook; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.extras_useraction (id, "time", object_id, action, message, content_type_id, user_id) FROM stdin;
-1	2018-06-03 16:31:55.138526+00	1	1	Created device role <a href="/dcim/devices/?role=leaf">Leaf</a>	16	1
-2	2018-06-03 16:32:09.473146+00	2	1	Created device role <a href="/dcim/devices/?role=spine">Spine</a>	16	1
-3	2018-06-03 16:33:42.610914+00	1	1	Created manufacturer <a href="/dcim/device-types/?manufacturer=cumulus-networks">Cumulus Networks</a>	21	1
-4	2018-06-03 16:34:10.636936+00	1	1	Created device type <a href="/dcim/device-types/1/">Cumulus VX</a>	17	1
-5	2018-06-03 16:38:35.026179+00	1	1	Created site <a href="/dcim/sites/virtual-topology/">Virtual Topology</a>	29	1
-6	2018-06-03 16:39:28.242071+00	1	1	Created rack group <a href="/dcim/racks/?group_id=1">Pod1</a>	28	1
-7	2018-06-03 16:39:55.44697+00	1	1	Created rack <a href="/dcim/racks/1/">Rack1</a>	27	1
-8	2018-06-03 16:44:47.119375+00	1	1	Created device <a href="/dcim/devices/1/">leaf01</a>	15	1
-9	2018-06-03 16:50:11.660993+00	2	1	Created device <a href="/dcim/devices/2/">leaf02</a>	15	1
-10	2018-06-03 16:54:55.129308+00	2	3	Modified device <a href="/dcim/devices/2/">leaf02</a>	15	1
-11	2018-06-03 17:03:23.159367+00	1	1	Created VLAN <a href="/ipam/vlans/1/">1000 (Vlan1000)</a>	42	1
-12	2018-06-03 17:04:33.143681+00	2	1	Created VLAN <a href="/ipam/vlans/2/">1001 (Vlan1001)</a>	42	1
-13	2018-06-03 17:05:45.691626+00	1	1	Created VRF <a href="/ipam/vrfs/1/">Tenant1 (0)</a>	43	1
-14	2018-06-03 17:06:14.601261+00	2	1	Created VRF <a href="/ipam/vrfs/2/">Tenant2 (1)</a>	43	1
-15	2018-06-03 17:08:17.527169+00	1	1	Created prefix <a href="/ipam/prefixes/1/">192.168.10.0/24</a>	39	1
-16	2018-06-03 17:09:07.27685+00	2	1	Created prefix <a href="/ipam/prefixes/2/">fc00:10::/64</a>	39	1
-17	2018-06-03 17:13:34.389943+00	1	1	Created IP address <a href="/ipam/ip-addresses/1/">192.168.10.1/24</a>	38	1
-18	2018-06-03 17:15:46.25316+00	\N	7	Added 2 IP addresses	38	1
-19	2018-06-03 17:16:22.385445+00	\N	7	Added 3 IP addresses	38	1
-20	2018-06-03 17:17:18.752381+00	\N	7	Added 2 IP addresses	38	1
-21	2018-06-03 17:19:24.395455+00	1	1	Created platform <a href="/dcim/devices/?platform=cumulus-vx">Cumulus VX</a>	22	1
-22	2018-06-03 17:20:29.73407+00	9	1	Created IP address <a href="/ipam/ip-addresses/9/">10.10.10.1/32</a>	38	1
-23	2018-06-03 17:21:40.780104+00	1	3	Modified device <a href="/dcim/devices/1/">leaf01</a>	15	1
-24	2018-06-03 17:28:03.01913+00	1	3	Modified IP address <a href="/ipam/ip-addresses/1/">192.168.10.1/24</a>	38	1
-25	2018-06-03 17:28:59.428211+00	9	3	Modified IP address <a href="/ipam/ip-addresses/9/">10.10.10.1/32</a>	38	1
-26	2018-06-03 17:29:29.208185+00	1	3	Modified IP address <a href="/ipam/ip-addresses/1/">192.168.10.1/24</a>	38	1
-27	2018-06-03 17:30:59.19307+00	5	3	Modified interface <a href="/dcim/devices/1/">peerlink</a>	18	1
-28	2018-06-03 17:31:41.435448+00	5	3	Modified interface <a href="/dcim/devices/1/">peerlink</a>	18	1
-29	2018-06-03 17:32:02.748807+00	\N	5	Deleted virtual chassis leaf01	36	1
-30	2018-06-03 17:37:40.993936+00	6	3	Modified interface <a href="/dcim/devices/1/">swp20</a>	18	1
-31	2018-06-03 17:39:40.735549+00	2	3	Modified IP address <a href="/ipam/ip-addresses/2/">192.168.10.2/24</a>	38	1
-32	2018-06-03 17:40:28.071036+00	4	3	Modified IP address <a href="/ipam/ip-addresses/4/">fc00:11::1/64</a>	38	1
-33	2018-06-03 17:40:50.086624+00	5	3	Modified IP address <a href="/ipam/ip-addresses/5/">fc00:11::2/64</a>	38	1
-34	2018-06-03 17:41:40.355565+00	7	3	Modified IP address <a href="/ipam/ip-addresses/7/">169.254.1.1/30</a>	38	1
-35	2018-06-03 17:42:29.473397+00	1	1	Created tenant <a href="/tenancy/tenants/tenant1/">Tenant1</a>	59	1
-36	2018-06-03 17:42:41.389206+00	2	1	Created tenant <a href="/tenancy/tenants/tenant2/">Tenant2</a>	59	1
-37	2018-06-03 17:43:13.669464+00	1	3	Modified VRF <a href="/ipam/vrfs/1/">4001 (0)</a>	43	1
-38	2018-06-03 17:43:31.011166+00	2	3	Modified VRF <a href="/ipam/vrfs/2/">4002 (1)</a>	43	1
-39	2018-06-03 17:44:29.476811+00	\N	6	Deleted 1 devices	15	1
-40	2018-06-03 17:47:38.856331+00	10	1	Created IP address <a href="/ipam/ip-addresses/10/">10.100.100.12/32</a>	38	1
-41	2018-06-03 17:48:55.751492+00	1	3	Modified interface <a href="/dcim/devices/1/">bond01</a>	18	1
-42	2018-06-03 17:49:16.56407+00	1	3	Modified interface <a href="/dcim/devices/1/">bond01</a>	18	1
-43	2018-06-03 17:49:22.496871+00	1	3	Modified interface <a href="/dcim/devices/1/">bond01</a>	18	1
-44	2018-06-04 10:14:41.195219+00	3	1	Created device <a href="/dcim/devices/3/">leaf02</a>	15	1
-45	2018-06-04 14:39:25.63067+00	3	3	Modified device <a href="/dcim/devices/3/">leaf02</a>	15	1
-46	2018-06-05 22:28:23.591103+00	1	3	Modified interface <a href="/dcim/devices/1/">bond01</a>	18	1
-47	2018-06-05 22:28:53.008667+00	1	3	Modified interface <a href="/dcim/devices/1/">bond01</a>	18	1
-48	2018-06-05 22:29:12.289029+00	1	3	Modified interface <a href="/dcim/devices/1/">bond01</a>	18	1
-49	2018-06-05 22:29:29.303616+00	1	3	Modified interface <a href="/dcim/devices/1/">bond01</a>	18	1
-50	2018-06-05 22:29:55.02017+00	1	3	Modified interface <a href="/dcim/devices/1/">bond01</a>	18	1
-51	2018-06-06 06:37:01.790672+00	12	3	Modified interface <a href="/dcim/devices/1/">bond02</a>	18	1
-52	2018-06-06 06:37:09.059697+00	12	3	Modified interface <a href="/dcim/devices/1/">bond02</a>	18	1
-53	2018-06-06 07:04:35.389523+00	12	3	Modified interface <a href="/dcim/devices/1/">bond02</a>	18	1
-54	2018-06-06 07:13:49.415373+00	14	3	Modified interface <a href="/dcim/devices/1/">test</a>	18	1
-55	2018-06-06 07:13:56.870485+00	14	3	Modified interface <a href="/dcim/devices/1/">test</a>	18	1
-56	2018-06-06 07:15:07.250389+00	1	1	Created circuit type <a href="/circuits/circuits/?type=mlag">mlag</a>	8	1
-57	2018-06-06 07:16:20.383414+00	1	1	Created provider <a href="/circuits/providers/leaf01-leaf02/">leaf01-leaf02</a>	9	1
-58	2018-06-06 07:16:38.965335+00	1	1	Created circuit <a href="/circuits/circuits/1/">leaf01-leaf02 1</a>	7	1
-59	2018-06-06 07:18:06.431782+00	1	1	Created circuit termination leaf01-leaf02 1 (Side A)	10	1
-60	2018-06-06 07:21:56.315268+00	\N	5	Deleted circuit leaf01-leaf02 1	7	1
-61	2018-06-06 07:22:03.508138+00	\N	6	Deleted 1 circuit types	8	1
-62	2018-06-06 07:22:23.161504+00	\N	6	Deleted 1 providers	9	1
-63	2018-06-06 17:26:20.643069+00	12	3	Modified interface <a href="/dcim/devices/1/">bond02</a>	18	1
-64	2018-06-06 17:33:31.295612+00	\N	5	Deleted interface test	18	1
-65	2018-06-07 05:47:40.18255+00	7	3	Modified IP address <a href="/ipam/ip-addresses/7/">169.254.1.1/30</a>	38	1
-66	2018-06-07 20:56:12.700387+00	3	3	Modified interface <a href="/dcim/devices/1/">1000</a>	18	1
-67	2018-06-07 21:11:31.911544+00	3	3	Modified interface <a href="/dcim/devices/1/">irb1000</a>	18	1
-68	2018-06-07 21:14:18.963089+00	3	3	Modified interface <a href="/dcim/devices/1/">irb1000</a>	18	1
-69	2018-06-07 21:14:52.062294+00	3	3	Modified interface <a href="/dcim/devices/1/">irb1000</a>	18	1
-70	2018-06-07 21:15:02.654507+00	3	3	Modified interface <a href="/dcim/devices/1/">irb1000</a>	18	1
-71	2018-06-07 22:10:08.165418+00	1	3	Modified VRF <a href="/ipam/vrfs/1/">4001 (0)</a>	43	1
-72	2018-06-07 22:10:28.98515+00	2	3	Modified VRF <a href="/ipam/vrfs/2/">4002 (1)</a>	43	1
-73	2018-06-07 22:10:35.443534+00	2	3	Modified VRF <a href="/ipam/vrfs/2/">4002 (1)</a>	43	1
-74	2018-06-07 22:11:04.034275+00	1	3	Modified IP address <a href="/ipam/ip-addresses/1/">192.168.10.1/24</a>	38	1
-75	2018-06-07 22:12:34.280079+00	1	3	Modified IP address <a href="/ipam/ip-addresses/1/">192.168.10.1/24</a>	38	1
-76	2018-06-07 22:18:10.951486+00	\N	4	Updated 6 IP addresses	38	1
-77	2018-06-08 08:41:11.823131+00	5	3	Modified interface <a href="/dcim/devices/1/">peerlink</a>	18	1
-78	2018-06-08 08:41:40.979104+00	5	3	Modified interface <a href="/dcim/devices/1/">peerlink</a>	18	1
-79	2018-06-08 08:42:13.717507+00	8	3	Modified interface <a href="/dcim/devices/1/">peerlink.4094</a>	18	1
-80	2018-06-08 08:42:23.578625+00	10	3	Modified interface <a href="/dcim/devices/1/">swp49</a>	18	1
-81	2018-06-08 08:42:35.725231+00	11	3	Modified interface <a href="/dcim/devices/1/">swp50</a>	18	1
-82	2018-06-08 16:53:47.070419+00	7	3	Modified IP address <a href="/ipam/ip-addresses/7/">169.254.1.1/30</a>	38	1
-83	2018-06-08 18:59:58.696115+00	\N	6	Deleted 1 devices	15	1
-84	2018-06-08 19:35:40.334173+00	4	1	Created device <a href="/dcim/devices/4/">leaf02</a>	15	1
-85	2018-06-08 19:54:22.190901+00	15	3	Modified interface <a href="/dcim/devices/4/">bond01</a>	18	1
-86	2018-06-08 19:54:27.39268+00	15	3	Modified interface <a href="/dcim/devices/4/">bond01</a>	18	1
-87	2018-06-08 19:56:16.45349+00	15	3	Modified interface <a href="/dcim/devices/4/">bond01</a>	18	1
-88	2018-06-08 20:01:50.389111+00	11	1	Created IP address <a href="/ipam/ip-addresses/11/">10.10.10.2/32</a>	38	1
-89	2018-06-08 20:04:53.18926+00	1	3	Modified IP address <a href="/ipam/ip-addresses/1/">192.168.11.1/24</a>	38	1
-90	2018-06-08 20:05:20.054109+00	2	3	Modified IP address <a href="/ipam/ip-addresses/2/">192.168.11.2/24</a>	38	1
-91	2018-06-08 20:05:35.055363+00	3	3	Modified IP address <a href="/ipam/ip-addresses/3/">192.168.11.3/24</a>	38	1
-92	2018-06-08 20:10:44.960216+00	16	3	Modified interface <a href="/dcim/devices/4/">bond02</a>	18	1
-93	2018-06-08 20:10:48.631134+00	16	3	Modified interface <a href="/dcim/devices/4/">bond02</a>	18	1
-94	2018-06-08 20:14:26.279927+00	10	3	Modified IP address <a href="/ipam/ip-addresses/10/">10.100.100.12/32</a>	38	1
-95	2018-06-08 20:15:32.912064+00	1	3	Modified IP address <a href="/ipam/ip-addresses/1/">192.168.11.1/24</a>	38	1
-96	2018-06-08 20:16:09.832172+00	3	3	Modified IP address <a href="/ipam/ip-addresses/3/">192.168.11.3/24</a>	38	1
-97	2018-06-08 20:16:39.08884+00	4	3	Modified IP address <a href="/ipam/ip-addresses/4/">fc00:11::1/64</a>	38	1
-98	2018-06-08 20:17:10.460291+00	6	3	Modified IP address <a href="/ipam/ip-addresses/6/">fc00:11::3/64</a>	38	1
-99	2018-06-08 20:17:26.812989+00	6	3	Modified IP address <a href="/ipam/ip-addresses/6/">fc00:11::3/64</a>	38	1
-100	2018-06-08 20:17:39.10255+00	4	3	Modified IP address <a href="/ipam/ip-addresses/4/">fc00:11::1/64</a>	38	1
-101	2018-06-08 20:17:59.825806+00	11	3	Modified IP address <a href="/ipam/ip-addresses/11/">10.10.10.2/32</a>	38	1
-102	2018-06-08 20:18:24.633274+00	20	3	Modified interface <a href="/dcim/devices/4/">peerlink</a>	18	1
-103	2018-06-08 20:20:21.189224+00	8	3	Modified IP address <a href="/ipam/ip-addresses/8/">169.254.1.2/30</a>	38	1
-104	2018-06-08 20:23:44.166212+00	26	3	Modified interface <a href="/dcim/devices/4/">swp49</a>	18	1
-105	2018-06-08 20:24:03.858706+00	27	3	Modified interface <a href="/dcim/devices/4/">swp50</a>	18	1
-106	2018-06-08 20:49:12.515406+00	4	3	Modified device <a href="/dcim/devices/4/">leaf02</a>	15	1
-107	2018-06-08 20:59:29.157198+00	4	3	Modified device <a href="/dcim/devices/4/">leaf02</a>	15	1
-108	2018-06-08 21:01:40.215388+00	\N	6	Deleted 2 prefixes	39	1
-109	2018-06-08 21:02:15.093465+00	\N	6	Deleted 3 IP addresses	38	1
-110	2018-06-08 21:03:22.064262+00	12	1	Created IP address <a href="/ipam/ip-addresses/12/">192.168.11.1/24</a>	38	1
-111	2018-06-08 21:03:49.107193+00	13	1	Created IP address <a href="/ipam/ip-addresses/13/">192.168.11.2/24</a>	38	1
-112	2018-06-08 21:04:21.663188+00	14	1	Created IP address <a href="/ipam/ip-addresses/14/">192.168.11.3/24</a>	38	1
-113	2018-06-08 21:05:05.782102+00	13	3	Modified IP address <a href="/ipam/ip-addresses/13/">192.168.11.2/24</a>	38	1
-114	2018-06-08 21:19:04.869687+00	18	3	Modified interface <a href="/dcim/devices/4/">irb1000</a>	18	1
-115	2018-06-08 21:19:18.034945+00	18	3	Modified interface <a href="/dcim/devices/4/">irb1000</a>	18	1
-116	2018-06-08 21:19:20.901495+00	18	3	Modified interface <a href="/dcim/devices/4/">irb1000</a>	18	1
-117	2018-06-08 21:24:46.140625+00	10	3	Modified IP address <a href="/ipam/ip-addresses/10/">10.100.100.12/32</a>	38	1
-118	2018-06-08 21:30:04.448794+00	15	1	Created IP address <a href="/ipam/ip-addresses/15/">10.100.100.12/32</a>	38	1
-119	2018-06-08 21:32:35.976259+00	4	3	Modified IP address <a href="/ipam/ip-addresses/4/">fc00:11::1/64</a>	38	1
-120	2018-06-08 21:33:01.751671+00	12	3	Modified IP address <a href="/ipam/ip-addresses/12/">192.168.11.1/24</a>	38	1
-121	2018-06-08 21:37:25.659281+00	13	3	Modified IP address <a href="/ipam/ip-addresses/13/">192.168.11.2/24</a>	38	1
-122	2018-06-08 21:38:00.961+00	12	3	Modified IP address <a href="/ipam/ip-addresses/12/">192.168.11.1/24</a>	38	1
-123	2018-06-08 21:38:35.964363+00	4	3	Modified IP address <a href="/ipam/ip-addresses/4/">fc00:11::1/64</a>	38	1
-124	2018-06-08 21:39:29.081714+00	14	3	Modified IP address <a href="/ipam/ip-addresses/14/">192.168.11.3/24</a>	38	1
-125	2018-06-08 21:42:26.166034+00	1	3	Modified VRF <a href="/ipam/vrfs/1/">4001 (0)</a>	43	1
-126	2018-06-08 21:42:43.362418+00	2	3	Modified VRF <a href="/ipam/vrfs/2/">4002 (1)</a>	43	1
-127	2018-06-08 21:42:48.094271+00	16	1	Created IP address <a href="/ipam/ip-addresses/16/">192.168.11.1/24</a>	38	1
-128	2018-06-08 21:43:16.211748+00	17	1	Created IP address <a href="/ipam/ip-addresses/17/">fc00:11::2/64</a>	38	1
-129	2018-06-08 21:45:55.461363+00	14	3	Modified IP address <a href="/ipam/ip-addresses/14/">192.168.11.3/24</a>	38	1
-130	2018-06-08 21:52:03.912777+00	2	1	Created rack <a href="/dcim/racks/2/">Spine</a>	27	1
-131	2018-06-08 21:53:14.123774+00	5	1	Created device <a href="/dcim/devices/5/">spine01</a>	15	1
-132	2018-06-08 21:53:42.310114+00	6	1	Created device <a href="/dcim/devices/6/">spine02</a>	15	1
-133	2018-06-08 21:58:28.069003+00	5	3	Modified device <a href="/dcim/devices/5/">spine01</a>	15	1
-134	2018-06-08 22:35:21.724986+00	6	3	Modified device <a href="/dcim/devices/6/">spine02</a>	15	1
-135	2018-06-08 22:36:50.559265+00	18	1	Created IP address <a href="/ipam/ip-addresses/18/">10.10.20.1/32</a>	38	1
-136	2018-06-08 22:38:33.440388+00	19	1	Created IP address <a href="/ipam/ip-addresses/19/">10.10.20.2/32</a>	38	1
-137	2018-06-08 23:21:39.676554+00	16	3	Modified IP address <a href="/ipam/ip-addresses/16/">192.168.10.1/24</a>	38	1
-138	2018-06-08 23:21:48.803156+00	12	3	Modified IP address <a href="/ipam/ip-addresses/12/">192.168.10.1/24</a>	38	1
-139	2018-06-08 23:21:56.251727+00	13	3	Modified IP address <a href="/ipam/ip-addresses/13/">192.168.10.2/24</a>	38	1
-140	2018-06-08 23:22:04.371305+00	14	3	Modified IP address <a href="/ipam/ip-addresses/14/">192.168.10.3/24</a>	38	1
-141	2018-06-08 23:22:15.291981+00	4	3	Modified IP address <a href="/ipam/ip-addresses/4/">fc00:10::1/64</a>	38	1
-142	2018-06-08 23:22:27.553417+00	5	3	Modified IP address <a href="/ipam/ip-addresses/5/">fc00:10::2/64</a>	38	1
-143	2018-06-08 23:22:35.809272+00	17	3	Modified IP address <a href="/ipam/ip-addresses/17/">fc00:10::2/64</a>	38	1
-144	2018-06-08 23:22:46.377113+00	6	3	Modified IP address <a href="/ipam/ip-addresses/6/">fc00:10::3/64</a>	38	1
-145	2018-06-08 23:53:29.453698+00	7	1	Created device <a href="/dcim/devices/7/">leaf03</a>	15	1
-146	2018-06-08 23:55:15.333027+00	45	3	Modified interface <a href="/dcim/devices/7/">irb1000</a>	18	1
-147	2018-06-08 23:55:20.282385+00	45	3	Modified interface <a href="/dcim/devices/7/">irb1000</a>	18	1
-148	2018-06-08 23:58:32.392345+00	20	1	Created IP address <a href="/ipam/ip-addresses/20/">10.100.100.34/12</a>	38	1
-149	2018-06-08 23:59:01.696057+00	21	1	Created IP address <a href="/ipam/ip-addresses/21/">10.10.10.3/32</a>	38	1
-150	2018-06-09 00:00:28.052431+00	22	1	Created IP address <a href="/ipam/ip-addresses/22/">169.254.1.1/30</a>	38	1
-151	2018-06-09 00:01:47.741305+00	23	1	Created IP address <a href="/ipam/ip-addresses/23/">192.168.10.1/24</a>	38	1
-152	2018-06-09 00:02:40.557514+00	24	1	Created IP address <a href="/ipam/ip-addresses/24/">192.168.10.4/24</a>	38	1
-153	2018-06-09 00:03:02.121543+00	25	1	Created IP address <a href="/ipam/ip-addresses/25/">fc00:10::1/64</a>	38	1
-154	2018-06-09 00:03:53.362731+00	26	1	Created IP address <a href="/ipam/ip-addresses/26/">fc00:10::4/64</a>	38	1
-155	2018-06-09 00:04:25.870261+00	17	3	Modified IP address <a href="/ipam/ip-addresses/17/">fc00:10::1/64</a>	38	1
-156	2018-06-09 00:08:34.443127+00	8	1	Created device <a href="/dcim/devices/8/">leaf04</a>	15	1
-157	2018-06-09 00:09:38.49871+00	42	3	Modified interface <a href="/dcim/devices/7/">bond01</a>	18	1
-158	2018-06-09 00:09:44.744333+00	42	3	Modified interface <a href="/dcim/devices/7/">bond01</a>	18	1
-159	2018-06-09 00:09:49.064118+00	42	3	Modified interface <a href="/dcim/devices/7/">bond01</a>	18	1
-160	2018-06-09 00:09:56.15263+00	43	3	Modified interface <a href="/dcim/devices/7/">bond02</a>	18	1
-161	2018-06-09 00:10:02.271723+00	43	3	Modified interface <a href="/dcim/devices/7/">bond02</a>	18	1
-162	2018-06-09 00:10:06.600159+00	43	3	Modified interface <a href="/dcim/devices/7/">bond02</a>	18	1
-163	2018-06-09 00:12:15.476821+00	58	3	Modified interface <a href="/dcim/devices/8/">irb1000</a>	18	1
-164	2018-06-09 00:12:25.398504+00	58	3	Modified interface <a href="/dcim/devices/8/">irb1000</a>	18	1
-165	2018-06-09 00:13:20.852758+00	47	3	Modified interface <a href="/dcim/devices/7/">peerlink</a>	18	1
-166	2018-06-09 00:15:54.734324+00	27	1	Created IP address <a href="/ipam/ip-addresses/27/">169.254.1.2/30</a>	38	1
-167	2018-06-09 00:16:12.384981+00	28	1	Created IP address <a href="/ipam/ip-addresses/28/">10.10.10.4/32</a>	38	1
-168	2018-06-09 00:16:37.909248+00	29	1	Created IP address <a href="/ipam/ip-addresses/29/">10.100.100.34/12</a>	38	1
-169	2018-06-09 00:16:58.390993+00	30	1	Created IP address <a href="/ipam/ip-addresses/30/">192.168.10.1/24</a>	38	1
-170	2018-06-09 00:17:27.581029+00	31	1	Created IP address <a href="/ipam/ip-addresses/31/">192.168.10.5/24</a>	38	1
-171	2018-06-09 00:17:56.100788+00	32	1	Created IP address <a href="/ipam/ip-addresses/32/">fc00:10::1/64</a>	38	1
-172	2018-06-09 00:18:16.899277+00	33	1	Created IP address <a href="/ipam/ip-addresses/33/">fc00:10::5/64</a>	38	1
-173	2018-06-09 00:29:07.369728+00	1	3	Modified rack <a href="/dcim/racks/1/">Rack1-pod1</a>	27	1
-174	2018-06-09 00:29:24.690501+00	2	3	Modified rack <a href="/dcim/racks/2/">Spine-pod1</a>	27	1
-175	2018-06-09 00:59:53.519605+00	20	3	Modified IP address <a href="/ipam/ip-addresses/20/">10.100.100.34/32</a>	38	1
-176	2018-06-09 01:00:36.433045+00	29	3	Modified IP address <a href="/ipam/ip-addresses/29/">10.100.100.34/32</a>	38	1
-177	2018-06-09 01:04:29.889097+00	55	3	Modified interface <a href="/dcim/devices/8/">bond01</a>	18	1
-178	2018-06-09 01:04:35.052318+00	55	3	Modified interface <a href="/dcim/devices/8/">bond01</a>	18	1
-179	2018-06-09 01:04:38.65542+00	55	3	Modified interface <a href="/dcim/devices/8/">bond01</a>	18	1
-180	2018-06-09 01:04:47.812342+00	56	3	Modified interface <a href="/dcim/devices/8/">bond02</a>	18	1
-181	2018-06-09 01:04:52.902208+00	56	3	Modified interface <a href="/dcim/devices/8/">bond02</a>	18	1
-182	2018-06-09 01:04:59.897141+00	56	3	Modified interface <a href="/dcim/devices/8/">bond02</a>	18	1
-183	2018-06-09 07:39:15.060773+00	3	1	Created rack <a href="/dcim/racks/3/">Rack2-pod1</a>	27	1
-184	2018-06-09 07:39:40.622238+00	4	1	Created rack <a href="/dcim/racks/4/">Rack3-pod1</a>	27	1
-185	2018-06-09 07:40:04.464675+00	\N	4	Updated 2 racks	27	1
-186	2018-06-09 07:40:40.894454+00	2	1	Created rack group <a href="/dcim/racks/?group_id=2">Edge</a>	28	1
-187	2018-06-09 07:40:59.451624+00	3	1	Created rack group <a href="/dcim/racks/?group_id=3">Superspine</a>	28	1
-188	2018-06-09 07:41:25.056993+00	5	1	Created rack <a href="/dcim/racks/5/">Superspine</a>	27	1
-189	2018-06-09 07:41:44.854215+00	6	1	Created rack <a href="/dcim/racks/6/">Edge</a>	27	1
-190	2018-06-09 07:42:23.394411+00	7	3	Modified device <a href="/dcim/devices/7/">leaf03</a>	15	1
-191	2018-06-09 07:42:45.698432+00	8	3	Modified device <a href="/dcim/devices/8/">leaf04</a>	15	1
-192	2018-06-09 07:43:21.458959+00	9	1	Created device <a href="/dcim/devices/9/">exit01</a>	15	1
-193	2018-06-09 07:44:02.199851+00	7	1	Created rack <a href="/dcim/racks/7/">exit02</a>	27	1
-194	2018-06-09 07:44:41.899893+00	10	1	Created device <a href="/dcim/devices/10/">exit02</a>	15	1
-195	2018-06-09 07:45:24.442044+00	11	1	Created device <a href="/dcim/devices/11/">super01</a>	15	1
-196	2018-06-09 07:48:10.768709+00	12	1	Created device <a href="/dcim/devices/12/">super02</a>	15	1
-197	2018-06-09 07:48:44.178339+00	13	1	Created device <a href="/dcim/devices/13/">edge01</a>	15	1
-198	2018-06-09 07:49:50.484647+00	14	1	Created device <a href="/dcim/devices/14/">edge02</a>	15	1
-199	2018-06-09 07:50:26.274806+00	15	1	Created device <a href="/dcim/devices/15/">rtr01</a>	15	1
-200	2018-06-09 07:50:53.053663+00	16	1	Created device <a href="/dcim/devices/16/">rtr02</a>	15	1
-201	2018-06-09 08:14:35.484024+00	9	3	Modified device <a href="/dcim/devices/9/">exit01</a>	15	1
-202	2018-06-09 08:14:44.566106+00	10	3	Modified device <a href="/dcim/devices/10/">exit02</a>	15	1
-203	2018-06-09 08:15:21.631162+00	11	3	Modified device <a href="/dcim/devices/11/">super01</a>	15	1
-204	2018-06-09 08:15:35.463711+00	12	3	Modified device <a href="/dcim/devices/12/">super02</a>	15	1
-205	2018-06-09 08:15:55.237308+00	13	3	Modified device <a href="/dcim/devices/13/">edge01</a>	15	1
-206	2018-06-09 08:16:09.040636+00	14	3	Modified device <a href="/dcim/devices/14/">edge02</a>	15	1
-207	2018-06-09 08:16:46.352322+00	15	3	Modified device <a href="/dcim/devices/15/">rtr01</a>	15	1
-208	2018-06-09 08:16:59.467993+00	16	3	Modified device <a href="/dcim/devices/16/">rtr02</a>	15	1
-209	2018-06-09 08:31:48.191911+00	68	3	Modified interface <a href="/dcim/devices/9/">bond01</a>	18	1
-210	2018-06-09 08:31:53.258097+00	68	3	Modified interface <a href="/dcim/devices/9/">bond01</a>	18	1
-211	2018-06-09 08:31:56.639479+00	68	3	Modified interface <a href="/dcim/devices/9/">bond01</a>	18	1
-212	2018-06-09 08:32:11.553934+00	69	3	Modified interface <a href="/dcim/devices/9/">bond02</a>	18	1
-213	2018-06-09 08:32:17.676458+00	69	3	Modified interface <a href="/dcim/devices/9/">bond02</a>	18	1
-214	2018-06-09 08:32:22.698965+00	69	3	Modified interface <a href="/dcim/devices/9/">bond02</a>	18	1
-215	2018-06-09 08:37:02.324437+00	34	1	Created IP address <a href="/ipam/ip-addresses/34/">10.100.100.56/32</a>	38	1
-216	2018-06-09 08:37:33.410716+00	35	1	Created IP address <a href="/ipam/ip-addresses/35/">10.10.10.5/32</a>	38	1
-217	2018-06-09 08:39:11.713381+00	36	1	Created IP address <a href="/ipam/ip-addresses/36/">169.254.1.1/30</a>	38	1
-218	2018-06-09 08:39:44.738285+00	73	3	Modified interface <a href="/dcim/devices/9/">peerlink</a>	18	1
-219	2018-06-09 08:41:07.057975+00	37	1	Created IP address <a href="/ipam/ip-addresses/37/">192.168.10.1/24</a>	38	1
-220	2018-06-09 08:41:31.488876+00	38	1	Created IP address <a href="/ipam/ip-addresses/38/">192.168.10.6/24</a>	38	1
-221	2018-06-09 08:42:07.383485+00	39	1	Created IP address <a href="/ipam/ip-addresses/39/">fc00:10::6/64</a>	38	1
-222	2018-06-09 08:42:27.205111+00	40	1	Created IP address <a href="/ipam/ip-addresses/40/">fc00:10::1/64</a>	38	1
-223	2018-06-09 08:47:56.205901+00	86	3	Modified interface <a href="/dcim/devices/10/">peerlink</a>	18	1
-224	2018-06-09 08:48:30.967477+00	87	3	Modified interface <a href="/dcim/devices/10/">peerlink.4094</a>	18	1
-225	2018-06-09 08:48:52.785748+00	41	1	Created IP address <a href="/ipam/ip-addresses/41/">10.100.100.56/32</a>	38	1
-226	2018-06-09 08:49:57.212022+00	42	1	Created IP address <a href="/ipam/ip-addresses/42/">10.10.10.6/32</a>	38	1
-227	2018-06-09 08:51:12.175265+00	43	1	Created IP address <a href="/ipam/ip-addresses/43/">169.254.1.2/30</a>	38	1
-228	2018-06-09 08:51:38.588301+00	44	1	Created IP address <a href="/ipam/ip-addresses/44/">192.168.10.1/24</a>	38	1
-229	2018-06-09 08:51:56.979677+00	45	1	Created IP address <a href="/ipam/ip-addresses/45/">192.168.10.7/24</a>	38	1
-230	2018-06-09 08:52:08.785281+00	46	1	Created IP address <a href="/ipam/ip-addresses/46/">fc00:10::1/64</a>	38	1
-231	2018-06-09 08:52:26.464764+00	47	1	Created IP address <a href="/ipam/ip-addresses/47/">fc00:10::7/64</a>	38	1
-232	2018-06-09 08:54:31.291222+00	48	1	Created IP address <a href="/ipam/ip-addresses/48/">10.10.30.1/32</a>	38	1
-233	2018-06-09 08:56:27.103121+00	95	3	Modified interface <a href="/dcim/devices/11/">swp1</a>	18	1
-234	2018-06-09 08:56:35.525887+00	96	3	Modified interface <a href="/dcim/devices/11/">swp2</a>	18	1
-235	2018-06-09 08:56:52.229653+00	97	3	Modified interface <a href="/dcim/devices/11/">swp49</a>	18	1
-236	2018-06-09 08:56:59.720328+00	98	3	Modified interface <a href="/dcim/devices/11/">swp50</a>	18	1
-237	2018-06-09 08:58:45.496812+00	49	1	Created IP address <a href="/ipam/ip-addresses/49/">10.10.30.2/32</a>	38	1
-238	2018-06-09 09:04:40.709971+00	108	3	Modified interface <a href="/dcim/devices/13/">irb2506</a>	18	1
-239	2018-06-09 09:04:48.031397+00	109	3	Modified interface <a href="/dcim/devices/13/">irb2507</a>	18	1
-240	2018-06-09 09:04:56.117995+00	110	3	Modified interface <a href="/dcim/devices/13/">irb2509</a>	18	1
-241	2018-06-09 09:07:12.497629+00	3	1	Created VLAN <a href="/ipam/vlans/3/">1002 (1002)</a>	42	1
-242	2018-06-09 09:07:44.580056+00	3	3	Modified VLAN <a href="/ipam/vlans/3/">1002 (1002)</a>	42	1
-243	2018-06-09 09:08:27.257517+00	3	3	Modified VLAN <a href="/ipam/vlans/3/">1002 (Vlan1002)</a>	42	1
-244	2018-06-09 09:08:49.655884+00	4	1	Created VLAN <a href="/ipam/vlans/4/">1003 (Vlan1003)</a>	42	1
-245	2018-06-09 09:09:13.625003+00	5	1	Created VLAN <a href="/ipam/vlans/5/">1004 (Vlan1004)</a>	42	1
-246	2018-06-09 09:09:26.877686+00	6	1	Created VLAN <a href="/ipam/vlans/6/">1005 (Vlan1005)</a>	42	1
-247	2018-06-09 09:10:04.465428+00	7	1	Created VLAN <a href="/ipam/vlans/7/">2501 (Vlan2501)</a>	42	1
-248	2018-06-09 09:10:19.899407+00	8	1	Created VLAN <a href="/ipam/vlans/8/">2502 (Vlan2502)</a>	42	1
-249	2018-06-09 09:10:36.264047+00	9	1	Created VLAN <a href="/ipam/vlans/9/">2503 (Vlan2503)</a>	42	1
-250	2018-06-09 09:10:49.002345+00	10	1	Created VLAN <a href="/ipam/vlans/10/">2504 (Vlan2504)</a>	42	1
-251	2018-06-09 09:11:02.487386+00	11	1	Created VLAN <a href="/ipam/vlans/11/">2505 (Vlan2505)</a>	42	1
-252	2018-06-09 09:11:15.211332+00	12	1	Created VLAN <a href="/ipam/vlans/12/">2506 (Vlan2506)</a>	42	1
-253	2018-06-09 09:11:39.573465+00	13	1	Created VLAN <a href="/ipam/vlans/13/">2507 (Vlan2507)</a>	42	1
-254	2018-06-09 09:11:50.394339+00	14	1	Created VLAN <a href="/ipam/vlans/14/">2508 (Vlan2508)</a>	42	1
-255	2018-06-09 09:12:02.401268+00	15	1	Created VLAN <a href="/ipam/vlans/15/">2509 (Vlan2509)</a>	42	1
-256	2018-06-09 09:12:17.095678+00	8	3	Modified VLAN <a href="/ipam/vlans/8/">2502 (Vlan2502)</a>	42	1
-257	2018-06-09 09:12:33.992099+00	15	3	Modified VLAN <a href="/ipam/vlans/15/">2509 (Vlan2509)</a>	42	1
-258	2018-06-09 09:13:14.377675+00	16	1	Created VLAN <a href="/ipam/vlans/16/">2701 (Vlan2701)</a>	42	1
-259	2018-06-09 09:13:34.417287+00	17	1	Created VLAN <a href="/ipam/vlans/17/">2702 (Vlan2702)</a>	42	1
-260	2018-06-09 09:13:48.139146+00	18	1	Created VLAN <a href="/ipam/vlans/18/">2703 (Vlan2703)</a>	42	1
-261	2018-06-09 09:14:08.272081+00	19	1	Created VLAN <a href="/ipam/vlans/19/">2704 (Vlan2704)</a>	42	1
-262	2018-06-09 09:16:08.471233+00	108	3	Modified interface <a href="/dcim/devices/13/">irb2501</a>	18	1
-263	2018-06-09 09:16:12.735882+00	109	3	Modified interface <a href="/dcim/devices/13/">irb2502</a>	18	1
-264	2018-06-09 09:16:18.805373+00	110	3	Modified interface <a href="/dcim/devices/13/">irb2503</a>	18	1
-265	2018-06-09 09:16:25.261003+00	111	3	Modified interface <a href="/dcim/devices/13/">irb2504</a>	18	1
-266	2018-06-09 09:18:25.950806+00	106	3	Modified interface <a href="/dcim/devices/13/">swp49</a>	18	1
-267	2018-06-09 09:18:28.428177+00	106	3	Modified interface <a href="/dcim/devices/13/">swp49</a>	18	1
-268	2018-06-09 09:18:40.495278+00	107	3	Modified interface <a href="/dcim/devices/13/">swp50</a>	18	1
-269	2018-06-09 09:18:43.621826+00	107	3	Modified interface <a href="/dcim/devices/13/">swp50</a>	18	1
-270	2018-06-09 09:29:49.587818+00	116	3	Modified interface <a href="/dcim/devices/14/">swp1</a>	18	1
-271	2018-06-09 09:30:05.811733+00	117	3	Modified interface <a href="/dcim/devices/14/">swp2</a>	18	1
-272	2018-06-09 09:30:18.295071+00	112	3	Modified interface <a href="/dcim/devices/14/">irb2505</a>	18	1
-273	2018-06-09 09:30:23.774129+00	113	3	Modified interface <a href="/dcim/devices/14/">irb2506</a>	18	1
-274	2018-06-09 09:30:31.043883+00	114	3	Modified interface <a href="/dcim/devices/14/">irb2507</a>	18	1
-275	2018-06-09 09:30:39.343829+00	115	3	Modified interface <a href="/dcim/devices/14/">irb2508</a>	18	1
-276	2018-06-09 09:34:00.396481+00	120	3	Modified interface <a href="/dcim/devices/15/">swp1</a>	18	1
-277	2018-06-09 09:34:17.606103+00	120	3	Modified interface <a href="/dcim/devices/15/">swp1</a>	18	1
-278	2018-06-09 09:34:38.1089+00	121	3	Modified interface <a href="/dcim/devices/15/">swp2</a>	18	1
-279	2018-06-09 09:34:41.870466+00	121	3	Modified interface <a href="/dcim/devices/15/">swp2</a>	18	1
-280	2018-06-09 09:36:40.92568+00	122	3	Modified interface <a href="/dcim/devices/15/">irb2501</a>	18	1
-281	2018-06-09 09:36:46.624875+00	122	3	Modified interface <a href="/dcim/devices/15/">irb2501</a>	18	1
-282	2018-06-09 09:36:48.94631+00	122	3	Modified interface <a href="/dcim/devices/15/">irb2501</a>	18	1
-283	2018-06-09 09:37:00.49648+00	123	3	Modified interface <a href="/dcim/devices/15/">irb2502</a>	18	1
-284	2018-06-09 09:37:05.481217+00	123	3	Modified interface <a href="/dcim/devices/15/">irb2502</a>	18	1
-285	2018-06-09 09:37:09.591706+00	123	3	Modified interface <a href="/dcim/devices/15/">irb2502</a>	18	1
-286	2018-06-09 09:37:14.48962+00	124	3	Modified interface <a href="/dcim/devices/15/">irb2505</a>	18	1
-287	2018-06-09 09:37:19.281309+00	124	3	Modified interface <a href="/dcim/devices/15/">irb2505</a>	18	1
-288	2018-06-09 09:37:21.324367+00	124	3	Modified interface <a href="/dcim/devices/15/">irb2505</a>	18	1
-289	2018-06-09 09:37:35.996681+00	125	3	Modified interface <a href="/dcim/devices/15/">irb2506</a>	18	1
-290	2018-06-09 09:37:41.383321+00	125	3	Modified interface <a href="/dcim/devices/15/">irb2506</a>	18	1
-291	2018-06-09 09:37:46.473979+00	125	3	Modified interface <a href="/dcim/devices/15/">irb2506</a>	18	1
-292	2018-06-09 09:37:54.930919+00	126	3	Modified interface <a href="/dcim/devices/15/">irb2701</a>	18	1
-293	2018-06-09 09:38:12.157259+00	126	3	Modified interface <a href="/dcim/devices/15/">irb2701</a>	18	1
-294	2018-06-09 09:38:18.985637+00	127	3	Modified interface <a href="/dcim/devices/15/">irb2702</a>	18	1
-295	2018-06-09 09:38:21.620635+00	127	3	Modified interface <a href="/dcim/devices/15/">irb2702</a>	18	1
-296	2018-06-09 09:39:52.288311+00	122	3	Modified interface <a href="/dcim/devices/15/">irb2501</a>	18	1
-297	2018-06-09 09:40:01.355529+00	123	3	Modified interface <a href="/dcim/devices/15/">irb2502</a>	18	1
-298	2018-06-09 09:40:08.403132+00	124	3	Modified interface <a href="/dcim/devices/15/">irb2505</a>	18	1
-299	2018-06-09 09:40:16.760971+00	125	3	Modified interface <a href="/dcim/devices/15/">irb2506</a>	18	1
-300	2018-06-09 09:40:31.296685+00	126	3	Modified interface <a href="/dcim/devices/15/">irb2701</a>	18	1
-301	2018-06-09 09:40:38.751438+00	127	3	Modified interface <a href="/dcim/devices/15/">irb2702</a>	18	1
-302	2018-06-09 09:45:02.620724+00	128	3	Modified interface <a href="/dcim/devices/16/">swp1</a>	18	1
-303	2018-06-09 09:45:45.776442+00	128	3	Modified interface <a href="/dcim/devices/16/">swp1</a>	18	1
-304	2018-06-09 09:46:15.514174+00	128	3	Modified interface <a href="/dcim/devices/16/">swp1</a>	18	1
-305	2018-06-09 09:46:20.346027+00	128	3	Modified interface <a href="/dcim/devices/16/">swp1</a>	18	1
-306	2018-06-09 09:47:02.257078+00	128	3	Modified interface <a href="/dcim/devices/16/">swp1</a>	18	1
-307	2018-06-09 09:47:08.118283+00	128	3	Modified interface <a href="/dcim/devices/16/">swp1</a>	18	1
-308	2018-06-09 09:47:21.026657+00	129	3	Modified interface <a href="/dcim/devices/16/">swp2</a>	18	1
-309	2018-06-09 09:47:25.098652+00	129	3	Modified interface <a href="/dcim/devices/16/">swp2</a>	18	1
-310	2018-06-09 09:48:18.28742+00	130	3	Modified interface <a href="/dcim/devices/16/">irb2503</a>	18	1
-311	2018-06-09 09:48:24.799405+00	131	3	Modified interface <a href="/dcim/devices/16/">irb2504</a>	18	1
-312	2018-06-09 09:48:37.767635+00	132	3	Modified interface <a href="/dcim/devices/16/">irb2507</a>	18	1
-313	2018-06-09 09:48:40.478506+00	132	3	Modified interface <a href="/dcim/devices/16/">irb2507</a>	18	1
-314	2018-06-09 09:48:53.286176+00	133	3	Modified interface <a href="/dcim/devices/16/">irb2508</a>	18	1
-315	2018-06-09 09:48:56.216173+00	133	3	Modified interface <a href="/dcim/devices/16/">irb2508</a>	18	1
-316	2018-06-09 09:49:17.707524+00	134	3	Modified interface <a href="/dcim/devices/16/">irb2703</a>	18	1
-317	2018-06-09 09:49:19.672221+00	134	3	Modified interface <a href="/dcim/devices/16/">irb2703</a>	18	1
-318	2018-06-09 09:49:27.53926+00	135	3	Modified interface <a href="/dcim/devices/16/">irb2704</a>	18	1
-319	2018-06-09 09:49:34.42237+00	129	3	Modified interface <a href="/dcim/devices/16/">swp2</a>	18	1
-320	2018-06-09 09:50:32.898384+00	118	3	Modified interface <a href="/dcim/devices/14/">swp49</a>	18	1
-321	2018-06-09 09:50:38.613383+00	118	3	Modified interface <a href="/dcim/devices/14/">swp49</a>	18	1
-322	2018-06-09 09:50:40.370677+00	118	3	Modified interface <a href="/dcim/devices/14/">swp49</a>	18	1
-323	2018-06-09 09:50:53.48548+00	119	3	Modified interface <a href="/dcim/devices/14/">swp50</a>	18	1
-324	2018-06-09 09:51:00.431737+00	119	3	Modified interface <a href="/dcim/devices/14/">swp50</a>	18	1
-325	2018-06-09 09:51:03.152644+00	119	3	Modified interface <a href="/dcim/devices/14/">swp50</a>	18	1
-326	2018-06-09 09:52:01.137969+00	112	3	Modified interface <a href="/dcim/devices/14/">irb2505</a>	18	1
-327	2018-06-09 09:52:06.701272+00	112	3	Modified interface <a href="/dcim/devices/14/">irb2505</a>	18	1
-328	2018-06-09 09:52:09.770702+00	112	3	Modified interface <a href="/dcim/devices/14/">irb2505</a>	18	1
-329	2018-06-09 09:52:14.247614+00	113	3	Modified interface <a href="/dcim/devices/14/">irb2506</a>	18	1
-330	2018-06-09 09:52:19.373273+00	113	3	Modified interface <a href="/dcim/devices/14/">irb2506</a>	18	1
-331	2018-06-09 09:52:23.193764+00	113	3	Modified interface <a href="/dcim/devices/14/">irb2506</a>	18	1
-332	2018-06-09 09:52:29.136064+00	114	3	Modified interface <a href="/dcim/devices/14/">irb2507</a>	18	1
-333	2018-06-09 09:52:34.850885+00	114	3	Modified interface <a href="/dcim/devices/14/">irb2507</a>	18	1
-334	2018-06-09 09:52:37.412442+00	114	3	Modified interface <a href="/dcim/devices/14/">irb2507</a>	18	1
-335	2018-06-09 09:52:42.375518+00	114	3	Modified interface <a href="/dcim/devices/14/">irb2507</a>	18	1
-336	2018-06-09 09:52:48.227208+00	115	3	Modified interface <a href="/dcim/devices/14/">irb2508</a>	18	1
-337	2018-06-09 09:52:53.369529+00	115	3	Modified interface <a href="/dcim/devices/14/">irb2508</a>	18	1
-338	2018-06-09 09:52:56.964672+00	115	3	Modified interface <a href="/dcim/devices/14/">irb2508</a>	18	1
-339	2018-06-09 09:53:23.246791+00	\N	6	Deleted 1 VLANs	42	1
-340	2018-06-09 09:55:24.347202+00	129	3	Modified interface <a href="/dcim/devices/16/">swp2</a>	18	1
-341	2018-06-09 09:55:27.059822+00	129	3	Modified interface <a href="/dcim/devices/16/">swp2</a>	18	1
-342	2018-06-09 09:55:41.268218+00	108	3	Modified interface <a href="/dcim/devices/13/">irb2501</a>	18	1
-343	2018-06-09 09:55:45.857991+00	108	3	Modified interface <a href="/dcim/devices/13/">irb2501</a>	18	1
-344	2018-06-09 09:55:47.829152+00	108	3	Modified interface <a href="/dcim/devices/13/">irb2501</a>	18	1
-345	2018-06-09 09:55:53.342836+00	109	3	Modified interface <a href="/dcim/devices/13/">irb2502</a>	18	1
-346	2018-06-09 09:55:58.761125+00	109	3	Modified interface <a href="/dcim/devices/13/">irb2502</a>	18	1
-347	2018-06-09 09:56:02.799497+00	109	3	Modified interface <a href="/dcim/devices/13/">irb2502</a>	18	1
-348	2018-06-09 09:56:07.422994+00	110	3	Modified interface <a href="/dcim/devices/13/">irb2503</a>	18	1
-349	2018-06-09 09:56:12.229403+00	110	3	Modified interface <a href="/dcim/devices/13/">irb2503</a>	18	1
-350	2018-06-09 09:56:15.817022+00	110	3	Modified interface <a href="/dcim/devices/13/">irb2503</a>	18	1
-351	2018-06-09 09:56:25.465828+00	111	3	Modified interface <a href="/dcim/devices/13/">irb2504</a>	18	1
-352	2018-06-09 09:56:31.557912+00	111	3	Modified interface <a href="/dcim/devices/13/">irb2504</a>	18	1
-353	2018-06-09 09:56:33.564537+00	111	3	Modified interface <a href="/dcim/devices/13/">irb2504</a>	18	1
-354	2018-06-09 09:58:35.026494+00	3	1	Created tenant <a href="/tenancy/tenants/tenant3/">Tenant3</a>	59	1
-355	2018-06-09 09:59:12.824743+00	3	1	Created VRF <a href="/ipam/vrfs/3/">4003 (2)</a>	43	1
-356	2018-06-09 10:02:13.693271+00	\N	7	Added 6 IP addresses	38	1
-357	2018-06-09 10:02:34.465691+00	\N	7	Added 12 IP addresses	38	1
-358	2018-06-09 10:03:01.41228+00	\N	7	Added 12 IP addresses	38	1
-359	2018-06-09 10:03:36.988867+00	\N	7	Added 6 IP addresses	38	1
-360	2018-06-09 10:03:53.765676+00	\N	7	Added 12 IP addresses	38	1
-361	2018-06-09 10:04:16.846136+00	\N	7	Added 12 IP addresses	38	1
-362	2018-06-09 10:04:52.160738+00	38	3	Modified IP address <a href="/ipam/ip-addresses/38/">192.168.10.6/24</a>	38	1
-363	2018-06-09 10:05:30.563317+00	45	3	Modified IP address <a href="/ipam/ip-addresses/45/">192.168.10.7/24</a>	38	1
-364	2018-06-09 10:05:52.635308+00	\N	4	Updated 2 IP addresses	38	1
-365	2018-06-09 10:06:15.168642+00	28	3	Modified IP address <a href="/ipam/ip-addresses/28/">10.10.10.4/32</a>	38	1
-366	2018-06-09 10:07:26.571674+00	\N	7	Added 5 IP addresses	38	1
-367	2018-06-09 10:07:55.145426+00	\N	7	Added 5 IP addresses	38	1
-368	2018-06-09 10:09:14.791075+00	112	3	Modified IP address <a href="/ipam/ip-addresses/112/">192.168.13.1/24</a>	38	1
-369	2018-06-09 10:09:26.548035+00	110	3	Modified IP address <a href="/ipam/ip-addresses/110/">192.168.11.1/24</a>	38	1
-370	2018-06-09 10:10:02.897083+00	111	3	Modified IP address <a href="/ipam/ip-addresses/111/">192.168.12.1/24</a>	38	1
-371	2018-06-09 10:10:54.349492+00	\N	4	Updated 2 IP addresses	38	1
-372	2018-06-09 10:12:10.016908+00	\N	4	Updated 10 IP addresses	38	1
-373	2018-06-09 10:13:35.579087+00	\N	4	Updated 8 IP addresses	38	1
-374	2018-06-09 10:14:08.899378+00	\N	4	Updated 2 IP addresses	38	1
-375	2018-06-09 10:15:23.344468+00	\N	4	Updated 14 IP addresses	38	1
-376	2018-06-09 10:15:53.379414+00	\N	4	Updated 14 IP addresses	38	1
-377	2018-06-09 10:31:00.207204+00	141	3	Modified interface <a href="/dcim/devices/4/">irb1001</a>	18	1
-378	2018-06-09 10:31:52.529166+00	142	3	Modified interface <a href="/dcim/devices/4/">irb1002</a>	18	1
-379	2018-06-09 10:31:54.376799+00	142	3	Modified interface <a href="/dcim/devices/4/">irb1002</a>	18	1
-380	2018-06-09 10:32:03.294144+00	143	3	Modified interface <a href="/dcim/devices/4/">irb1003</a>	18	1
-381	2018-06-09 10:32:09.409783+00	143	3	Modified interface <a href="/dcim/devices/4/">irb1003</a>	18	1
-382	2018-06-09 10:32:23.355105+00	144	3	Modified interface <a href="/dcim/devices/4/">irb1004</a>	18	1
-383	2018-06-09 10:32:33.019405+00	144	3	Modified interface <a href="/dcim/devices/4/">irb1004</a>	18	1
-384	2018-06-09 10:32:40.999784+00	145	3	Modified interface <a href="/dcim/devices/4/">irb1005</a>	18	1
-385	2018-06-09 10:32:43.98518+00	145	3	Modified interface <a href="/dcim/devices/4/">irb1005</a>	18	1
-386	2018-06-09 10:33:01.119673+00	146	3	Modified interface <a href="/dcim/devices/7/">irb1001</a>	18	1
-387	2018-06-09 10:33:42.036642+00	147	3	Modified interface <a href="/dcim/devices/7/">irb1002</a>	18	1
-388	2018-06-09 10:33:47.386994+00	148	3	Modified interface <a href="/dcim/devices/7/">irb1003</a>	18	1
-389	2018-06-09 10:33:53.152926+00	149	3	Modified interface <a href="/dcim/devices/7/">irb1004</a>	18	1
-390	2018-06-09 10:34:04.305016+00	150	3	Modified interface <a href="/dcim/devices/7/">irb1005</a>	18	1
-391	2018-06-09 10:34:11.453383+00	151	3	Modified interface <a href="/dcim/devices/8/">irb1001</a>	18	1
-392	2018-06-09 10:34:17.270032+00	152	3	Modified interface <a href="/dcim/devices/8/">irb1002</a>	18	1
-393	2018-06-09 10:34:22.373186+00	153	3	Modified interface <a href="/dcim/devices/8/">irb1003</a>	18	1
-394	2018-06-09 10:34:27.386884+00	154	3	Modified interface <a href="/dcim/devices/8/">irb1004</a>	18	1
-395	2018-06-09 10:34:36.622829+00	155	3	Modified interface <a href="/dcim/devices/8/">irb1005</a>	18	1
-396	2018-06-09 10:34:40.081169+00	155	3	Modified interface <a href="/dcim/devices/8/">irb1005</a>	18	1
-397	2018-06-09 10:34:56.126464+00	156	3	Modified interface <a href="/dcim/devices/9/">irb1001</a>	18	1
-398	2018-06-09 10:35:02.201799+00	157	3	Modified interface <a href="/dcim/devices/9/">irb1002</a>	18	1
-399	2018-06-09 10:35:08.582814+00	158	3	Modified interface <a href="/dcim/devices/9/">irb1003</a>	18	1
-400	2018-06-09 10:35:15.385868+00	159	3	Modified interface <a href="/dcim/devices/9/">irb1004</a>	18	1
-401	2018-06-09 10:35:22.442905+00	160	3	Modified interface <a href="/dcim/devices/9/">irb1005</a>	18	1
-402	2018-06-09 10:35:27.386164+00	136	3	Modified interface <a href="/dcim/devices/1/">irb1001</a>	18	1
-403	2018-06-09 10:35:32.095082+00	137	3	Modified interface <a href="/dcim/devices/1/">irb1002</a>	18	1
-404	2018-06-09 10:35:38.895613+00	138	3	Modified interface <a href="/dcim/devices/1/">irb1003</a>	18	1
-405	2018-06-09 10:35:45.854969+00	139	3	Modified interface <a href="/dcim/devices/1/">irb1004</a>	18	1
-406	2018-06-09 10:35:54.628282+00	140	3	Modified interface <a href="/dcim/devices/1/">irb1005</a>	18	1
-407	2018-06-09 10:36:14.758786+00	161	3	Modified interface <a href="/dcim/devices/10/">irb1001</a>	18	1
-408	2018-06-09 10:36:19.858269+00	162	3	Modified interface <a href="/dcim/devices/10/">irb1002</a>	18	1
-409	2018-06-09 10:36:25.986877+00	163	3	Modified interface <a href="/dcim/devices/10/">irb1003</a>	18	1
-410	2018-06-09 10:36:32.965921+00	164	3	Modified interface <a href="/dcim/devices/10/">irb1004</a>	18	1
-411	2018-06-09 10:36:39.955254+00	165	3	Modified interface <a href="/dcim/devices/10/">irb1005</a>	18	1
-412	2018-06-09 10:36:42.465531+00	165	3	Modified interface <a href="/dcim/devices/10/">irb1005</a>	18	1
-413	2018-06-09 10:45:00.646653+00	50	3	Modified IP address <a href="/ipam/ip-addresses/50/">192.168.11.2/24</a>	38	1
-414	2018-06-09 10:45:52.615457+00	110	3	Modified IP address <a href="/ipam/ip-addresses/110/">192.168.11.1/24</a>	38	1
-415	2018-06-09 10:46:35.087662+00	111	3	Modified IP address <a href="/ipam/ip-addresses/111/">192.168.12.1/24</a>	38	1
-416	2018-06-09 10:46:52.350611+00	112	3	Modified IP address <a href="/ipam/ip-addresses/112/">192.168.13.1/24</a>	38	1
-417	2018-06-09 10:47:12.454277+00	113	3	Modified IP address <a href="/ipam/ip-addresses/113/">192.168.14.1/24</a>	38	1
-418	2018-06-09 10:47:34.396149+00	114	3	Modified IP address <a href="/ipam/ip-addresses/114/">192.168.15.1/24</a>	38	1
-419	2018-06-09 10:48:20.757868+00	56	3	Modified IP address <a href="/ipam/ip-addresses/56/">192.168.12.2/24</a>	38	1
-420	2018-06-09 10:48:39.058089+00	62	3	Modified IP address <a href="/ipam/ip-addresses/62/">192.168.13.2/24</a>	38	1
-421	2018-06-09 10:49:40.265396+00	68	3	Modified IP address <a href="/ipam/ip-addresses/68/">192.168.14.2/24</a>	38	1
-422	2018-06-09 10:49:53.908109+00	74	3	Modified IP address <a href="/ipam/ip-addresses/74/">192.168.15.2/24</a>	38	1
-423	2018-06-09 10:51:21.945458+00	115	3	Modified IP address <a href="/ipam/ip-addresses/115/">fc00:11::1/64</a>	38	1
-424	2018-06-09 10:51:53.170825+00	116	3	Modified IP address <a href="/ipam/ip-addresses/116/">fc00:12::1/64</a>	38	1
-425	2018-06-09 10:52:08.901782+00	117	3	Modified IP address <a href="/ipam/ip-addresses/117/">fc00:13::1/64</a>	38	1
-426	2018-06-09 10:52:31.383866+00	118	3	Modified IP address <a href="/ipam/ip-addresses/118/">fc00:14::1/64</a>	38	1
-427	2018-06-09 10:52:56.166702+00	119	3	Modified IP address <a href="/ipam/ip-addresses/119/">fc00:15::1/64</a>	38	1
-428	2018-06-09 10:53:26.872485+00	80	3	Modified IP address <a href="/ipam/ip-addresses/80/">fc00:11::2/64</a>	38	1
-429	2018-06-09 10:53:42.701187+00	86	3	Modified IP address <a href="/ipam/ip-addresses/86/">fc00:12::2/64</a>	38	1
-430	2018-06-09 10:54:23.932675+00	92	3	Modified IP address <a href="/ipam/ip-addresses/92/">fc00:13::2/64</a>	38	1
-431	2018-06-09 10:54:42.03552+00	98	3	Modified IP address <a href="/ipam/ip-addresses/98/">fc00:14::2/64</a>	38	1
-432	2018-06-09 10:54:58.973332+00	104	3	Modified IP address <a href="/ipam/ip-addresses/104/">fc00:15::2/64</a>	38	1
-433	2018-06-09 10:56:18.16227+00	\N	4	Updated 4 devices	15	1
-434	2018-06-09 10:58:17.192188+00	71	3	Modified interface <a href="/dcim/devices/9/">irb1000</a>	18	1
-435	2018-06-09 10:58:21.683202+00	71	3	Modified interface <a href="/dcim/devices/9/">irb1000</a>	18	1
-436	2018-06-09 10:58:25.799297+00	71	3	Modified interface <a href="/dcim/devices/9/">irb1000</a>	18	1
-437	2018-06-09 10:58:43.588225+00	84	3	Modified interface <a href="/dcim/devices/10/">irb1000</a>	18	1
-438	2018-06-09 10:58:51.351907+00	84	3	Modified interface <a href="/dcim/devices/10/">irb1000</a>	18	1
-439	2018-06-09 10:58:53.002119+00	84	3	Modified interface <a href="/dcim/devices/10/">irb1000</a>	18	1
-440	2018-06-09 19:51:37.044998+00	120	1	Created IP address <a href="/ipam/ip-addresses/120/">192.168.11.1/24</a>	38	1
-441	2018-06-09 19:52:09.138626+00	121	1	Created IP address <a href="/ipam/ip-addresses/121/">192.168.12.1/24</a>	38	1
-442	2018-06-09 19:52:44.317731+00	122	1	Created IP address <a href="/ipam/ip-addresses/122/">192.168.13.1/24</a>	38	1
-443	2018-06-09 19:53:08.757197+00	123	1	Created IP address <a href="/ipam/ip-addresses/123/">192.168.14.1/24</a>	38	1
-444	2018-06-09 19:53:48.896357+00	124	1	Created IP address <a href="/ipam/ip-addresses/124/">192.168.15.1/24</a>	38	1
-445	2018-06-09 19:54:35.413552+00	125	1	Created IP address <a href="/ipam/ip-addresses/125/">192.168.11.1/24</a>	38	1
-446	2018-06-09 19:54:50.350476+00	126	1	Created IP address <a href="/ipam/ip-addresses/126/">192.168.12.1/24</a>	38	1
-447	2018-06-09 19:55:08.272845+00	127	1	Created IP address <a href="/ipam/ip-addresses/127/">192.168.13.1/24</a>	38	1
-448	2018-06-09 19:55:30.060428+00	128	1	Created IP address <a href="/ipam/ip-addresses/128/">192.168.14.1/24</a>	38	1
-449	2018-06-09 19:55:45.53608+00	129	1	Created IP address <a href="/ipam/ip-addresses/129/">192.168.15.1/24</a>	38	1
-450	2018-06-09 19:56:22.60404+00	130	1	Created IP address <a href="/ipam/ip-addresses/130/">fc00:11::1/64</a>	38	1
-451	2018-06-09 19:56:40.698351+00	131	1	Created IP address <a href="/ipam/ip-addresses/131/">fc00:12::1/64</a>	38	1
-452	2018-06-09 19:56:55.152981+00	132	1	Created IP address <a href="/ipam/ip-addresses/132/">fc00:13::1/64</a>	38	1
-453	2018-06-09 19:57:10.405836+00	133	1	Created IP address <a href="/ipam/ip-addresses/133/">fc00:14::1/64</a>	38	1
-454	2018-06-09 19:57:25.662977+00	134	1	Created IP address <a href="/ipam/ip-addresses/134/">fc00:15::1/64</a>	38	1
-455	2018-06-09 19:58:19.024166+00	81	3	Modified IP address <a href="/ipam/ip-addresses/81/">fc00:11::3/64</a>	38	1
-456	2018-06-09 19:58:35.071295+00	87	3	Modified IP address <a href="/ipam/ip-addresses/87/">fc00:12::3/64</a>	38	1
-457	2018-06-09 19:59:00.644158+00	93	3	Modified IP address <a href="/ipam/ip-addresses/93/">fc00:13::3/64</a>	38	1
-458	2018-06-09 19:59:16.319323+00	99	3	Modified IP address <a href="/ipam/ip-addresses/99/">fc00:14::3/64</a>	38	1
-459	2018-06-09 19:59:30.933169+00	105	3	Modified IP address <a href="/ipam/ip-addresses/105/">fc00:15::3/64</a>	38	1
-460	2018-06-09 20:00:12.410966+00	51	3	Modified IP address <a href="/ipam/ip-addresses/51/">192.168.11.3/24</a>	38	1
-461	2018-06-09 20:00:24.886613+00	57	3	Modified IP address <a href="/ipam/ip-addresses/57/">192.168.12.3/24</a>	38	1
-462	2018-06-09 20:00:37.967019+00	63	3	Modified IP address <a href="/ipam/ip-addresses/63/">192.168.13.3/24</a>	38	1
-463	2018-06-09 20:00:58.26791+00	69	3	Modified IP address <a href="/ipam/ip-addresses/69/">192.168.14.3/24</a>	38	1
-464	2018-06-09 20:01:13.661424+00	75	3	Modified IP address <a href="/ipam/ip-addresses/75/">192.168.15.3/24</a>	38	1
-465	2018-06-09 20:02:26.027156+00	135	1	Created IP address <a href="/ipam/ip-addresses/135/">192.168.11.1/24</a>	38	1
-466	2018-06-09 20:02:39.013081+00	136	1	Created IP address <a href="/ipam/ip-addresses/136/">fc00:11::1/64</a>	38	1
-467	2018-06-09 20:02:53.514627+00	137	1	Created IP address <a href="/ipam/ip-addresses/137/">192.168.12.1/24</a>	38	1
-468	2018-06-09 20:03:08.88354+00	138	1	Created IP address <a href="/ipam/ip-addresses/138/">fc00:12::1/64</a>	38	1
-469	2018-06-09 20:03:25.77827+00	139	1	Created IP address <a href="/ipam/ip-addresses/139/">192.168.13.1/24</a>	38	1
-470	2018-06-09 20:03:47.074474+00	140	1	Created IP address <a href="/ipam/ip-addresses/140/">fc00:13::1/64</a>	38	1
-471	2018-06-09 20:04:11.440381+00	141	1	Created IP address <a href="/ipam/ip-addresses/141/">192.168.14.1/24</a>	38	1
-472	2018-06-09 20:04:25.76839+00	142	1	Created IP address <a href="/ipam/ip-addresses/142/">fc00:14::1/64</a>	38	1
-473	2018-06-09 20:04:41.417727+00	143	1	Created IP address <a href="/ipam/ip-addresses/143/">192.168.15.1/24</a>	38	1
-474	2018-06-09 20:04:55.072752+00	144	1	Created IP address <a href="/ipam/ip-addresses/144/">fc00:15::1/64</a>	38	1
-475	2018-06-09 20:14:51.586168+00	52	3	Modified IP address <a href="/ipam/ip-addresses/52/">192.168.11.4/24</a>	38	1
-476	2018-06-09 20:15:05.656282+00	58	3	Modified IP address <a href="/ipam/ip-addresses/58/">192.168.12.4/24</a>	38	1
-477	2018-06-09 20:15:21.563023+00	64	3	Modified IP address <a href="/ipam/ip-addresses/64/">192.168.13.4/24</a>	38	1
-478	2018-06-09 20:15:38.900708+00	70	3	Modified IP address <a href="/ipam/ip-addresses/70/">192.168.14.4/24</a>	38	1
-479	2018-06-09 20:16:03.947412+00	76	3	Modified IP address <a href="/ipam/ip-addresses/76/">192.168.15.4/24</a>	38	1
-480	2018-06-09 20:16:38.943894+00	82	3	Modified IP address <a href="/ipam/ip-addresses/82/">fc00:11::4/64</a>	38	1
-481	2018-06-09 20:16:55.398235+00	88	3	Modified IP address <a href="/ipam/ip-addresses/88/">fc00:12::4/64</a>	38	1
-482	2018-06-09 20:17:09.742993+00	94	3	Modified IP address <a href="/ipam/ip-addresses/94/">fc00:13::4/64</a>	38	1
-483	2018-06-09 20:17:21.414535+00	100	3	Modified IP address <a href="/ipam/ip-addresses/100/">fc00:14::4/64</a>	38	1
-484	2018-06-09 20:17:43.142713+00	106	3	Modified IP address <a href="/ipam/ip-addresses/106/">fc00:15::4/64</a>	38	1
-485	2018-06-09 20:25:37.579152+00	145	1	Created IP address <a href="/ipam/ip-addresses/145/">192.168.11.1/24</a>	38	1
-486	2018-06-09 20:25:50.815295+00	146	1	Created IP address <a href="/ipam/ip-addresses/146/">fc00:11::1/64</a>	38	1
-487	2018-06-09 20:26:04.875509+00	147	1	Created IP address <a href="/ipam/ip-addresses/147/">192.168.12.1/24</a>	38	1
-488	2018-06-09 20:26:31.863027+00	148	1	Created IP address <a href="/ipam/ip-addresses/148/">fc00:12::1/64</a>	38	1
-489	2018-06-09 20:26:45.150723+00	149	1	Created IP address <a href="/ipam/ip-addresses/149/">192.168.13.1/24</a>	38	1
-490	2018-06-09 20:26:55.71352+00	150	1	Created IP address <a href="/ipam/ip-addresses/150/">fc00:13::1/64</a>	38	1
-491	2018-06-09 20:27:20.750498+00	151	1	Created IP address <a href="/ipam/ip-addresses/151/">192.168.14.1/24</a>	38	1
-492	2018-06-09 20:27:40.628826+00	152	1	Created IP address <a href="/ipam/ip-addresses/152/">fc00:14::1/64</a>	38	1
-493	2018-06-09 20:27:57.035403+00	153	1	Created IP address <a href="/ipam/ip-addresses/153/">192.168.15.1/24</a>	38	1
-494	2018-06-09 20:28:11.810481+00	154	1	Created IP address <a href="/ipam/ip-addresses/154/">fc00:15::1/64</a>	38	1
-495	2018-06-09 20:28:55.525756+00	53	3	Modified IP address <a href="/ipam/ip-addresses/53/">192.168.11.5/24</a>	38	1
-496	2018-06-09 20:29:07.410424+00	59	3	Modified IP address <a href="/ipam/ip-addresses/59/">192.168.12.5/24</a>	38	1
-497	2018-06-09 20:29:19.180486+00	65	3	Modified IP address <a href="/ipam/ip-addresses/65/">192.168.13.5/24</a>	38	1
-498	2018-06-09 20:29:32.524901+00	71	3	Modified IP address <a href="/ipam/ip-addresses/71/">192.168.14.5/24</a>	38	1
-499	2018-06-09 20:29:44.041164+00	77	3	Modified IP address <a href="/ipam/ip-addresses/77/">192.168.15.5/24</a>	38	1
-500	2018-06-09 20:30:19.812034+00	83	3	Modified IP address <a href="/ipam/ip-addresses/83/">fc00:11::5/64</a>	38	1
-501	2018-06-09 20:30:30.423274+00	89	3	Modified IP address <a href="/ipam/ip-addresses/89/">fc00:12::5/64</a>	38	1
-502	2018-06-09 20:30:50.187897+00	95	3	Modified IP address <a href="/ipam/ip-addresses/95/">fc00:13::5/64</a>	38	1
-503	2018-06-09 20:31:01.364368+00	101	3	Modified IP address <a href="/ipam/ip-addresses/101/">fc00:14::5/64</a>	38	1
-504	2018-06-09 20:31:14.60952+00	107	3	Modified IP address <a href="/ipam/ip-addresses/107/">fc00:15::5/64</a>	38	1
-505	2018-06-09 20:32:16.61029+00	155	1	Created IP address <a href="/ipam/ip-addresses/155/">192.168.11.1/24</a>	38	1
-506	2018-06-09 20:32:29.930972+00	156	1	Created IP address <a href="/ipam/ip-addresses/156/">fc00:11::1/64</a>	38	1
-507	2018-06-09 20:32:44.776721+00	157	1	Created IP address <a href="/ipam/ip-addresses/157/">192.168.12.1/24</a>	38	1
-508	2018-06-09 20:32:59.446151+00	158	1	Created IP address <a href="/ipam/ip-addresses/158/">fc00:12::1/64</a>	38	1
-509	2018-06-09 20:33:10.635114+00	159	1	Created IP address <a href="/ipam/ip-addresses/159/">192.168.13.1/24</a>	38	1
-510	2018-06-09 20:33:24.179454+00	160	1	Created IP address <a href="/ipam/ip-addresses/160/">fc00:13::1/64</a>	38	1
-511	2018-06-09 20:33:39.476445+00	161	1	Created IP address <a href="/ipam/ip-addresses/161/">192.168.14.1/24</a>	38	1
-512	2018-06-09 20:33:54.65865+00	162	1	Created IP address <a href="/ipam/ip-addresses/162/">fc00:14::1/64</a>	38	1
-513	2018-06-09 20:34:07.416743+00	163	1	Created IP address <a href="/ipam/ip-addresses/163/">192.168.15.1/24</a>	38	1
-514	2018-06-09 20:34:28.239964+00	164	1	Created IP address <a href="/ipam/ip-addresses/164/">fc00:15::1/64</a>	38	1
-515	2018-06-09 20:35:00.541615+00	54	3	Modified IP address <a href="/ipam/ip-addresses/54/">192.168.11.6/24</a>	38	1
-516	2018-06-09 20:35:13.02922+00	60	3	Modified IP address <a href="/ipam/ip-addresses/60/">192.168.12.6/24</a>	38	1
-517	2018-06-09 20:35:26.375363+00	66	3	Modified IP address <a href="/ipam/ip-addresses/66/">192.168.13.6/24</a>	38	1
-518	2018-06-09 20:35:37.283808+00	72	3	Modified IP address <a href="/ipam/ip-addresses/72/">192.168.14.6/24</a>	38	1
-519	2018-06-09 20:35:51.213652+00	78	3	Modified IP address <a href="/ipam/ip-addresses/78/">192.168.15.6/24</a>	38	1
-520	2018-06-09 20:36:17.540786+00	84	3	Modified IP address <a href="/ipam/ip-addresses/84/">fc00:11::6/64</a>	38	1
-521	2018-06-09 20:36:38.653797+00	90	3	Modified IP address <a href="/ipam/ip-addresses/90/">fc00:12::6/64</a>	38	1
-522	2018-06-09 20:36:53.236439+00	96	3	Modified IP address <a href="/ipam/ip-addresses/96/">fc00:13::6/64</a>	38	1
-523	2018-06-09 20:37:08.257958+00	102	3	Modified IP address <a href="/ipam/ip-addresses/102/">fc00:14::6/64</a>	38	1
-524	2018-06-09 20:37:28.639789+00	108	3	Modified IP address <a href="/ipam/ip-addresses/108/">fc00:15::6/64</a>	38	1
-525	2018-06-09 20:38:10.200704+00	165	1	Created IP address <a href="/ipam/ip-addresses/165/">fc00:11::1/64</a>	38	1
-526	2018-06-09 20:38:21.863545+00	166	1	Created IP address <a href="/ipam/ip-addresses/166/">fc00:12::1/64</a>	38	1
-527	2018-06-09 20:38:38.703049+00	167	1	Created IP address <a href="/ipam/ip-addresses/167/">fc00:13::1/64</a>	38	1
-528	2018-06-09 20:38:51.205696+00	168	1	Created IP address <a href="/ipam/ip-addresses/168/">fc00:14::1/64</a>	38	1
-529	2018-06-09 20:39:07.880079+00	169	1	Created IP address <a href="/ipam/ip-addresses/169/">fc00:15::1/64</a>	38	1
-530	2018-06-09 20:39:38.429364+00	85	3	Modified IP address <a href="/ipam/ip-addresses/85/">fc00:11::7/64</a>	38	1
-531	2018-06-09 20:39:51.454492+00	91	3	Modified IP address <a href="/ipam/ip-addresses/91/">fc00:12::7/64</a>	38	1
-532	2018-06-09 20:40:06.854426+00	97	3	Modified IP address <a href="/ipam/ip-addresses/97/">fc00:13::7/64</a>	38	1
-533	2018-06-09 20:40:20.333428+00	103	3	Modified IP address <a href="/ipam/ip-addresses/103/">fc00:14::7/64</a>	38	1
-534	2018-06-09 20:40:31.767754+00	109	3	Modified IP address <a href="/ipam/ip-addresses/109/">fc00:15::7/64</a>	38	1
-535	2018-06-09 20:40:56.600722+00	55	3	Modified IP address <a href="/ipam/ip-addresses/55/">192.168.11.7/24</a>	38	1
-536	2018-06-09 20:41:11.023644+00	61	3	Modified IP address <a href="/ipam/ip-addresses/61/">192.168.12.7/24</a>	38	1
-537	2018-06-09 20:41:21.438853+00	67	3	Modified IP address <a href="/ipam/ip-addresses/67/">192.168.13.7/24</a>	38	1
-538	2018-06-09 20:41:32.931732+00	73	3	Modified IP address <a href="/ipam/ip-addresses/73/">192.168.14.7/24</a>	38	1
-539	2018-06-09 20:41:45.068342+00	79	3	Modified IP address <a href="/ipam/ip-addresses/79/">192.168.15.7/24</a>	38	1
-540	2018-06-09 20:43:40.293068+00	121	3	Modified IP address <a href="/ipam/ip-addresses/121/">192.168.12.1/24</a>	38	1
-541	2018-06-09 20:45:51.968232+00	3	3	Modified VRF <a href="/ipam/vrfs/3/">4003 (2)</a>	43	1
-542	2018-06-09 20:48:05.68907+00	127	3	Modified IP address <a href="/ipam/ip-addresses/127/">192.168.13.1/24</a>	38	1
-543	2018-06-09 21:25:48.670797+00	1	3	Modified interface <a href="/dcim/devices/1/">bond01</a>	18	1
-544	2018-06-09 21:25:56.562158+00	12	3	Modified interface <a href="/dcim/devices/1/">bond02</a>	18	1
-545	2018-06-09 21:26:33.745362+00	15	3	Modified interface <a href="/dcim/devices/4/">bond01</a>	18	1
-546	2018-06-09 21:26:40.764397+00	16	3	Modified interface <a href="/dcim/devices/4/">bond02</a>	18	1
-547	2018-06-09 21:26:54.38325+00	42	3	Modified interface <a href="/dcim/devices/7/">bond01</a>	18	1
-548	2018-06-09 21:27:03.544174+00	43	3	Modified interface <a href="/dcim/devices/7/">bond02</a>	18	1
-549	2018-06-09 21:27:16.230691+00	55	3	Modified interface <a href="/dcim/devices/8/">bond01</a>	18	1
-550	2018-06-09 21:27:23.423455+00	56	3	Modified interface <a href="/dcim/devices/8/">bond02</a>	18	1
-551	2018-06-09 21:27:26.427826+00	56	3	Modified interface <a href="/dcim/devices/8/">bond02</a>	18	1
-552	2018-06-09 21:27:43.730277+00	68	3	Modified interface <a href="/dcim/devices/9/">bond01</a>	18	1
-553	2018-06-09 21:27:50.112725+00	69	3	Modified interface <a href="/dcim/devices/9/">bond02</a>	18	1
-554	2018-06-09 21:28:12.184184+00	81	3	Modified interface <a href="/dcim/devices/10/">bond01</a>	18	1
-555	2018-06-09 21:28:18.080757+00	81	3	Modified interface <a href="/dcim/devices/10/">bond01</a>	18	1
-556	2018-06-09 21:28:23.689099+00	81	3	Modified interface <a href="/dcim/devices/10/">bond01</a>	18	1
-557	2018-06-09 21:28:29.637133+00	82	3	Modified interface <a href="/dcim/devices/10/">bond02</a>	18	1
-558	2018-06-09 21:28:34.781746+00	82	3	Modified interface <a href="/dcim/devices/10/">bond02</a>	18	1
-559	2018-06-09 21:28:37.608935+00	82	3	Modified interface <a href="/dcim/devices/10/">bond02</a>	18	1
-560	2018-11-07 16:49:56.651752+00	\N	4	Updated 2 devices	15	1
-561	2018-11-07 16:57:09.332252+00	\N	4	Updated 2 devices	15	1
-562	2018-11-07 18:40:11.942846+00	8	3	Modified device <a href="/dcim/devices/8/">leaf04</a>	15	1
-563	2018-11-08 18:52:42.84896+00	\N	4	Updated 1 devices	15	1
-564	2018-11-08 18:56:19.417461+00	\N	6	Deleted 9 interfaces	18	1
-565	2018-11-08 18:56:39.379376+00	49	3	Modified interface <a href="/dcim/devices/7/">swp1</a>	18	1
-566	2018-11-08 18:56:50.186742+00	50	3	Modified interface <a href="/dcim/devices/7/">swp2</a>	18	1
-567	2018-11-08 18:57:37.569131+00	\N	6	Deleted 9 interfaces	18	1
-568	2018-11-08 18:57:48.794184+00	62	3	Modified interface <a href="/dcim/devices/8/">swp1</a>	18	1
-569	2018-11-08 18:57:56.647329+00	63	3	Modified interface <a href="/dcim/devices/8/">swp2</a>	18	1
-570	2019-06-08 15:19:27.960789+00	9	3	Modified device <a href="/dcim/devices/9/">service01</a>	15	1
-571	2019-06-08 15:19:45.703224+00	10	3	Modified device <a href="/dcim/devices/10/">service02</a>	15	1
-572	2019-06-08 15:20:08.990854+00	13	3	Modified device <a href="/dcim/devices/13/">exit01</a>	15	1
-573	2019-06-08 15:20:30.354712+00	14	3	Modified device <a href="/dcim/devices/14/">exit02</a>	15	1
-574	2019-06-08 15:34:38.871934+00	10	3	Modified interface <a href="/dcim/devices/1/">swp51</a>	18	1
-575	2019-06-08 15:34:51.160196+00	11	3	Modified interface <a href="/dcim/devices/1/">swp52</a>	18	1
-576	2019-06-08 15:35:01.982155+00	6	3	Modified interface <a href="/dcim/devices/1/">swp49</a>	18	1
-577	2019-06-08 15:35:12.576769+00	7	3	Modified interface <a href="/dcim/devices/1/">swp50</a>	18	1
-578	2019-06-08 15:36:14.797436+00	26	3	Modified interface <a href="/dcim/devices/4/">swp51</a>	18	1
-579	2019-06-08 15:36:21.267022+00	27	3	Modified interface <a href="/dcim/devices/4/">swp52</a>	18	1
-580	2019-06-08 15:36:27.633597+00	25	3	Modified interface <a href="/dcim/devices/4/">swp50</a>	18	1
-581	2019-06-08 15:36:32.807575+00	24	3	Modified interface <a href="/dcim/devices/4/">swp49</a>	18	1
-582	2019-06-08 15:37:03.485245+00	54	3	Modified interface <a href="/dcim/devices/7/">swp52</a>	18	1
-583	2019-06-08 15:37:10.002075+00	53	3	Modified interface <a href="/dcim/devices/7/">swp51</a>	18	1
-584	2019-06-08 15:37:15.816029+00	52	3	Modified interface <a href="/dcim/devices/7/">swp50</a>	18	1
-585	2019-06-08 15:37:22.029922+00	51	3	Modified interface <a href="/dcim/devices/7/">swp49</a>	18	1
-586	2019-06-08 15:37:42.458886+00	67	3	Modified interface <a href="/dcim/devices/8/">swp52</a>	18	1
-587	2019-06-08 15:37:48.300058+00	66	3	Modified interface <a href="/dcim/devices/8/">swp51</a>	18	1
-588	2019-06-08 15:37:55.475567+00	65	3	Modified interface <a href="/dcim/devices/8/">swp50</a>	18	1
-589	2019-06-08 15:38:01.349244+00	64	3	Modified interface <a href="/dcim/devices/8/">swp49</a>	18	1
-590	2019-06-08 15:38:40.17388+00	79	3	Modified interface <a href="/dcim/devices/9/">swp53</a>	18	1
-591	2019-06-08 15:38:46.843267+00	80	3	Modified interface <a href="/dcim/devices/9/">swp54</a>	18	1
-592	2019-06-08 15:39:03.537314+00	77	3	Modified interface <a href="/dcim/devices/9/">swp49</a>	18	1
-593	2019-06-08 15:39:10.958658+00	78	3	Modified interface <a href="/dcim/devices/9/">swp50</a>	18	1
-594	2019-06-08 15:40:16.770317+00	92	3	Modified interface <a href="/dcim/devices/10/">swp53</a>	18	1
-595	2019-06-08 15:40:24.297766+00	93	3	Modified interface <a href="/dcim/devices/10/">swp54</a>	18	1
-596	2019-06-08 15:40:30.853322+00	90	3	Modified interface <a href="/dcim/devices/10/">swp49</a>	18	1
-597	2019-06-08 15:40:37.303802+00	91	3	Modified interface <a href="/dcim/devices/10/">swp50</a>	18	1
-598	2019-06-08 15:41:06.682685+00	97	3	Modified interface <a href="/dcim/devices/11/">swp6</a>	18	1
-599	2019-06-08 15:41:14.263791+00	98	3	Modified interface <a href="/dcim/devices/11/">swp7</a>	18	1
-600	2019-06-08 15:41:27.773939+00	102	3	Modified interface <a href="/dcim/devices/12/">swp6</a>	18	1
-601	2019-06-08 15:41:36.564566+00	103	3	Modified interface <a href="/dcim/devices/12/">swp7</a>	18	1
+COPY public.extras_webhook (id, name, type_create, type_update, type_delete, payload_url, http_content_type, secret, enabled, ssl_verification, ca_file_path, additional_headers) FROM stdin;
+\.
+
+
+--
+-- Data for Name: extras_webhook_obj_type; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.extras_webhook_obj_type (id, webhook_id, contenttype_id) FROM stdin;
 \.
 
 
@@ -5155,123 +5882,123 @@ COPY public.ipam_aggregate (id, created, last_updated, family, prefix, date_adde
 -- Data for Name: ipam_ipaddress; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.ipam_ipaddress (id, created, last_updated, family, address, description, interface_id, nat_inside_id, vrf_id, tenant_id, status, role) FROM stdin;
-56	2018-06-09	2018-06-09 10:48:20.743316+00	4	192.168.12.2/24		137	\N	2	2	1	\N
-62	2018-06-09	2018-06-09 10:48:39.040862+00	4	192.168.13.2/24		138	\N	2	2	1	\N
-68	2018-06-09	2018-06-09 10:49:40.251921+00	4	192.168.14.2/24		139	\N	3	3	1	\N
-9	2018-06-03	2018-06-03 17:28:59.410321+00	4	10.10.10.1		4	\N	\N	\N	1	10
-74	2018-06-09	2018-06-09 10:49:53.894667+00	4	192.168.15.2/24		140	\N	3	3	1	\N
-86	2018-06-09	2018-06-09 10:53:42.687133+00	6	fc00:12::2/64		137	\N	2	2	1	\N
-92	2018-06-09	2018-06-09 10:54:23.916168+00	6	fc00:13::2/64		138	\N	2	2	1	\N
-98	2018-06-09	2018-06-09 10:54:42.020742+00	6	fc00:14::2/64		139	\N	3	3	1	\N
-120	2018-06-09	2018-06-09 19:51:37.028337+00	4	192.168.11.1/24		161	\N	1	1	1	41
-49	2018-06-09	2018-06-09 08:58:45.482406+00	4	10.10.30.2		99	\N	\N	\N	1	10
-122	2018-06-09	2018-06-09 19:52:44.302551+00	4	192.168.13.1/24		163	\N	2	2	1	41
-124	2018-06-09	2018-06-09 19:53:48.876302+00	4	192.168.15.1/24		165	\N	3	3	1	41
-126	2018-06-09	2018-06-09 19:54:50.332847+00	4	192.168.12.1/24		142	\N	2	2	1	41
-128	2018-06-09	2018-06-09 19:55:30.045081+00	4	192.168.14.1/24		144	\N	3	3	1	41
-130	2018-06-09	2018-06-09 19:56:22.588307+00	6	fc00:11::1/64		141	\N	1	1	1	41
-132	2018-06-09	2018-06-09 19:56:55.134519+00	6	fc00:13::1/64		143	\N	2	2	1	41
-7	2018-06-03	2018-06-08 16:53:47.050852+00	4	169.254.1.1/30		8	\N	\N	\N	1	\N
-134	2018-06-09	2018-06-09 19:57:25.643063+00	6	fc00:15::1/64		145	\N	3	3	1	41
-87	2018-06-09	2018-06-09 19:58:35.058177+00	6	fc00:12::3/64		142	\N	2	2	1	\N
-93	2018-06-09	2018-06-09 19:59:00.601134+00	6	fc00:13::3/64		143	\N	2	2	1	\N
-99	2018-06-09	2018-06-09 19:59:16.304608+00	6	fc00:14::3/64		144	\N	3	3	1	\N
-51	2018-06-09	2018-06-09 20:00:12.396717+00	4	192.168.11.3/24		141	\N	1	1	1	\N
-11	2018-06-08	2018-06-08 20:17:59.798689+00	4	10.10.10.2		19	\N	\N	\N	1	10
-8	2018-06-03	2018-06-08 20:20:21.168161+00	4	169.254.1.2/30		21	\N	\N	\N	1	\N
-57	2018-06-09	2018-06-09 20:00:24.869895+00	4	192.168.12.3/24		142	\N	2	2	1	\N
-63	2018-06-09	2018-06-09 20:00:37.953922+00	4	192.168.13.3/24		143	\N	2	2	1	\N
-69	2018-06-09	2018-06-09 20:00:58.253397+00	4	192.168.14.3/24		144	\N	3	3	1	\N
-75	2018-06-09	2018-06-09 20:01:13.646992+00	4	192.168.15.3/24		145	\N	3	3	1	\N
-10	2018-06-03	2018-06-08 21:24:46.126106+00	4	10.100.100.12		9	\N	\N	\N	1	30
-15	2018-06-08	2018-06-08 21:30:04.433543+00	4	10.100.100.12		17	\N	\N	\N	1	30
-18	2018-06-08	2018-06-08 22:36:50.542167+00	4	10.10.20.1		28	\N	\N	\N	1	10
-19	2018-06-08	2018-06-08 22:38:33.425144+00	4	10.10.20.2		35	\N	\N	\N	1	10
-16	2018-06-08	2018-06-08 23:21:39.662181+00	4	192.168.10.1/24		3	\N	1	1	1	41
-12	2018-06-08	2018-06-08 23:21:48.785744+00	4	192.168.10.1/24		18	\N	1	1	1	41
-13	2018-06-08	2018-06-08 23:21:56.237071+00	4	192.168.10.2/24		3	\N	1	1	1	\N
-14	2018-06-08	2018-06-08 23:22:04.35702+00	4	192.168.10.3/24		18	\N	1	1	1	\N
-4	2018-06-03	2018-06-08 23:22:15.27877+00	6	fc00:10::1/64		18	\N	1	1	1	41
-5	2018-06-03	2018-06-08 23:22:27.540686+00	6	fc00:10::2/64		3	\N	1	1	1	\N
-6	2018-06-03	2018-06-08 23:22:46.362188+00	6	fc00:10::3/64		18	\N	1	1	1	\N
-21	2018-06-08	2018-06-08 23:59:01.661535+00	4	10.10.10.3		46	\N	\N	\N	1	10
-22	2018-06-09	2018-06-09 00:00:28.026116+00	4	169.254.1.1/30		48	\N	\N	\N	1	\N
-17	2018-06-08	2018-06-09 00:04:25.854341+00	6	fc00:10::1/64		3	\N	1	1	1	41
-27	2018-06-09	2018-06-09 00:15:54.709314+00	4	169.254.1.2/30		61	\N	\N	\N	1	\N
-34	2018-06-09	2018-06-09 08:37:02.310354+00	4	10.100.100.56		70	\N	\N	\N	1	30
-35	2018-06-09	2018-06-09 08:37:33.395269+00	4	10.10.10.5		72	\N	\N	\N	1	10
-36	2018-06-09	2018-06-09 08:39:11.687954+00	4	169.254.1.1/30		74	\N	\N	\N	1	\N
-41	2018-06-09	2018-06-09 08:48:52.770896+00	4	10.100.100.56		83	\N	\N	\N	1	30
-42	2018-06-09	2018-06-09 08:49:57.197178+00	4	10.10.10.6		85	\N	\N	\N	1	10
-43	2018-06-09	2018-06-09 08:51:12.140443+00	4	169.254.1.2/30		87	\N	\N	\N	1	\N
-48	2018-06-09	2018-06-09 08:54:31.276043+00	4	10.10.30.1		94	\N	\N	\N	1	10
-54	2018-06-09	2018-06-09 20:35:00.51934+00	4	192.168.11.6/24		156	\N	1	1	1	\N
-60	2018-06-09	2018-06-09 20:35:13.015298+00	4	192.168.12.6/24		157	\N	2	2	1	\N
-66	2018-06-09	2018-06-09 20:35:26.35718+00	4	192.168.13.6/24		158	\N	2	2	1	\N
-72	2018-06-09	2018-06-09 20:35:37.269083+00	4	192.168.14.6/24		159	\N	3	3	1	\N
-45	2018-06-09	2018-06-09 10:05:30.547499+00	4	192.168.10.7/24		84	\N	1	1	1	\N
-28	2018-06-09	2018-06-09 10:06:15.15478+00	4	10.10.10.4		59	\N	\N	\N	1	10
-78	2018-06-09	2018-06-09 20:35:51.193111+00	4	192.168.15.6/24		160	\N	3	3	1	\N
-90	2018-06-09	2018-06-09 20:36:38.637933+00	6	fc00:12::6/64		157	\N	2	2	1	\N
-40	2018-06-09	2018-06-09 10:14:08.887747+00	6	fc00:10::1/64		71	\N	1	1	1	41
-46	2018-06-09	2018-06-09 10:14:08.893935+00	6	fc00:10::1/64		84	\N	1	1	1	41
-91	2018-06-09	2018-06-09 20:39:51.423013+00	6	fc00:12::7/64		162	\N	2	2	1	\N
-55	2018-06-09	2018-06-09 20:40:56.586391+00	4	192.168.11.7/24		161	\N	1	1	1	\N
-61	2018-06-09	2018-06-09 20:41:10.993366+00	4	192.168.12.7/24		162	\N	2	2	1	\N
-73	2018-06-09	2018-06-09 20:41:32.918289+00	4	192.168.14.7/24		164	\N	3	3	1	\N
-79	2018-06-09	2018-06-09 20:41:45.053978+00	4	192.168.15.7/24		165	\N	3	3	1	\N
-50	2018-06-09	2018-06-09 10:45:00.558226+00	4	192.168.11.2/24		136	\N	1	1	1	\N
-38	2018-06-09	2018-06-09 10:04:52.146074+00	4	192.168.10.6/24		71	\N	1	1	1	\N
-37	2018-06-09	2018-06-09 10:05:52.622032+00	4	192.168.10.1/24		71	\N	1	1	1	41
-44	2018-06-09	2018-06-09 10:05:52.630131+00	4	192.168.10.1/24		84	\N	1	1	1	41
-115	2018-06-09	2018-06-09 10:51:21.927845+00	6	fc00:11::1/64		136	\N	1	1	1	41
-116	2018-06-09	2018-06-09 10:51:53.153056+00	6	fc00:12::1/64		137	\N	2	2	1	41
-117	2018-06-09	2018-06-09 10:52:08.888119+00	6	fc00:13::1/64		138	\N	2	2	1	41
-118	2018-06-09	2018-06-09 10:52:31.369316+00	6	fc00:14::1/64		139	\N	3	3	1	41
-119	2018-06-09	2018-06-09 10:52:56.1531+00	6	fc00:15::1/64		140	\N	3	3	1	41
-80	2018-06-09	2018-06-09 10:53:26.858314+00	6	fc00:11::2/64		136	\N	1	1	1	\N
-104	2018-06-09	2018-06-09 10:54:58.958957+00	6	fc00:15::2/64		140	\N	3	3	1	\N
-123	2018-06-09	2018-06-09 19:53:08.740336+00	4	192.168.14.1/24		164	\N	3	3	1	41
-125	2018-06-09	2018-06-09 19:54:35.398377+00	4	192.168.11.1/24		141	\N	1	1	1	41
-129	2018-06-09	2018-06-09 19:55:45.52175+00	4	192.168.15.1/24		145	\N	3	3	1	41
-131	2018-06-09	2018-06-09 19:56:40.680239+00	6	fc00:12::1/64		142	\N	2	2	1	41
-133	2018-06-09	2018-06-09 19:57:10.388924+00	6	fc00:14::1/64		144	\N	3	3	1	41
-81	2018-06-09	2018-06-09 19:58:19.005782+00	6	fc00:11::3/64		141	\N	1	1	1	\N
-105	2018-06-09	2018-06-09 19:59:30.920288+00	6	fc00:15::3/64		145	\N	3	3	1	\N
-39	2018-06-09	2018-06-09 10:13:35.532328+00	6	fc00:10::6/64		71	\N	1	1	1	\N
-47	2018-06-09	2018-06-09 10:13:35.540608+00	6	fc00:10::7/64		84	\N	1	1	1	\N
-127	2018-06-09	2018-06-09 20:48:05.676037+00	4	192.168.13.1/24		143	\N	1	2	1	41
-96	2018-06-09	2018-06-09 20:36:53.220312+00	6	fc00:13::6/64		158	\N	2	2	1	\N
-102	2018-06-09	2018-06-09 20:37:08.244069+00	6	fc00:14::6/64		159	\N	3	3	1	\N
-108	2018-06-09	2018-06-09 20:37:28.611635+00	6	fc00:15::6/64		160	\N	3	3	1	\N
-165	2018-06-09	2018-06-09 20:38:10.179972+00	6	fc00:11::1/64		161	\N	1	1	1	41
-110	2018-06-09	2018-06-09 10:45:52.595965+00	4	192.168.11.1/24		136	\N	1	1	1	41
-111	2018-06-09	2018-06-09 10:46:35.0743+00	4	192.168.12.1/24		137	\N	2	2	1	41
-112	2018-06-09	2018-06-09 10:46:52.321546+00	4	192.168.13.1/24		138	\N	2	2	1	41
-113	2018-06-09	2018-06-09 10:47:12.440114+00	4	192.168.14.1/24		139	\N	3	3	1	41
-114	2018-06-09	2018-06-09 10:47:34.379552+00	4	192.168.15.1/24		140	\N	3	3	1	41
-155	2018-06-09	2018-06-09 20:32:16.585849+00	4	192.168.11.1/24		156	\N	1	1	1	41
-156	2018-06-09	2018-06-09 20:32:29.915115+00	6	fc00:11::1/64		156	\N	1	1	1	41
-157	2018-06-09	2018-06-09 20:32:44.76192+00	4	192.168.12.1/24		157	\N	2	2	1	41
-158	2018-06-09	2018-06-09 20:32:59.432429+00	6	fc00:12::1/64		157	\N	2	2	1	41
-159	2018-06-09	2018-06-09 20:33:10.620229+00	4	192.168.13.1/24		158	\N	2	2	1	41
-160	2018-06-09	2018-06-09 20:33:24.164546+00	6	fc00:13::1/64		158	\N	2	2	1	41
-161	2018-06-09	2018-06-09 20:33:39.459045+00	4	192.168.14.1/24		159	\N	3	3	1	41
-162	2018-06-09	2018-06-09 20:33:54.627912+00	6	fc00:14::1/64		159	\N	3	3	1	41
-163	2018-06-09	2018-06-09 20:34:07.400939+00	4	192.168.15.1/24		160	\N	3	3	1	41
-164	2018-06-09	2018-06-09 20:34:28.218622+00	6	fc00:15::1/64		160	\N	3	3	1	41
-84	2018-06-09	2018-06-09 20:36:17.526537+00	6	fc00:11::6/64		156	\N	1	1	1	\N
-166	2018-06-09	2018-06-09 20:38:21.848697+00	6	fc00:12::1/64		162	\N	2	2	1	41
-167	2018-06-09	2018-06-09 20:38:38.68772+00	6	fc00:13::1/64		163	\N	2	2	1	41
-168	2018-06-09	2018-06-09 20:38:51.17949+00	6	fc00:14::1/64		164	\N	3	3	1	41
-169	2018-06-09	2018-06-09 20:39:07.863229+00	6	fc00:15::1/64		165	\N	3	3	1	41
-85	2018-06-09	2018-06-09 20:39:38.399468+00	6	fc00:11::7/64		161	\N	1	1	1	\N
-97	2018-06-09	2018-06-09 20:40:06.835903+00	6	fc00:13::7/64		163	\N	2	2	1	\N
-103	2018-06-09	2018-06-09 20:40:20.317366+00	6	fc00:14::7/64		164	\N	3	3	1	\N
-109	2018-06-09	2018-06-09 20:40:31.752772+00	6	fc00:15::7/64		165	\N	3	3	1	\N
-67	2018-06-09	2018-06-09 20:41:21.421193+00	4	192.168.13.7/24		163	\N	2	2	1	\N
-121	2018-06-09	2018-06-09 20:43:40.279345+00	4	192.168.12.1/24		162	\N	2	2	1	41
+COPY public.ipam_ipaddress (id, created, last_updated, family, address, description, interface_id, nat_inside_id, vrf_id, tenant_id, status, role, dns_name) FROM stdin;
+56	2018-06-09	2018-06-09 10:48:20.743316+00	4	192.168.12.2/24		137	\N	2	2	1	\N	
+62	2018-06-09	2018-06-09 10:48:39.040862+00	4	192.168.13.2/24		138	\N	2	2	1	\N	
+68	2018-06-09	2018-06-09 10:49:40.251921+00	4	192.168.14.2/24		139	\N	3	3	1	\N	
+9	2018-06-03	2018-06-03 17:28:59.410321+00	4	10.10.10.1		4	\N	\N	\N	1	10	
+74	2018-06-09	2018-06-09 10:49:53.894667+00	4	192.168.15.2/24		140	\N	3	3	1	\N	
+86	2018-06-09	2018-06-09 10:53:42.687133+00	6	fc00:12::2/64		137	\N	2	2	1	\N	
+92	2018-06-09	2018-06-09 10:54:23.916168+00	6	fc00:13::2/64		138	\N	2	2	1	\N	
+98	2018-06-09	2018-06-09 10:54:42.020742+00	6	fc00:14::2/64		139	\N	3	3	1	\N	
+120	2018-06-09	2018-06-09 19:51:37.028337+00	4	192.168.11.1/24		161	\N	1	1	1	41	
+49	2018-06-09	2018-06-09 08:58:45.482406+00	4	10.10.30.2		99	\N	\N	\N	1	10	
+122	2018-06-09	2018-06-09 19:52:44.302551+00	4	192.168.13.1/24		163	\N	2	2	1	41	
+124	2018-06-09	2018-06-09 19:53:48.876302+00	4	192.168.15.1/24		165	\N	3	3	1	41	
+126	2018-06-09	2018-06-09 19:54:50.332847+00	4	192.168.12.1/24		142	\N	2	2	1	41	
+128	2018-06-09	2018-06-09 19:55:30.045081+00	4	192.168.14.1/24		144	\N	3	3	1	41	
+130	2018-06-09	2018-06-09 19:56:22.588307+00	6	fc00:11::1/64		141	\N	1	1	1	41	
+132	2018-06-09	2018-06-09 19:56:55.134519+00	6	fc00:13::1/64		143	\N	2	2	1	41	
+7	2018-06-03	2018-06-08 16:53:47.050852+00	4	169.254.1.1/30		8	\N	\N	\N	1	\N	
+134	2018-06-09	2018-06-09 19:57:25.643063+00	6	fc00:15::1/64		145	\N	3	3	1	41	
+87	2018-06-09	2018-06-09 19:58:35.058177+00	6	fc00:12::3/64		142	\N	2	2	1	\N	
+93	2018-06-09	2018-06-09 19:59:00.601134+00	6	fc00:13::3/64		143	\N	2	2	1	\N	
+99	2018-06-09	2018-06-09 19:59:16.304608+00	6	fc00:14::3/64		144	\N	3	3	1	\N	
+51	2018-06-09	2018-06-09 20:00:12.396717+00	4	192.168.11.3/24		141	\N	1	1	1	\N	
+11	2018-06-08	2018-06-08 20:17:59.798689+00	4	10.10.10.2		19	\N	\N	\N	1	10	
+8	2018-06-03	2018-06-08 20:20:21.168161+00	4	169.254.1.2/30		21	\N	\N	\N	1	\N	
+57	2018-06-09	2018-06-09 20:00:24.869895+00	4	192.168.12.3/24		142	\N	2	2	1	\N	
+63	2018-06-09	2018-06-09 20:00:37.953922+00	4	192.168.13.3/24		143	\N	2	2	1	\N	
+69	2018-06-09	2018-06-09 20:00:58.253397+00	4	192.168.14.3/24		144	\N	3	3	1	\N	
+75	2018-06-09	2018-06-09 20:01:13.646992+00	4	192.168.15.3/24		145	\N	3	3	1	\N	
+10	2018-06-03	2018-06-08 21:24:46.126106+00	4	10.100.100.12		9	\N	\N	\N	1	30	
+15	2018-06-08	2018-06-08 21:30:04.433543+00	4	10.100.100.12		17	\N	\N	\N	1	30	
+18	2018-06-08	2018-06-08 22:36:50.542167+00	4	10.10.20.1		28	\N	\N	\N	1	10	
+19	2018-06-08	2018-06-08 22:38:33.425144+00	4	10.10.20.2		35	\N	\N	\N	1	10	
+16	2018-06-08	2018-06-08 23:21:39.662181+00	4	192.168.10.1/24		3	\N	1	1	1	41	
+12	2018-06-08	2018-06-08 23:21:48.785744+00	4	192.168.10.1/24		18	\N	1	1	1	41	
+13	2018-06-08	2018-06-08 23:21:56.237071+00	4	192.168.10.2/24		3	\N	1	1	1	\N	
+14	2018-06-08	2018-06-08 23:22:04.35702+00	4	192.168.10.3/24		18	\N	1	1	1	\N	
+4	2018-06-03	2018-06-08 23:22:15.27877+00	6	fc00:10::1/64		18	\N	1	1	1	41	
+5	2018-06-03	2018-06-08 23:22:27.540686+00	6	fc00:10::2/64		3	\N	1	1	1	\N	
+6	2018-06-03	2018-06-08 23:22:46.362188+00	6	fc00:10::3/64		18	\N	1	1	1	\N	
+21	2018-06-08	2018-06-08 23:59:01.661535+00	4	10.10.10.3		46	\N	\N	\N	1	10	
+22	2018-06-09	2018-06-09 00:00:28.026116+00	4	169.254.1.1/30		48	\N	\N	\N	1	\N	
+17	2018-06-08	2018-06-09 00:04:25.854341+00	6	fc00:10::1/64		3	\N	1	1	1	41	
+27	2018-06-09	2018-06-09 00:15:54.709314+00	4	169.254.1.2/30		61	\N	\N	\N	1	\N	
+34	2018-06-09	2018-06-09 08:37:02.310354+00	4	10.100.100.56		70	\N	\N	\N	1	30	
+35	2018-06-09	2018-06-09 08:37:33.395269+00	4	10.10.10.5		72	\N	\N	\N	1	10	
+36	2018-06-09	2018-06-09 08:39:11.687954+00	4	169.254.1.1/30		74	\N	\N	\N	1	\N	
+41	2018-06-09	2018-06-09 08:48:52.770896+00	4	10.100.100.56		83	\N	\N	\N	1	30	
+42	2018-06-09	2018-06-09 08:49:57.197178+00	4	10.10.10.6		85	\N	\N	\N	1	10	
+43	2018-06-09	2018-06-09 08:51:12.140443+00	4	169.254.1.2/30		87	\N	\N	\N	1	\N	
+48	2018-06-09	2018-06-09 08:54:31.276043+00	4	10.10.30.1		94	\N	\N	\N	1	10	
+54	2018-06-09	2018-06-09 20:35:00.51934+00	4	192.168.11.6/24		156	\N	1	1	1	\N	
+60	2018-06-09	2018-06-09 20:35:13.015298+00	4	192.168.12.6/24		157	\N	2	2	1	\N	
+66	2018-06-09	2018-06-09 20:35:26.35718+00	4	192.168.13.6/24		158	\N	2	2	1	\N	
+72	2018-06-09	2018-06-09 20:35:37.269083+00	4	192.168.14.6/24		159	\N	3	3	1	\N	
+45	2018-06-09	2018-06-09 10:05:30.547499+00	4	192.168.10.7/24		84	\N	1	1	1	\N	
+28	2018-06-09	2018-06-09 10:06:15.15478+00	4	10.10.10.4		59	\N	\N	\N	1	10	
+78	2018-06-09	2018-06-09 20:35:51.193111+00	4	192.168.15.6/24		160	\N	3	3	1	\N	
+90	2018-06-09	2018-06-09 20:36:38.637933+00	6	fc00:12::6/64		157	\N	2	2	1	\N	
+40	2018-06-09	2018-06-09 10:14:08.887747+00	6	fc00:10::1/64		71	\N	1	1	1	41	
+46	2018-06-09	2018-06-09 10:14:08.893935+00	6	fc00:10::1/64		84	\N	1	1	1	41	
+91	2018-06-09	2018-06-09 20:39:51.423013+00	6	fc00:12::7/64		162	\N	2	2	1	\N	
+55	2018-06-09	2018-06-09 20:40:56.586391+00	4	192.168.11.7/24		161	\N	1	1	1	\N	
+61	2018-06-09	2018-06-09 20:41:10.993366+00	4	192.168.12.7/24		162	\N	2	2	1	\N	
+73	2018-06-09	2018-06-09 20:41:32.918289+00	4	192.168.14.7/24		164	\N	3	3	1	\N	
+79	2018-06-09	2018-06-09 20:41:45.053978+00	4	192.168.15.7/24		165	\N	3	3	1	\N	
+50	2018-06-09	2018-06-09 10:45:00.558226+00	4	192.168.11.2/24		136	\N	1	1	1	\N	
+38	2018-06-09	2018-06-09 10:04:52.146074+00	4	192.168.10.6/24		71	\N	1	1	1	\N	
+37	2018-06-09	2018-06-09 10:05:52.622032+00	4	192.168.10.1/24		71	\N	1	1	1	41	
+44	2018-06-09	2018-06-09 10:05:52.630131+00	4	192.168.10.1/24		84	\N	1	1	1	41	
+115	2018-06-09	2018-06-09 10:51:21.927845+00	6	fc00:11::1/64		136	\N	1	1	1	41	
+116	2018-06-09	2018-06-09 10:51:53.153056+00	6	fc00:12::1/64		137	\N	2	2	1	41	
+117	2018-06-09	2018-06-09 10:52:08.888119+00	6	fc00:13::1/64		138	\N	2	2	1	41	
+118	2018-06-09	2018-06-09 10:52:31.369316+00	6	fc00:14::1/64		139	\N	3	3	1	41	
+119	2018-06-09	2018-06-09 10:52:56.1531+00	6	fc00:15::1/64		140	\N	3	3	1	41	
+80	2018-06-09	2018-06-09 10:53:26.858314+00	6	fc00:11::2/64		136	\N	1	1	1	\N	
+104	2018-06-09	2018-06-09 10:54:58.958957+00	6	fc00:15::2/64		140	\N	3	3	1	\N	
+123	2018-06-09	2018-06-09 19:53:08.740336+00	4	192.168.14.1/24		164	\N	3	3	1	41	
+125	2018-06-09	2018-06-09 19:54:35.398377+00	4	192.168.11.1/24		141	\N	1	1	1	41	
+129	2018-06-09	2018-06-09 19:55:45.52175+00	4	192.168.15.1/24		145	\N	3	3	1	41	
+131	2018-06-09	2018-06-09 19:56:40.680239+00	6	fc00:12::1/64		142	\N	2	2	1	41	
+133	2018-06-09	2018-06-09 19:57:10.388924+00	6	fc00:14::1/64		144	\N	3	3	1	41	
+81	2018-06-09	2018-06-09 19:58:19.005782+00	6	fc00:11::3/64		141	\N	1	1	1	\N	
+105	2018-06-09	2018-06-09 19:59:30.920288+00	6	fc00:15::3/64		145	\N	3	3	1	\N	
+39	2018-06-09	2018-06-09 10:13:35.532328+00	6	fc00:10::6/64		71	\N	1	1	1	\N	
+47	2018-06-09	2018-06-09 10:13:35.540608+00	6	fc00:10::7/64		84	\N	1	1	1	\N	
+127	2018-06-09	2018-06-09 20:48:05.676037+00	4	192.168.13.1/24		143	\N	1	2	1	41	
+96	2018-06-09	2018-06-09 20:36:53.220312+00	6	fc00:13::6/64		158	\N	2	2	1	\N	
+102	2018-06-09	2018-06-09 20:37:08.244069+00	6	fc00:14::6/64		159	\N	3	3	1	\N	
+108	2018-06-09	2018-06-09 20:37:28.611635+00	6	fc00:15::6/64		160	\N	3	3	1	\N	
+165	2018-06-09	2018-06-09 20:38:10.179972+00	6	fc00:11::1/64		161	\N	1	1	1	41	
+110	2018-06-09	2018-06-09 10:45:52.595965+00	4	192.168.11.1/24		136	\N	1	1	1	41	
+111	2018-06-09	2018-06-09 10:46:35.0743+00	4	192.168.12.1/24		137	\N	2	2	1	41	
+112	2018-06-09	2018-06-09 10:46:52.321546+00	4	192.168.13.1/24		138	\N	2	2	1	41	
+113	2018-06-09	2018-06-09 10:47:12.440114+00	4	192.168.14.1/24		139	\N	3	3	1	41	
+114	2018-06-09	2018-06-09 10:47:34.379552+00	4	192.168.15.1/24		140	\N	3	3	1	41	
+155	2018-06-09	2018-06-09 20:32:16.585849+00	4	192.168.11.1/24		156	\N	1	1	1	41	
+156	2018-06-09	2018-06-09 20:32:29.915115+00	6	fc00:11::1/64		156	\N	1	1	1	41	
+157	2018-06-09	2018-06-09 20:32:44.76192+00	4	192.168.12.1/24		157	\N	2	2	1	41	
+158	2018-06-09	2018-06-09 20:32:59.432429+00	6	fc00:12::1/64		157	\N	2	2	1	41	
+159	2018-06-09	2018-06-09 20:33:10.620229+00	4	192.168.13.1/24		158	\N	2	2	1	41	
+160	2018-06-09	2018-06-09 20:33:24.164546+00	6	fc00:13::1/64		158	\N	2	2	1	41	
+161	2018-06-09	2018-06-09 20:33:39.459045+00	4	192.168.14.1/24		159	\N	3	3	1	41	
+162	2018-06-09	2018-06-09 20:33:54.627912+00	6	fc00:14::1/64		159	\N	3	3	1	41	
+163	2018-06-09	2018-06-09 20:34:07.400939+00	4	192.168.15.1/24		160	\N	3	3	1	41	
+164	2018-06-09	2018-06-09 20:34:28.218622+00	6	fc00:15::1/64		160	\N	3	3	1	41	
+84	2018-06-09	2018-06-09 20:36:17.526537+00	6	fc00:11::6/64		156	\N	1	1	1	\N	
+166	2018-06-09	2018-06-09 20:38:21.848697+00	6	fc00:12::1/64		162	\N	2	2	1	41	
+167	2018-06-09	2018-06-09 20:38:38.68772+00	6	fc00:13::1/64		163	\N	2	2	1	41	
+168	2018-06-09	2018-06-09 20:38:51.17949+00	6	fc00:14::1/64		164	\N	3	3	1	41	
+169	2018-06-09	2018-06-09 20:39:07.863229+00	6	fc00:15::1/64		165	\N	3	3	1	41	
+85	2018-06-09	2018-06-09 20:39:38.399468+00	6	fc00:11::7/64		161	\N	1	1	1	\N	
+97	2018-06-09	2018-06-09 20:40:06.835903+00	6	fc00:13::7/64		163	\N	2	2	1	\N	
+103	2018-06-09	2018-06-09 20:40:20.317366+00	6	fc00:14::7/64		164	\N	3	3	1	\N	
+109	2018-06-09	2018-06-09 20:40:31.752772+00	6	fc00:15::7/64		165	\N	3	3	1	\N	
+67	2018-06-09	2018-06-09 20:41:21.421193+00	4	192.168.13.7/24		163	\N	2	2	1	\N	
+121	2018-06-09	2018-06-09 20:43:40.279345+00	4	192.168.12.1/24		162	\N	2	2	1	41	
 \.
 
 
@@ -5287,7 +6014,7 @@ COPY public.ipam_prefix (id, created, last_updated, family, prefix, status, desc
 -- Data for Name: ipam_rir; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.ipam_rir (id, name, slug, is_private) FROM stdin;
+COPY public.ipam_rir (id, name, slug, is_private, created, last_updated) FROM stdin;
 \.
 
 
@@ -5295,7 +6022,7 @@ COPY public.ipam_rir (id, name, slug, is_private) FROM stdin;
 -- Data for Name: ipam_role; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.ipam_role (id, name, slug, weight) FROM stdin;
+COPY public.ipam_role (id, name, slug, weight, created, last_updated) FROM stdin;
 \.
 
 
@@ -5345,7 +6072,7 @@ COPY public.ipam_vlan (id, created, last_updated, vid, name, status, role_id, si
 -- Data for Name: ipam_vlangroup; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.ipam_vlangroup (id, name, slug, site_id) FROM stdin;
+COPY public.ipam_vlangroup (id, name, slug, site_id, created, last_updated) FROM stdin;
 \.
 
 
@@ -5372,7 +6099,7 @@ COPY public.secrets_secret (id, created, last_updated, name, ciphertext, hash, d
 -- Data for Name: secrets_secretrole; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.secrets_secretrole (id, name, slug) FROM stdin;
+COPY public.secrets_secretrole (id, name, slug, created, last_updated) FROM stdin;
 \.
 
 
@@ -5409,6 +6136,22 @@ COPY public.secrets_userkey (id, created, last_updated, public_key, master_key_c
 
 
 --
+-- Data for Name: taggit_tag; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.taggit_tag (id, name, slug) FROM stdin;
+\.
+
+
+--
+-- Data for Name: taggit_taggeditem; Type: TABLE DATA; Schema: public; Owner: netbox
+--
+
+COPY public.taggit_taggeditem (id, object_id, content_type_id, tag_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: tenancy_tenant; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
@@ -5423,7 +6166,7 @@ COPY public.tenancy_tenant (id, created, last_updated, name, slug, description, 
 -- Data for Name: tenancy_tenantgroup; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.tenancy_tenantgroup (id, name, slug) FROM stdin;
+COPY public.tenancy_tenantgroup (id, name, slug, created, last_updated) FROM stdin;
 \.
 
 
@@ -5448,7 +6191,7 @@ COPY public.virtualization_cluster (id, created, last_updated, name, comments, g
 -- Data for Name: virtualization_clustergroup; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.virtualization_clustergroup (id, name, slug) FROM stdin;
+COPY public.virtualization_clustergroup (id, name, slug, created, last_updated) FROM stdin;
 \.
 
 
@@ -5456,7 +6199,7 @@ COPY public.virtualization_clustergroup (id, name, slug) FROM stdin;
 -- Data for Name: virtualization_clustertype; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.virtualization_clustertype (id, name, slug) FROM stdin;
+COPY public.virtualization_clustertype (id, name, slug, created, last_updated) FROM stdin;
 \.
 
 
@@ -5464,7 +6207,7 @@ COPY public.virtualization_clustertype (id, name, slug) FROM stdin;
 -- Data for Name: virtualization_virtualmachine; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY public.virtualization_virtualmachine (id, created, last_updated, name, vcpus, memory, disk, comments, cluster_id, platform_id, primary_ip4_id, primary_ip6_id, tenant_id, status, role_id) FROM stdin;
+COPY public.virtualization_virtualmachine (id, created, last_updated, name, vcpus, memory, disk, comments, cluster_id, platform_id, primary_ip4_id, primary_ip6_id, tenant_id, status, role_id, local_context_data) FROM stdin;
 \.
 
 
@@ -5486,7 +6229,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 195, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 326, true);
 
 
 --
@@ -5536,6 +6279,13 @@ SELECT pg_catalog.setval('public.circuits_circuittype_id_seq', 1, true);
 --
 
 SELECT pg_catalog.setval('public.circuits_provider_id_seq', 1, true);
+
+
+--
+-- Name: dcim_cable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.dcim_cable_id_seq', 1, false);
 
 
 --
@@ -5602,6 +6352,20 @@ SELECT pg_catalog.setval('public.dcim_devicetype_id_seq', 1, true);
 
 
 --
+-- Name: dcim_frontport_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.dcim_frontport_id_seq', 1, false);
+
+
+--
+-- Name: dcim_frontporttemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.dcim_frontporttemplate_id_seq', 1, false);
+
+
+--
 -- Name: dcim_interface_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
@@ -5613,13 +6377,6 @@ SELECT pg_catalog.setval('public.dcim_interface_id_seq', 169, true);
 --
 
 SELECT pg_catalog.setval('public.dcim_interface_tagged_vlans_id_seq', 100, true);
-
-
---
--- Name: dcim_interfaceconnection_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
---
-
-SELECT pg_catalog.setval('public.dcim_interfaceconnection_id_seq', 1, false);
 
 
 --
@@ -5651,6 +6408,13 @@ SELECT pg_catalog.setval('public.dcim_platform_id_seq', 1, true);
 
 
 --
+-- Name: dcim_powerfeed_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.dcim_powerfeed_id_seq', 1, false);
+
+
+--
 -- Name: dcim_poweroutlet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
@@ -5662,6 +6426,13 @@ SELECT pg_catalog.setval('public.dcim_poweroutlet_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.dcim_poweroutlettemplate_id_seq', 1, false);
+
+
+--
+-- Name: dcim_powerpanel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.dcim_powerpanel_id_seq', 1, false);
 
 
 --
@@ -5707,6 +6478,20 @@ SELECT pg_catalog.setval('public.dcim_rackrole_id_seq', 1, false);
 
 
 --
+-- Name: dcim_rearport_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.dcim_rearport_id_seq', 1, false);
+
+
+--
+-- Name: dcim_rearporttemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.dcim_rearporttemplate_id_seq', 1, false);
+
+
+--
 -- Name: dcim_region_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
@@ -5738,14 +6523,63 @@ SELECT pg_catalog.setval('public.django_admin_log_id_seq', 7, true);
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 65, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 81, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 121, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 199, true);
+
+
+--
+-- Name: extras_configcontext_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_configcontext_id_seq', 1, false);
+
+
+--
+-- Name: extras_configcontext_platforms_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_configcontext_platforms_id_seq', 1, false);
+
+
+--
+-- Name: extras_configcontext_regions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_configcontext_regions_id_seq', 1, false);
+
+
+--
+-- Name: extras_configcontext_roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_configcontext_roles_id_seq', 1, false);
+
+
+--
+-- Name: extras_configcontext_sites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_configcontext_sites_id_seq', 1, false);
+
+
+--
+-- Name: extras_configcontext_tenant_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_configcontext_tenant_groups_id_seq', 1, false);
+
+
+--
+-- Name: extras_configcontext_tenants_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_configcontext_tenants_id_seq', 1, false);
 
 
 --
@@ -5777,6 +6611,13 @@ SELECT pg_catalog.setval('public.extras_customfieldvalue_id_seq', 28, true);
 
 
 --
+-- Name: extras_customlink_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_customlink_id_seq', 1, false);
+
+
+--
 -- Name: extras_exporttemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
@@ -5798,10 +6639,31 @@ SELECT pg_catalog.setval('public.extras_imageattachment_id_seq', 1, false);
 
 
 --
+-- Name: extras_objectchange_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_objectchange_id_seq', 1, false);
+
+
+--
 -- Name: extras_reportresult_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
 SELECT pg_catalog.setval('public.extras_reportresult_id_seq', 1, false);
+
+
+--
+-- Name: extras_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_tag_id_seq', 1, false);
+
+
+--
+-- Name: extras_taggeditem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_taggeditem_id_seq', 1, false);
 
 
 --
@@ -5812,10 +6674,17 @@ SELECT pg_catalog.setval('public.extras_topologymap_id_seq', 1, false);
 
 
 --
--- Name: extras_useraction_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+-- Name: extras_webhook_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.extras_useraction_id_seq', 601, true);
+SELECT pg_catalog.setval('public.extras_webhook_id_seq', 1, false);
+
+
+--
+-- Name: extras_webhook_obj_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.extras_webhook_obj_type_id_seq', 1, false);
 
 
 --
@@ -5928,6 +6797,20 @@ SELECT pg_catalog.setval('public.secrets_sessionkey_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.secrets_userkey_id_seq', 1, false);
+
+
+--
+-- Name: taggit_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.taggit_tag_id_seq', 1, false);
+
+
+--
+-- Name: taggit_taggeditem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
+--
+
+SELECT pg_catalog.setval('public.taggit_taggeditem_id_seq', 1, false);
 
 
 --
@@ -6100,11 +6983,11 @@ ALTER TABLE ONLY public.circuits_circuittermination
 
 
 --
--- Name: circuits_circuittermination circuits_circuittermination_interface_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+-- Name: circuits_circuittermination circuits_circuittermination_connected_endpoint_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
 ALTER TABLE ONLY public.circuits_circuittermination
-    ADD CONSTRAINT circuits_circuittermination_interface_id_key UNIQUE (interface_id);
+    ADD CONSTRAINT circuits_circuittermination_connected_endpoint_id_key UNIQUE (connected_endpoint_id);
 
 
 --
@@ -6164,11 +7047,35 @@ ALTER TABLE ONLY public.circuits_provider
 
 
 --
+-- Name: dcim_cable dcim_cable_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_cable
+    ADD CONSTRAINT dcim_cable_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dcim_cable dcim_cable_termination_a_type_id_termination_a_id_e9d24bad_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_cable
+    ADD CONSTRAINT dcim_cable_termination_a_type_id_termination_a_id_e9d24bad_uniq UNIQUE (termination_a_type_id, termination_a_id);
+
+
+--
+-- Name: dcim_cable dcim_cable_termination_b_type_id_termination_b_id_057fc21f_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_cable
+    ADD CONSTRAINT dcim_cable_termination_b_type_id_termination_b_id_057fc21f_uniq UNIQUE (termination_b_type_id, termination_b_id);
+
+
+--
 -- Name: dcim_consoleport dcim_consoleport_cs_port_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
 ALTER TABLE ONLY public.dcim_consoleport
-    ADD CONSTRAINT dcim_consoleport_cs_port_id_key UNIQUE (cs_port_id);
+    ADD CONSTRAINT dcim_consoleport_cs_port_id_key UNIQUE (connected_endpoint_id);
 
 
 --
@@ -6380,6 +7287,70 @@ ALTER TABLE ONLY public.dcim_devicetype
 
 
 --
+-- Name: dcim_frontport dcim_frontport_device_id_name_235b7af2_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontport
+    ADD CONSTRAINT dcim_frontport_device_id_name_235b7af2_uniq UNIQUE (device_id, name);
+
+
+--
+-- Name: dcim_frontport dcim_frontport_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontport
+    ADD CONSTRAINT dcim_frontport_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dcim_frontport dcim_frontport_rear_port_id_rear_port_position_8b0bf7ca_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontport
+    ADD CONSTRAINT dcim_frontport_rear_port_id_rear_port_position_8b0bf7ca_uniq UNIQUE (rear_port_id, rear_port_position);
+
+
+--
+-- Name: dcim_frontporttemplate dcim_frontporttemplate_device_type_id_name_0a0a0e05_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontporttemplate
+    ADD CONSTRAINT dcim_frontporttemplate_device_type_id_name_0a0a0e05_uniq UNIQUE (device_type_id, name);
+
+
+--
+-- Name: dcim_frontporttemplate dcim_frontporttemplate_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontporttemplate
+    ADD CONSTRAINT dcim_frontporttemplate_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dcim_frontporttemplate dcim_frontporttemplate_rear_port_id_rear_port_p_401fe927_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontporttemplate
+    ADD CONSTRAINT dcim_frontporttemplate_rear_port_id_rear_port_p_401fe927_uniq UNIQUE (rear_port_id, rear_port_position);
+
+
+--
+-- Name: dcim_interface dcim_interface__connected_circuittermination_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_interface
+    ADD CONSTRAINT dcim_interface__connected_circuittermination_id_key UNIQUE (_connected_circuittermination_id);
+
+
+--
+-- Name: dcim_interface dcim_interface__connected_interface_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_interface
+    ADD CONSTRAINT dcim_interface__connected_interface_id_key UNIQUE (_connected_interface_id);
+
+
+--
 -- Name: dcim_interface dcim_interface_device_id_name_bffc4ec4_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -6409,30 +7380,6 @@ ALTER TABLE ONLY public.dcim_interface_tagged_vlans
 
 ALTER TABLE ONLY public.dcim_interface_tagged_vlans
     ADD CONSTRAINT dcim_interface_tagged_vlans_pkey PRIMARY KEY (id);
-
-
---
--- Name: dcim_interfaceconnection dcim_interfaceconnection_interface_a_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
---
-
-ALTER TABLE ONLY public.dcim_interfaceconnection
-    ADD CONSTRAINT dcim_interfaceconnection_interface_a_id_key UNIQUE (interface_a_id);
-
-
---
--- Name: dcim_interfaceconnection dcim_interfaceconnection_interface_b_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
---
-
-ALTER TABLE ONLY public.dcim_interfaceconnection
-    ADD CONSTRAINT dcim_interfaceconnection_interface_b_id_key UNIQUE (interface_b_id);
-
-
---
--- Name: dcim_interfaceconnection dcim_interfaceconnection_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
---
-
-ALTER TABLE ONLY public.dcim_interfaceconnection
-    ADD CONSTRAINT dcim_interfaceconnection_pkey PRIMARY KEY (id);
 
 
 --
@@ -6524,6 +7471,30 @@ ALTER TABLE ONLY public.dcim_platform
 
 
 --
+-- Name: dcim_powerfeed dcim_powerfeed_connected_endpoint_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerfeed
+    ADD CONSTRAINT dcim_powerfeed_connected_endpoint_id_key UNIQUE (connected_endpoint_id);
+
+
+--
+-- Name: dcim_powerfeed dcim_powerfeed_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerfeed
+    ADD CONSTRAINT dcim_powerfeed_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dcim_powerfeed dcim_powerfeed_power_panel_id_name_0fbaae9f_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerfeed
+    ADD CONSTRAINT dcim_powerfeed_power_panel_id_name_0fbaae9f_uniq UNIQUE (power_panel_id, name);
+
+
+--
 -- Name: dcim_poweroutlet dcim_poweroutlet_device_id_name_981b00c1_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -6556,6 +7527,30 @@ ALTER TABLE ONLY public.dcim_poweroutlettemplate
 
 
 --
+-- Name: dcim_powerpanel dcim_powerpanel_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerpanel
+    ADD CONSTRAINT dcim_powerpanel_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dcim_powerpanel dcim_powerpanel_site_id_name_804df4c0_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerpanel
+    ADD CONSTRAINT dcim_powerpanel_site_id_name_804df4c0_uniq UNIQUE (site_id, name);
+
+
+--
+-- Name: dcim_powerport dcim_powerport__connected_powerfeed_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerport
+    ADD CONSTRAINT dcim_powerport__connected_powerfeed_id_key UNIQUE (_connected_powerfeed_id);
+
+
+--
 -- Name: dcim_powerport dcim_powerport_device_id_name_948af82c_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -6576,7 +7571,7 @@ ALTER TABLE ONLY public.dcim_powerport
 --
 
 ALTER TABLE ONLY public.dcim_powerport
-    ADD CONSTRAINT dcim_powerport_power_outlet_id_key UNIQUE (power_outlet_id);
+    ADD CONSTRAINT dcim_powerport_power_outlet_id_key UNIQUE (_connected_poweroutlet_id);
 
 
 --
@@ -6596,27 +7591,35 @@ ALTER TABLE ONLY public.dcim_powerporttemplate
 
 
 --
+-- Name: dcim_rack dcim_rack_asset_tag_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rack
+    ADD CONSTRAINT dcim_rack_asset_tag_key UNIQUE (asset_tag);
+
+
+--
+-- Name: dcim_rack dcim_rack_group_id_facility_id_f16a53ae_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rack
+    ADD CONSTRAINT dcim_rack_group_id_facility_id_f16a53ae_uniq UNIQUE (group_id, facility_id);
+
+
+--
+-- Name: dcim_rack dcim_rack_group_id_name_846f3826_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rack
+    ADD CONSTRAINT dcim_rack_group_id_name_846f3826_uniq UNIQUE (group_id, name);
+
+
+--
 -- Name: dcim_rack dcim_rack_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
 ALTER TABLE ONLY public.dcim_rack
     ADD CONSTRAINT dcim_rack_pkey PRIMARY KEY (id);
-
-
---
--- Name: dcim_rack dcim_rack_site_id_facility_id_2a1d0860_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
---
-
-ALTER TABLE ONLY public.dcim_rack
-    ADD CONSTRAINT dcim_rack_site_id_facility_id_2a1d0860_uniq UNIQUE (site_id, facility_id);
-
-
---
--- Name: dcim_rack dcim_rack_site_id_name_5fde0119_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
---
-
-ALTER TABLE ONLY public.dcim_rack
-    ADD CONSTRAINT dcim_rack_site_id_name_5fde0119_uniq UNIQUE (site_id, name);
 
 
 --
@@ -6673,6 +7676,38 @@ ALTER TABLE ONLY public.dcim_rackrole
 
 ALTER TABLE ONLY public.dcim_rackrole
     ADD CONSTRAINT dcim_rackrole_slug_key UNIQUE (slug);
+
+
+--
+-- Name: dcim_rearport dcim_rearport_device_id_name_4b14dde6_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rearport
+    ADD CONSTRAINT dcim_rearport_device_id_name_4b14dde6_uniq UNIQUE (device_id, name);
+
+
+--
+-- Name: dcim_rearport dcim_rearport_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rearport
+    ADD CONSTRAINT dcim_rearport_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dcim_rearporttemplate dcim_rearporttemplate_device_type_id_name_9bdddb29_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rearporttemplate
+    ADD CONSTRAINT dcim_rearporttemplate_device_type_id_name_9bdddb29_uniq UNIQUE (device_type_id, name);
+
+
+--
+-- Name: dcim_rearporttemplate dcim_rearporttemplate_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rearporttemplate
+    ADD CONSTRAINT dcim_rearporttemplate_pkey PRIMARY KEY (id);
 
 
 --
@@ -6780,6 +7815,118 @@ ALTER TABLE ONLY public.django_session
 
 
 --
+-- Name: extras_configcontext extras_configcontext_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext
+    ADD CONSTRAINT extras_configcontext_name_key UNIQUE (name);
+
+
+--
+-- Name: extras_configcontext extras_configcontext_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext
+    ADD CONSTRAINT extras_configcontext_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: extras_configcontext_platforms extras_configcontext_pla_configcontext_id_platfor_3c67c104_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_platforms
+    ADD CONSTRAINT extras_configcontext_pla_configcontext_id_platfor_3c67c104_uniq UNIQUE (configcontext_id, platform_id);
+
+
+--
+-- Name: extras_configcontext_platforms extras_configcontext_platforms_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_platforms
+    ADD CONSTRAINT extras_configcontext_platforms_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: extras_configcontext_regions extras_configcontext_reg_configcontext_id_region__d4a1d77f_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_regions
+    ADD CONSTRAINT extras_configcontext_reg_configcontext_id_region__d4a1d77f_uniq UNIQUE (configcontext_id, region_id);
+
+
+--
+-- Name: extras_configcontext_regions extras_configcontext_regions_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_regions
+    ADD CONSTRAINT extras_configcontext_regions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: extras_configcontext_roles extras_configcontext_rol_configcontext_id_devicer_4d8dbb50_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_roles
+    ADD CONSTRAINT extras_configcontext_rol_configcontext_id_devicer_4d8dbb50_uniq UNIQUE (configcontext_id, devicerole_id);
+
+
+--
+-- Name: extras_configcontext_roles extras_configcontext_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_roles
+    ADD CONSTRAINT extras_configcontext_roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: extras_configcontext_sites extras_configcontext_sit_configcontext_id_site_id_a4fe5f4f_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_sites
+    ADD CONSTRAINT extras_configcontext_sit_configcontext_id_site_id_a4fe5f4f_uniq UNIQUE (configcontext_id, site_id);
+
+
+--
+-- Name: extras_configcontext_sites extras_configcontext_sites_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_sites
+    ADD CONSTRAINT extras_configcontext_sites_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: extras_configcontext_tenants extras_configcontext_ten_configcontext_id_tenant__aefb257d_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_tenants
+    ADD CONSTRAINT extras_configcontext_ten_configcontext_id_tenant__aefb257d_uniq UNIQUE (configcontext_id, tenant_id);
+
+
+--
+-- Name: extras_configcontext_tenant_groups extras_configcontext_ten_configcontext_id_tenantg_d6afc6f5_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_tenant_groups
+    ADD CONSTRAINT extras_configcontext_ten_configcontext_id_tenantg_d6afc6f5_uniq UNIQUE (configcontext_id, tenantgroup_id);
+
+
+--
+-- Name: extras_configcontext_tenant_groups extras_configcontext_tenant_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_tenant_groups
+    ADD CONSTRAINT extras_configcontext_tenant_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: extras_configcontext_tenants extras_configcontext_tenants_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_tenants
+    ADD CONSTRAINT extras_configcontext_tenants_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: extras_customfield extras_customfield_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -6844,6 +7991,22 @@ ALTER TABLE ONLY public.extras_customfieldvalue
 
 
 --
+-- Name: extras_customlink extras_customlink_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_customlink
+    ADD CONSTRAINT extras_customlink_name_key UNIQUE (name);
+
+
+--
+-- Name: extras_customlink extras_customlink_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_customlink
+    ADD CONSTRAINT extras_customlink_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: extras_exporttemplate extras_exporttemplate_content_type_id_name_edca9b9b_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -6876,6 +8039,14 @@ ALTER TABLE ONLY public.extras_imageattachment
 
 
 --
+-- Name: extras_objectchange extras_objectchange_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_objectchange
+    ADD CONSTRAINT extras_objectchange_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: extras_reportresult extras_reportresult_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -6889,6 +8060,38 @@ ALTER TABLE ONLY public.extras_reportresult
 
 ALTER TABLE ONLY public.extras_reportresult
     ADD CONSTRAINT extras_reportresult_report_key UNIQUE (report);
+
+
+--
+-- Name: extras_tag extras_tag_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_tag
+    ADD CONSTRAINT extras_tag_name_key UNIQUE (name);
+
+
+--
+-- Name: extras_tag extras_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_tag
+    ADD CONSTRAINT extras_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: extras_tag extras_tag_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_tag
+    ADD CONSTRAINT extras_tag_slug_key UNIQUE (slug);
+
+
+--
+-- Name: extras_taggeditem extras_taggeditem_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_taggeditem
+    ADD CONSTRAINT extras_taggeditem_pkey PRIMARY KEY (id);
 
 
 --
@@ -6916,11 +8119,43 @@ ALTER TABLE ONLY public.extras_topologymap
 
 
 --
--- Name: extras_useraction extras_useraction_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+-- Name: extras_webhook extras_webhook_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY public.extras_useraction
-    ADD CONSTRAINT extras_useraction_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.extras_webhook
+    ADD CONSTRAINT extras_webhook_name_key UNIQUE (name);
+
+
+--
+-- Name: extras_webhook_obj_type extras_webhook_obj_type_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_webhook_obj_type
+    ADD CONSTRAINT extras_webhook_obj_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: extras_webhook_obj_type extras_webhook_obj_type_webhook_id_contenttype_id_99b8b9c3_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_webhook_obj_type
+    ADD CONSTRAINT extras_webhook_obj_type_webhook_id_contenttype_id_99b8b9c3_uniq UNIQUE (webhook_id, contenttype_id);
+
+
+--
+-- Name: extras_webhook extras_webhook_payload_url_type_create__dd332134_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_webhook
+    ADD CONSTRAINT extras_webhook_payload_url_type_create__dd332134_uniq UNIQUE (payload_url, type_create, type_update, type_delete);
+
+
+--
+-- Name: extras_webhook extras_webhook_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_webhook
+    ADD CONSTRAINT extras_webhook_pkey PRIMARY KEY (id);
 
 
 --
@@ -7196,6 +8431,46 @@ ALTER TABLE ONLY public.secrets_userkey
 
 
 --
+-- Name: taggit_tag taggit_tag_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.taggit_tag
+    ADD CONSTRAINT taggit_tag_name_key UNIQUE (name);
+
+
+--
+-- Name: taggit_tag taggit_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.taggit_tag
+    ADD CONSTRAINT taggit_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: taggit_tag taggit_tag_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.taggit_tag
+    ADD CONSTRAINT taggit_tag_slug_key UNIQUE (slug);
+
+
+--
+-- Name: taggit_taggeditem taggit_taggeditem_content_type_id_object_i_4bb97a8e_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.taggit_taggeditem
+    ADD CONSTRAINT taggit_taggeditem_content_type_id_object_i_4bb97a8e_uniq UNIQUE (content_type_id, object_id, tag_id);
+
+
+--
+-- Name: taggit_taggeditem taggit_taggeditem_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.taggit_taggeditem
+    ADD CONSTRAINT taggit_taggeditem_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: tenancy_tenant tenancy_tenant_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -7440,6 +8715,13 @@ CREATE INDEX circuits_circuit_type_id_1b9f485a ON public.circuits_circuit USING 
 
 
 --
+-- Name: circuits_circuittermination_cable_id_35e9f703; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX circuits_circuittermination_cable_id_35e9f703 ON public.circuits_circuittermination USING btree (cable_id);
+
+
+--
 -- Name: circuits_circuittermination_circuit_id_257e87e7; Type: INDEX; Schema: public; Owner: netbox
 --
 
@@ -7482,6 +8764,41 @@ CREATE INDEX circuits_provider_slug_c3c0aa10_like ON public.circuits_provider US
 
 
 --
+-- Name: dcim_cable__termination_a_device_id_e59cde1c; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_cable__termination_a_device_id_e59cde1c ON public.dcim_cable USING btree (_termination_a_device_id);
+
+
+--
+-- Name: dcim_cable__termination_b_device_id_a9073762; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_cable__termination_b_device_id_a9073762 ON public.dcim_cable USING btree (_termination_b_device_id);
+
+
+--
+-- Name: dcim_cable_termination_a_type_id_a614bab8; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_cable_termination_a_type_id_a614bab8 ON public.dcim_cable USING btree (termination_a_type_id);
+
+
+--
+-- Name: dcim_cable_termination_b_type_id_a91595d0; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_cable_termination_b_type_id_a91595d0 ON public.dcim_cable USING btree (termination_b_type_id);
+
+
+--
+-- Name: dcim_consoleport_cable_id_a9ae5465; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_consoleport_cable_id_a9ae5465 ON public.dcim_consoleport USING btree (cable_id);
+
+
+--
 -- Name: dcim_consoleport_device_id_f2d90d3c; Type: INDEX; Schema: public; Owner: netbox
 --
 
@@ -7493,6 +8810,13 @@ CREATE INDEX dcim_consoleport_device_id_f2d90d3c ON public.dcim_consoleport USIN
 --
 
 CREATE INDEX dcim_consoleporttemplate_device_type_id_075d4015 ON public.dcim_consoleporttemplate USING btree (device_type_id);
+
+
+--
+-- Name: dcim_consoleserverport_cable_id_f2940dfd; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_consoleserverport_cable_id_f2940dfd ON public.dcim_consoleserverport USING btree (cable_id);
 
 
 --
@@ -7629,6 +8953,48 @@ CREATE INDEX dcim_devicetype_slug_448745bd_like ON public.dcim_devicetype USING 
 
 
 --
+-- Name: dcim_frontport_cable_id_04ff8aab; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_frontport_cable_id_04ff8aab ON public.dcim_frontport USING btree (cable_id);
+
+
+--
+-- Name: dcim_frontport_device_id_950557b5; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_frontport_device_id_950557b5 ON public.dcim_frontport USING btree (device_id);
+
+
+--
+-- Name: dcim_frontport_rear_port_id_78df2532; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_frontport_rear_port_id_78df2532 ON public.dcim_frontport USING btree (rear_port_id);
+
+
+--
+-- Name: dcim_frontporttemplate_device_type_id_f088b952; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_frontporttemplate_device_type_id_f088b952 ON public.dcim_frontporttemplate USING btree (device_type_id);
+
+
+--
+-- Name: dcim_frontporttemplate_rear_port_id_9775411b; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_frontporttemplate_rear_port_id_9775411b ON public.dcim_frontporttemplate USING btree (rear_port_id);
+
+
+--
+-- Name: dcim_interface_cable_id_1b264edb; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_interface_cable_id_1b264edb ON public.dcim_interface USING btree (cable_id);
+
+
+--
 -- Name: dcim_interface_device_id_359c6115; Type: INDEX; Schema: public; Owner: netbox
 --
 
@@ -7741,6 +9107,34 @@ CREATE INDEX dcim_platform_slug_b0908ae4_like ON public.dcim_platform USING btre
 
 
 --
+-- Name: dcim_powerfeed_cable_id_ec44c4f8; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_powerfeed_cable_id_ec44c4f8 ON public.dcim_powerfeed USING btree (cable_id);
+
+
+--
+-- Name: dcim_powerfeed_power_panel_id_32bde3be; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_powerfeed_power_panel_id_32bde3be ON public.dcim_powerfeed USING btree (power_panel_id);
+
+
+--
+-- Name: dcim_powerfeed_rack_id_7abba090; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_powerfeed_rack_id_7abba090 ON public.dcim_powerfeed USING btree (rack_id);
+
+
+--
+-- Name: dcim_poweroutlet_cable_id_8dbea1ec; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_poweroutlet_cable_id_8dbea1ec ON public.dcim_poweroutlet USING btree (cable_id);
+
+
+--
 -- Name: dcim_poweroutlet_device_id_286351d7; Type: INDEX; Schema: public; Owner: netbox
 --
 
@@ -7748,10 +9142,45 @@ CREATE INDEX dcim_poweroutlet_device_id_286351d7 ON public.dcim_poweroutlet USIN
 
 
 --
+-- Name: dcim_poweroutlet_power_port_id_9bdf4163; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_poweroutlet_power_port_id_9bdf4163 ON public.dcim_poweroutlet USING btree (power_port_id);
+
+
+--
 -- Name: dcim_poweroutlettemplate_device_type_id_26b2316c; Type: INDEX; Schema: public; Owner: netbox
 --
 
 CREATE INDEX dcim_poweroutlettemplate_device_type_id_26b2316c ON public.dcim_poweroutlettemplate USING btree (device_type_id);
+
+
+--
+-- Name: dcim_poweroutlettemplate_power_port_id_c0fb0c42; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_poweroutlettemplate_power_port_id_c0fb0c42 ON public.dcim_poweroutlettemplate USING btree (power_port_id);
+
+
+--
+-- Name: dcim_powerpanel_rack_group_id_76467cc9; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_powerpanel_rack_group_id_76467cc9 ON public.dcim_powerpanel USING btree (rack_group_id);
+
+
+--
+-- Name: dcim_powerpanel_site_id_c430bc89; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_powerpanel_site_id_c430bc89 ON public.dcim_powerpanel USING btree (site_id);
+
+
+--
+-- Name: dcim_powerport_cable_id_c9682ba2; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_powerport_cable_id_c9682ba2 ON public.dcim_powerport USING btree (cable_id);
 
 
 --
@@ -7766,6 +9195,13 @@ CREATE INDEX dcim_powerport_device_id_ef7185ae ON public.dcim_powerport USING bt
 --
 
 CREATE INDEX dcim_powerporttemplate_device_type_id_1ddfbfcc ON public.dcim_powerporttemplate USING btree (device_type_id);
+
+
+--
+-- Name: dcim_rack_asset_tag_f88408e5_like; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_rack_asset_tag_f88408e5_like ON public.dcim_rack USING btree (asset_tag varchar_pattern_ops);
 
 
 --
@@ -7850,6 +9286,27 @@ CREATE INDEX dcim_rackrole_name_9077cfcc_like ON public.dcim_rackrole USING btre
 --
 
 CREATE INDEX dcim_rackrole_slug_40bbcd3a_like ON public.dcim_rackrole USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: dcim_rearport_cable_id_42c0e4e7; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_rearport_cable_id_42c0e4e7 ON public.dcim_rearport USING btree (cable_id);
+
+
+--
+-- Name: dcim_rearport_device_id_0bdfe9c0; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_rearport_device_id_0bdfe9c0 ON public.dcim_rearport USING btree (device_id);
+
+
+--
+-- Name: dcim_rearporttemplate_device_type_id_6a02fd01; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX dcim_rearporttemplate_device_type_id_6a02fd01 ON public.dcim_rearporttemplate USING btree (device_type_id);
 
 
 --
@@ -7958,6 +9415,97 @@ CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session U
 
 
 --
+-- Name: extras_configcontext_name_4bbfe25d_like; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_name_4bbfe25d_like ON public.extras_configcontext USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: extras_configcontext_platforms_configcontext_id_2a516699; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_platforms_configcontext_id_2a516699 ON public.extras_configcontext_platforms USING btree (configcontext_id);
+
+
+--
+-- Name: extras_configcontext_platforms_platform_id_3fdfedc0; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_platforms_platform_id_3fdfedc0 ON public.extras_configcontext_platforms USING btree (platform_id);
+
+
+--
+-- Name: extras_configcontext_regions_configcontext_id_73003dbc; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_regions_configcontext_id_73003dbc ON public.extras_configcontext_regions USING btree (configcontext_id);
+
+
+--
+-- Name: extras_configcontext_regions_region_id_35c6ba9d; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_regions_region_id_35c6ba9d ON public.extras_configcontext_regions USING btree (region_id);
+
+
+--
+-- Name: extras_configcontext_roles_configcontext_id_59b67386; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_roles_configcontext_id_59b67386 ON public.extras_configcontext_roles USING btree (configcontext_id);
+
+
+--
+-- Name: extras_configcontext_roles_devicerole_id_d3a84813; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_roles_devicerole_id_d3a84813 ON public.extras_configcontext_roles USING btree (devicerole_id);
+
+
+--
+-- Name: extras_configcontext_sites_configcontext_id_8c54feb9; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_sites_configcontext_id_8c54feb9 ON public.extras_configcontext_sites USING btree (configcontext_id);
+
+
+--
+-- Name: extras_configcontext_sites_site_id_cbb76c96; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_sites_site_id_cbb76c96 ON public.extras_configcontext_sites USING btree (site_id);
+
+
+--
+-- Name: extras_configcontext_tenant_groups_configcontext_id_92f68345; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_tenant_groups_configcontext_id_92f68345 ON public.extras_configcontext_tenant_groups USING btree (configcontext_id);
+
+
+--
+-- Name: extras_configcontext_tenant_groups_tenantgroup_id_0909688d; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_tenant_groups_tenantgroup_id_0909688d ON public.extras_configcontext_tenant_groups USING btree (tenantgroup_id);
+
+
+--
+-- Name: extras_configcontext_tenants_configcontext_id_b53552a6; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_tenants_configcontext_id_b53552a6 ON public.extras_configcontext_tenants USING btree (configcontext_id);
+
+
+--
+-- Name: extras_configcontext_tenants_tenant_id_8d0aa28e; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_configcontext_tenants_tenant_id_8d0aa28e ON public.extras_configcontext_tenants USING btree (tenant_id);
+
+
+--
 -- Name: extras_customfield_name_2fe72707_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
@@ -8000,6 +9548,20 @@ CREATE INDEX extras_customfieldvalue_obj_type_id_b750b07b ON public.extras_custo
 
 
 --
+-- Name: extras_customlink_content_type_id_4d35b063; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_customlink_content_type_id_4d35b063 ON public.extras_customlink USING btree (content_type_id);
+
+
+--
+-- Name: extras_customlink_name_daed2d18_like; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_customlink_name_daed2d18_like ON public.extras_customlink USING btree (name varchar_pattern_ops);
+
+
+--
 -- Name: extras_exporttemplate_content_type_id_59737e21; Type: INDEX; Schema: public; Owner: netbox
 --
 
@@ -8014,6 +9576,34 @@ CREATE INDEX extras_imageattachment_content_type_id_90e0643d ON public.extras_im
 
 
 --
+-- Name: extras_objectchange_changed_object_type_id_b755bb60; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_objectchange_changed_object_type_id_b755bb60 ON public.extras_objectchange USING btree (changed_object_type_id);
+
+
+--
+-- Name: extras_objectchange_related_object_type_id_fe6e521f; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_objectchange_related_object_type_id_fe6e521f ON public.extras_objectchange USING btree (related_object_type_id);
+
+
+--
+-- Name: extras_objectchange_time_224380ea; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_objectchange_time_224380ea ON public.extras_objectchange USING btree ("time");
+
+
+--
+-- Name: extras_objectchange_user_id_7fdf8186; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_objectchange_user_id_7fdf8186 ON public.extras_objectchange USING btree (user_id);
+
+
+--
 -- Name: extras_reportresult_report_3575dd21_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
@@ -8025,6 +9615,48 @@ CREATE INDEX extras_reportresult_report_3575dd21_like ON public.extras_reportres
 --
 
 CREATE INDEX extras_reportresult_user_id_0df55b95 ON public.extras_reportresult USING btree (user_id);
+
+
+--
+-- Name: extras_tag_name_9550b3d9_like; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_tag_name_9550b3d9_like ON public.extras_tag USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: extras_tag_slug_aaa5b7e9_like; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_tag_slug_aaa5b7e9_like ON public.extras_tag USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: extras_taggeditem_content_type_id_ba5562ed; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_taggeditem_content_type_id_ba5562ed ON public.extras_taggeditem USING btree (content_type_id);
+
+
+--
+-- Name: extras_taggeditem_content_type_id_object_id_80e28e23_idx; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_taggeditem_content_type_id_object_id_80e28e23_idx ON public.extras_taggeditem USING btree (content_type_id, object_id);
+
+
+--
+-- Name: extras_taggeditem_object_id_31b2aa77; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_taggeditem_object_id_31b2aa77 ON public.extras_taggeditem USING btree (object_id);
+
+
+--
+-- Name: extras_taggeditem_tag_id_d48af7c7; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_taggeditem_tag_id_d48af7c7 ON public.extras_taggeditem USING btree (tag_id);
 
 
 --
@@ -8049,17 +9681,24 @@ CREATE INDEX extras_topologymap_slug_9ba3d31e_like ON public.extras_topologymap 
 
 
 --
--- Name: extras_useraction_content_type_id_99f782d7; Type: INDEX; Schema: public; Owner: netbox
+-- Name: extras_webhook_name_82cf60b5_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_useraction_content_type_id_99f782d7 ON public.extras_useraction USING btree (content_type_id);
+CREATE INDEX extras_webhook_name_82cf60b5_like ON public.extras_webhook USING btree (name varchar_pattern_ops);
 
 
 --
--- Name: extras_useraction_user_id_8aacec56; Type: INDEX; Schema: public; Owner: netbox
+-- Name: extras_webhook_obj_type_contenttype_id_85c7693b; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_useraction_user_id_8aacec56 ON public.extras_useraction USING btree (user_id);
+CREATE INDEX extras_webhook_obj_type_contenttype_id_85c7693b ON public.extras_webhook_obj_type USING btree (contenttype_id);
+
+
+--
+-- Name: extras_webhook_obj_type_webhook_id_c7bed170; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX extras_webhook_obj_type_webhook_id_c7bed170 ON public.extras_webhook_obj_type USING btree (webhook_id);
 
 
 --
@@ -8301,6 +9940,48 @@ CREATE INDEX secrets_secretrole_users_user_id_25be95ad ON public.secrets_secretr
 
 
 --
+-- Name: taggit_tag_name_58eb2ed9_like; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX taggit_tag_name_58eb2ed9_like ON public.taggit_tag USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: taggit_tag_slug_6be58b2c_like; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX taggit_tag_slug_6be58b2c_like ON public.taggit_tag USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: taggit_taggeditem_content_type_id_9957a03c; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX taggit_taggeditem_content_type_id_9957a03c ON public.taggit_taggeditem USING btree (content_type_id);
+
+
+--
+-- Name: taggit_taggeditem_content_type_id_object_id_196cc965_idx; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX taggit_taggeditem_content_type_id_object_id_196cc965_idx ON public.taggit_taggeditem USING btree (content_type_id, object_id);
+
+
+--
+-- Name: taggit_taggeditem_object_id_e2d7d1df; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX taggit_taggeditem_object_id_e2d7d1df ON public.taggit_taggeditem USING btree (object_id);
+
+
+--
+-- Name: taggit_taggeditem_tag_id_f4f5b767; Type: INDEX; Schema: public; Owner: netbox
+--
+
+CREATE INDEX taggit_taggeditem_tag_id_f4f5b767 ON public.taggit_taggeditem USING btree (tag_id);
+
+
+--
 -- Name: tenancy_tenant_group_id_7daef6f4; Type: INDEX; Schema: public; Owner: netbox
 --
 
@@ -8529,11 +10210,19 @@ ALTER TABLE ONLY public.circuits_circuittermination
 
 
 --
--- Name: circuits_circuittermination circuits_circuitterm_interface_id_a147755f_fk_dcim_inte; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+-- Name: circuits_circuittermination circuits_circuitterm_connected_endpoint_i_eb10be43_fk_dcim_inte; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
 ALTER TABLE ONLY public.circuits_circuittermination
-    ADD CONSTRAINT circuits_circuitterm_interface_id_a147755f_fk_dcim_inte FOREIGN KEY (interface_id) REFERENCES public.dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT circuits_circuitterm_connected_endpoint_i_eb10be43_fk_dcim_inte FOREIGN KEY (connected_endpoint_id) REFERENCES public.dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: circuits_circuittermination circuits_circuittermination_cable_id_35e9f703_fk_dcim_cable_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.circuits_circuittermination
+    ADD CONSTRAINT circuits_circuittermination_cable_id_35e9f703_fk_dcim_cable_id FOREIGN KEY (cable_id) REFERENCES public.dcim_cable(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -8545,11 +10234,51 @@ ALTER TABLE ONLY public.circuits_circuittermination
 
 
 --
--- Name: dcim_consoleport dcim_consoleport_cs_port_id_41f056d5_fk_dcim_cons; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+-- Name: dcim_cable dcim_cable__termination_a_device_id_e59cde1c_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_cable
+    ADD CONSTRAINT dcim_cable__termination_a_device_id_e59cde1c_fk_dcim_device_id FOREIGN KEY (_termination_a_device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_cable dcim_cable__termination_b_device_id_a9073762_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_cable
+    ADD CONSTRAINT dcim_cable__termination_b_device_id_a9073762_fk_dcim_device_id FOREIGN KEY (_termination_b_device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_cable dcim_cable_termination_a_type_i_a614bab8_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_cable
+    ADD CONSTRAINT dcim_cable_termination_a_type_i_a614bab8_fk_django_co FOREIGN KEY (termination_a_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_cable dcim_cable_termination_b_type_i_a91595d0_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_cable
+    ADD CONSTRAINT dcim_cable_termination_b_type_i_a91595d0_fk_django_co FOREIGN KEY (termination_b_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_consoleport dcim_consoleport_cable_id_a9ae5465_fk_dcim_cable_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
 ALTER TABLE ONLY public.dcim_consoleport
-    ADD CONSTRAINT dcim_consoleport_cs_port_id_41f056d5_fk_dcim_cons FOREIGN KEY (cs_port_id) REFERENCES public.dcim_consoleserverport(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT dcim_consoleport_cable_id_a9ae5465_fk_dcim_cable_id FOREIGN KEY (cable_id) REFERENCES public.dcim_cable(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_consoleport dcim_consoleport_connected_endpoint_i_efe0a825_fk_dcim_cons; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_consoleport
+    ADD CONSTRAINT dcim_consoleport_connected_endpoint_i_efe0a825_fk_dcim_cons FOREIGN KEY (connected_endpoint_id) REFERENCES public.dcim_consoleserverport(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -8574,6 +10303,14 @@ ALTER TABLE ONLY public.dcim_consoleporttemplate
 
 ALTER TABLE ONLY public.dcim_consoleserverporttemplate
     ADD CONSTRAINT dcim_consoleserverpo_device_type_id_579bdc86_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES public.dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_consoleserverport dcim_consoleserverport_cable_id_f2940dfd_fk_dcim_cable_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_consoleserverport
+    ADD CONSTRAINT dcim_consoleserverport_cable_id_f2940dfd_fk_dcim_cable_id FOREIGN KEY (cable_id) REFERENCES public.dcim_cable(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -8697,6 +10434,70 @@ ALTER TABLE ONLY public.dcim_devicetype
 
 
 --
+-- Name: dcim_frontport dcim_frontport_cable_id_04ff8aab_fk_dcim_cable_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontport
+    ADD CONSTRAINT dcim_frontport_cable_id_04ff8aab_fk_dcim_cable_id FOREIGN KEY (cable_id) REFERENCES public.dcim_cable(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_frontport dcim_frontport_device_id_950557b5_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontport
+    ADD CONSTRAINT dcim_frontport_device_id_950557b5_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_frontport dcim_frontport_rear_port_id_78df2532_fk_dcim_rearport_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontport
+    ADD CONSTRAINT dcim_frontport_rear_port_id_78df2532_fk_dcim_rearport_id FOREIGN KEY (rear_port_id) REFERENCES public.dcim_rearport(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_frontporttemplate dcim_frontporttempla_device_type_id_f088b952_fk_dcim_devi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontporttemplate
+    ADD CONSTRAINT dcim_frontporttempla_device_type_id_f088b952_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES public.dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_frontporttemplate dcim_frontporttempla_rear_port_id_9775411b_fk_dcim_rear; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_frontporttemplate
+    ADD CONSTRAINT dcim_frontporttempla_rear_port_id_9775411b_fk_dcim_rear FOREIGN KEY (rear_port_id) REFERENCES public.dcim_rearporttemplate(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_interface dcim_interface__connected_circuitte_be36a3a3_fk_circuits_; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_interface
+    ADD CONSTRAINT dcim_interface__connected_circuitte_be36a3a3_fk_circuits_ FOREIGN KEY (_connected_circuittermination_id) REFERENCES public.circuits_circuittermination(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_interface dcim_interface__connected_interface_3dfcd87c_fk_dcim_inte; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_interface
+    ADD CONSTRAINT dcim_interface__connected_interface_3dfcd87c_fk_dcim_inte FOREIGN KEY (_connected_interface_id) REFERENCES public.dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_interface dcim_interface_cable_id_1b264edb_fk_dcim_cable_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_interface
+    ADD CONSTRAINT dcim_interface_cable_id_1b264edb_fk_dcim_cable_id FOREIGN KEY (cable_id) REFERENCES public.dcim_cable(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: dcim_interface dcim_interface_device_id_359c6115_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -8745,22 +10546,6 @@ ALTER TABLE ONLY public.dcim_interface
 
 
 --
--- Name: dcim_interfaceconnection dcim_interfaceconnec_interface_a_id_503f46c2_fk_dcim_inte; Type: FK CONSTRAINT; Schema: public; Owner: netbox
---
-
-ALTER TABLE ONLY public.dcim_interfaceconnection
-    ADD CONSTRAINT dcim_interfaceconnec_interface_a_id_503f46c2_fk_dcim_inte FOREIGN KEY (interface_a_id) REFERENCES public.dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: dcim_interfaceconnection dcim_interfaceconnec_interface_b_id_85faa104_fk_dcim_inte; Type: FK CONSTRAINT; Schema: public; Owner: netbox
---
-
-ALTER TABLE ONLY public.dcim_interfaceconnection
-    ADD CONSTRAINT dcim_interfaceconnec_interface_b_id_85faa104_fk_dcim_inte FOREIGN KEY (interface_b_id) REFERENCES public.dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: dcim_interfacetemplate dcim_interfacetempla_device_type_id_4bfcbfab_fk_dcim_devi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -8801,11 +10586,59 @@ ALTER TABLE ONLY public.dcim_platform
 
 
 --
+-- Name: dcim_powerfeed dcim_powerfeed_cable_id_ec44c4f8_fk_dcim_cable_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerfeed
+    ADD CONSTRAINT dcim_powerfeed_cable_id_ec44c4f8_fk_dcim_cable_id FOREIGN KEY (cable_id) REFERENCES public.dcim_cable(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_powerfeed dcim_powerfeed_connected_endpoint_i_6ad0aad2_fk_dcim_powe; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerfeed
+    ADD CONSTRAINT dcim_powerfeed_connected_endpoint_i_6ad0aad2_fk_dcim_powe FOREIGN KEY (connected_endpoint_id) REFERENCES public.dcim_powerport(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_powerfeed dcim_powerfeed_power_panel_id_32bde3be_fk_dcim_powerpanel_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerfeed
+    ADD CONSTRAINT dcim_powerfeed_power_panel_id_32bde3be_fk_dcim_powerpanel_id FOREIGN KEY (power_panel_id) REFERENCES public.dcim_powerpanel(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_powerfeed dcim_powerfeed_rack_id_7abba090_fk_dcim_rack_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerfeed
+    ADD CONSTRAINT dcim_powerfeed_rack_id_7abba090_fk_dcim_rack_id FOREIGN KEY (rack_id) REFERENCES public.dcim_rack(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_poweroutlet dcim_poweroutlet_cable_id_8dbea1ec_fk_dcim_cable_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_poweroutlet
+    ADD CONSTRAINT dcim_poweroutlet_cable_id_8dbea1ec_fk_dcim_cable_id FOREIGN KEY (cable_id) REFERENCES public.dcim_cable(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: dcim_poweroutlet dcim_poweroutlet_device_id_286351d7_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
 ALTER TABLE ONLY public.dcim_poweroutlet
     ADD CONSTRAINT dcim_poweroutlet_device_id_286351d7_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_poweroutlet dcim_poweroutlet_power_port_id_9bdf4163_fk_dcim_powerport_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_poweroutlet
+    ADD CONSTRAINT dcim_poweroutlet_power_port_id_9bdf4163_fk_dcim_powerport_id FOREIGN KEY (power_port_id) REFERENCES public.dcim_powerport(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -8817,19 +10650,59 @@ ALTER TABLE ONLY public.dcim_poweroutlettemplate
 
 
 --
+-- Name: dcim_poweroutlettemplate dcim_poweroutlettemp_power_port_id_c0fb0c42_fk_dcim_powe; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_poweroutlettemplate
+    ADD CONSTRAINT dcim_poweroutlettemp_power_port_id_c0fb0c42_fk_dcim_powe FOREIGN KEY (power_port_id) REFERENCES public.dcim_powerporttemplate(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_powerpanel dcim_powerpanel_rack_group_id_76467cc9_fk_dcim_rackgroup_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerpanel
+    ADD CONSTRAINT dcim_powerpanel_rack_group_id_76467cc9_fk_dcim_rackgroup_id FOREIGN KEY (rack_group_id) REFERENCES public.dcim_rackgroup(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_powerpanel dcim_powerpanel_site_id_c430bc89_fk_dcim_site_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerpanel
+    ADD CONSTRAINT dcim_powerpanel_site_id_c430bc89_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES public.dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_powerport dcim_powerport__connected_powerfeed_8f5230a3_fk_dcim_powe; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerport
+    ADD CONSTRAINT dcim_powerport__connected_powerfeed_8f5230a3_fk_dcim_powe FOREIGN KEY (_connected_powerfeed_id) REFERENCES public.dcim_powerfeed(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_powerport dcim_powerport__connected_poweroutl_6c3ea413_fk_dcim_powe; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerport
+    ADD CONSTRAINT dcim_powerport__connected_poweroutl_6c3ea413_fk_dcim_powe FOREIGN KEY (_connected_poweroutlet_id) REFERENCES public.dcim_poweroutlet(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_powerport dcim_powerport_cable_id_c9682ba2_fk_dcim_cable_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_powerport
+    ADD CONSTRAINT dcim_powerport_cable_id_c9682ba2_fk_dcim_cable_id FOREIGN KEY (cable_id) REFERENCES public.dcim_cable(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: dcim_powerport dcim_powerport_device_id_ef7185ae_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
 ALTER TABLE ONLY public.dcim_powerport
     ADD CONSTRAINT dcim_powerport_device_id_ef7185ae_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: dcim_powerport dcim_powerport_power_outlet_id_741276ef_fk_dcim_poweroutlet_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
---
-
-ALTER TABLE ONLY public.dcim_powerport
-    ADD CONSTRAINT dcim_powerport_power_outlet_id_741276ef_fk_dcim_poweroutlet_id FOREIGN KEY (power_outlet_id) REFERENCES public.dcim_poweroutlet(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -8905,6 +10778,30 @@ ALTER TABLE ONLY public.dcim_rackreservation
 
 
 --
+-- Name: dcim_rearport dcim_rearport_cable_id_42c0e4e7_fk_dcim_cable_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rearport
+    ADD CONSTRAINT dcim_rearport_cable_id_42c0e4e7_fk_dcim_cable_id FOREIGN KEY (cable_id) REFERENCES public.dcim_cable(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_rearport dcim_rearport_device_id_0bdfe9c0_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rearport
+    ADD CONSTRAINT dcim_rearport_device_id_0bdfe9c0_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: dcim_rearporttemplate dcim_rearporttemplat_device_type_id_6a02fd01_fk_dcim_devi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.dcim_rearporttemplate
+    ADD CONSTRAINT dcim_rearporttemplat_device_type_id_6a02fd01_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES public.dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: dcim_region dcim_region_parent_id_2486f5d4_fk_dcim_region_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -8953,6 +10850,102 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
+-- Name: extras_configcontext_platforms extras_configcontext_configcontext_id_2a516699_fk_extras_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_platforms
+    ADD CONSTRAINT extras_configcontext_configcontext_id_2a516699_fk_extras_co FOREIGN KEY (configcontext_id) REFERENCES public.extras_configcontext(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_configcontext_roles extras_configcontext_configcontext_id_59b67386_fk_extras_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_roles
+    ADD CONSTRAINT extras_configcontext_configcontext_id_59b67386_fk_extras_co FOREIGN KEY (configcontext_id) REFERENCES public.extras_configcontext(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_configcontext_regions extras_configcontext_configcontext_id_73003dbc_fk_extras_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_regions
+    ADD CONSTRAINT extras_configcontext_configcontext_id_73003dbc_fk_extras_co FOREIGN KEY (configcontext_id) REFERENCES public.extras_configcontext(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_configcontext_sites extras_configcontext_configcontext_id_8c54feb9_fk_extras_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_sites
+    ADD CONSTRAINT extras_configcontext_configcontext_id_8c54feb9_fk_extras_co FOREIGN KEY (configcontext_id) REFERENCES public.extras_configcontext(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_configcontext_tenant_groups extras_configcontext_configcontext_id_92f68345_fk_extras_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_tenant_groups
+    ADD CONSTRAINT extras_configcontext_configcontext_id_92f68345_fk_extras_co FOREIGN KEY (configcontext_id) REFERENCES public.extras_configcontext(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_configcontext_tenants extras_configcontext_configcontext_id_b53552a6_fk_extras_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_tenants
+    ADD CONSTRAINT extras_configcontext_configcontext_id_b53552a6_fk_extras_co FOREIGN KEY (configcontext_id) REFERENCES public.extras_configcontext(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_configcontext_roles extras_configcontext_devicerole_id_d3a84813_fk_dcim_devi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_roles
+    ADD CONSTRAINT extras_configcontext_devicerole_id_d3a84813_fk_dcim_devi FOREIGN KEY (devicerole_id) REFERENCES public.dcim_devicerole(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_configcontext_platforms extras_configcontext_platform_id_3fdfedc0_fk_dcim_plat; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_platforms
+    ADD CONSTRAINT extras_configcontext_platform_id_3fdfedc0_fk_dcim_plat FOREIGN KEY (platform_id) REFERENCES public.dcim_platform(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_configcontext_regions extras_configcontext_region_id_35c6ba9d_fk_dcim_regi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_regions
+    ADD CONSTRAINT extras_configcontext_region_id_35c6ba9d_fk_dcim_regi FOREIGN KEY (region_id) REFERENCES public.dcim_region(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_configcontext_sites extras_configcontext_sites_site_id_cbb76c96_fk_dcim_site_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_sites
+    ADD CONSTRAINT extras_configcontext_sites_site_id_cbb76c96_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES public.dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_configcontext_tenants extras_configcontext_tenant_id_8d0aa28e_fk_tenancy_t; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_tenants
+    ADD CONSTRAINT extras_configcontext_tenant_id_8d0aa28e_fk_tenancy_t FOREIGN KEY (tenant_id) REFERENCES public.tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_configcontext_tenant_groups extras_configcontext_tenantgroup_id_0909688d_fk_tenancy_t; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_configcontext_tenant_groups
+    ADD CONSTRAINT extras_configcontext_tenantgroup_id_0909688d_fk_tenancy_t FOREIGN KEY (tenantgroup_id) REFERENCES public.tenancy_tenantgroup(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: extras_customfield_obj_type extras_customfield_o_contenttype_id_6890b714_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -8993,6 +10986,14 @@ ALTER TABLE ONLY public.extras_customfieldvalue
 
 
 --
+-- Name: extras_customlink extras_customlink_content_type_id_4d35b063_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_customlink
+    ADD CONSTRAINT extras_customlink_content_type_id_4d35b063_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: extras_exporttemplate extras_exporttemplat_content_type_id_59737e21_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -9009,11 +11010,51 @@ ALTER TABLE ONLY public.extras_imageattachment
 
 
 --
+-- Name: extras_objectchange extras_objectchange_changed_object_type__b755bb60_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_objectchange
+    ADD CONSTRAINT extras_objectchange_changed_object_type__b755bb60_fk_django_co FOREIGN KEY (changed_object_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_objectchange extras_objectchange_related_object_type__fe6e521f_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_objectchange
+    ADD CONSTRAINT extras_objectchange_related_object_type__fe6e521f_fk_django_co FOREIGN KEY (related_object_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_objectchange extras_objectchange_user_id_7fdf8186_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_objectchange
+    ADD CONSTRAINT extras_objectchange_user_id_7fdf8186_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: extras_reportresult extras_reportresult_user_id_0df55b95_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
 ALTER TABLE ONLY public.extras_reportresult
     ADD CONSTRAINT extras_reportresult_user_id_0df55b95_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_taggeditem extras_taggeditem_content_type_id_ba5562ed_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_taggeditem
+    ADD CONSTRAINT extras_taggeditem_content_type_id_ba5562ed_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: extras_taggeditem extras_taggeditem_tag_id_d48af7c7_fk_extras_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.extras_taggeditem
+    ADD CONSTRAINT extras_taggeditem_tag_id_d48af7c7_fk_extras_tag_id FOREIGN KEY (tag_id) REFERENCES public.extras_tag(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -9025,19 +11066,19 @@ ALTER TABLE ONLY public.extras_topologymap
 
 
 --
--- Name: extras_useraction extras_useraction_content_type_id_99f782d7_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+-- Name: extras_webhook_obj_type extras_webhook_obj_t_contenttype_id_85c7693b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY public.extras_useraction
-    ADD CONSTRAINT extras_useraction_content_type_id_99f782d7_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_webhook_obj_type
+    ADD CONSTRAINT extras_webhook_obj_t_contenttype_id_85c7693b_fk_django_co FOREIGN KEY (contenttype_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
--- Name: extras_useraction extras_useraction_user_id_8aacec56_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+-- Name: extras_webhook_obj_type extras_webhook_obj_t_webhook_id_c7bed170_fk_extras_we; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY public.extras_useraction
-    ADD CONSTRAINT extras_useraction_user_id_8aacec56_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_webhook_obj_type
+    ADD CONSTRAINT extras_webhook_obj_t_webhook_id_c7bed170_fk_extras_we FOREIGN KEY (webhook_id) REFERENCES public.extras_webhook(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -9265,6 +11306,22 @@ ALTER TABLE ONLY public.secrets_userkey
 
 
 --
+-- Name: taggit_taggeditem taggit_taggeditem_content_type_id_9957a03c_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.taggit_taggeditem
+    ADD CONSTRAINT taggit_taggeditem_content_type_id_9957a03c_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: taggit_taggeditem taggit_taggeditem_tag_id_f4f5b767_fk_taggit_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
+--
+
+ALTER TABLE ONLY public.taggit_taggeditem
+    ADD CONSTRAINT taggit_taggeditem_tag_id_f4f5b767_fk_taggit_tag_id FOREIGN KEY (tag_id) REFERENCES public.taggit_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: tenancy_tenant tenancy_tenant_group_id_7daef6f4_fk_tenancy_tenantgroup_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
@@ -9354,101 +11411,5 @@ ALTER TABLE ONLY public.virtualization_virtualmachine
 
 --
 -- PostgreSQL database dump complete
---
-
-\connect postgres
-
-SET default_transaction_read_only = off;
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 10.4
--- Dumped by pg_dump version 10.4
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: DATABASE postgres; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON DATABASE postgres IS 'default administrative connection database';
-
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
--- PostgreSQL database dump complete
---
-
-\connect template1
-
-SET default_transaction_read_only = off;
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 10.4
--- Dumped by pg_dump version 10.4
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: DATABASE template1; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON DATABASE template1 IS 'default template for new databases';
-
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
--- PostgreSQL database dump complete
---
-
---
--- PostgreSQL database cluster dump complete
 --
 
