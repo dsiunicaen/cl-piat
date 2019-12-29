@@ -1,4 +1,9 @@
 ---
+- hosts: leaf01
+  become: true
+  roles:
+  - { role: test-netbox, tags: ['test'] }
+
 - hosts: oob-mgmt-server 
   become: true
   roles:
