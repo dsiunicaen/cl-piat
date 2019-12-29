@@ -1,27 +1,21 @@
 ---
-- name: Test Netbox module
-  connection: local
-  gather_facts: False
-  collections:
-    - fragmentedpacket.netbox_modules
 
-  tasks:
-    - name: Use Netbox data with Jinja2 
-      vars:
-        interfaces: "{{ query('fragmentedpacket.netbox_modules.netbox', 'interfaces', 
-                                        api_filter='device=' + inventory_hostname,
-                                        api_endpoint=netbox_api_endpoint, 
-                                        token=netbox_api_token) }}"
-        devices: "{{ query('fragmentedpacket.netbox_modules.netbox', 'devices', 
-                                        api_filter='name=' + inventory_hostname,
-                                        api_endpoint=netbox_api_endpoint, 
-                                        token=netbox_api_token) }}"
-      #template:
-      #  src: test.j2
-      #  dest: "test/test"
-      #delegate_to: localhost
-      #become: false
-      debug:
-        msg: 
-          - "{{ interfaces }}"
-          - "{{ devices }}"
+- name: Use Netbox data with Jinja2 
+  vars:
+    interfaces: "{{ query('fragmentedpacket.netbox_modules.netbox', 'interfaces', 
+                                    api_filter='device=' + inventory_hostname,
+                                    api_endpoint=netbox_api_endpoint, 
+                                    token=netbox_api_token) }}"
+    devices: "{{ query('fragmentedpacket.netbox_modules.netbox', 'devices', 
+                                    api_filter='name=' + inventory_hostname,
+                                    api_endpoint=netbox_api_endpoint, 
+                                    token=netbox_api_token) }}"
+  #template:
+  #  src: test.j2
+  #  dest: "test/test"
+  #delegate_to: localhost
+  #become: false
+  debug:
+    msg: 
+      - "{{ interfaces }}"
+      - "{{ devices }}"
