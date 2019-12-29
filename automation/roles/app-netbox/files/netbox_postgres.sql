@@ -4779,7 +4779,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$150000$q6Z1TSrq70NI$EYoSJjgAqqsgT7L/94/1UcLCuTl20cvJY0ht7dE4yOg=	2019-12-29 11:10:15.418679+00	t	admin			admin@example.com	t	t	2018-06-03 16:17:44.788445+00
+1	pbkdf2_sha256$150000$q6Z1TSrq70NI$EYoSJjgAqqsgT7L/94/1UcLCuTl20cvJY0ht7dE4yOg=	2019-12-29 11:50:34.71622+00	t	admin			admin@example.com	t	t	2018-06-03 16:17:44.788445+00
 \.
 
 
@@ -4876,20 +4876,61 @@ COPY public.dcim_consoleserverporttemplate (id, name, device_type_id) FROM stdin
 --
 
 COPY public.dcim_device (id, created, last_updated, name, serial, "position", face, status, comments, device_role_id, device_type_id, platform_id, rack_id, primary_ip4_id, primary_ip6_id, tenant_id, asset_tag, site_id, cluster_id, virtual_chassis_id, vc_position, vc_priority, local_context_data) FROM stdin;
-5	2018-06-08	2018-06-08 21:58:28.048198+00	spine01		\N	\N	1		2	1	\N	2	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-6	2018-06-08	2018-06-08 22:35:21.708373+00	spine02		\N	\N	1		2	1	\N	2	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-7	2018-06-08	2018-06-09 07:42:23.365687+00	leaf03		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-11	2018-06-09	2018-06-09 08:15:21.61264+00	super01		\N	\N	1		2	1	\N	5	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-12	2018-06-09	2018-06-09 08:15:35.44707+00	super02		\N	\N	1		2	1	\N	5	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-15	2018-06-09	2018-06-09 10:56:18.130143+00	rtr01		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-16	2018-06-09	2018-06-09 10:56:18.153524+00	rtr02		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-1	2018-06-03	2018-11-07 16:57:09.294214+00	leaf01		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-4	2018-06-08	2018-11-07 16:57:09.324612+00	leaf02		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-8	2018-06-09	2018-11-08 18:52:42.84008+00	leaf04		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-9	2018-06-09	2019-06-08 15:19:27.946342+00	service01		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-10	2018-06-09	2019-06-08 15:19:45.693987+00	service02		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-13	2018-06-09	2019-06-08 15:20:08.981553+00	exit01		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
-14	2018-06-09	2019-06-08 15:20:30.346048+00	exit02		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N	\N
+86	2019-12-29	2019-12-29 13:45:46.82127+00	oob-mgmt-switch		\N	\N	1		8	3	\N	15	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+87	2019-12-29	2019-12-29 13:45:46.855203+00	rtr01		\N	\N	1		7	1	\N	6	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+1	2018-06-03	2019-12-29 13:10:30.790156+00	leaf01		\N	\N	1		1	1	\N	1	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+88	2019-12-29	2019-12-29 13:45:46.901993+00	rtr02		\N	\N	1		7	1	\N	6	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+89	2019-12-29	2019-12-29 13:45:46.95204+00	server01		\N	\N	1		3	2	\N	1	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+90	2019-12-29	2019-12-29 13:45:46.982711+00	server02		\N	\N	1		3	2	\N	1	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+91	2019-12-29	2019-12-29 13:45:47.013544+00	server03		\N	\N	1		3	2	\N	1	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+92	2019-12-29	2019-12-29 13:45:47.043086+00	server04		\N	\N	1		3	2	\N	1	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+93	2019-12-29	2019-12-29 13:45:47.07286+00	server05		\N	\N	1		3	2	\N	3	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+94	2019-12-29	2019-12-29 13:45:47.102948+00	server06		\N	\N	1		3	2	\N	3	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+95	2019-12-29	2019-12-29 13:45:47.138479+00	server07		\N	\N	1		3	2	\N	3	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+71	2019-12-29	2019-12-29 13:45:46.152962+00	exit01		\N	\N	1		1	1	\N	6	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+72	2019-12-29	2019-12-29 13:45:46.206503+00	exit02		\N	\N	1		1	1	\N	6	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+73	2019-12-29	2019-12-29 13:45:46.250555+00	fw01		\N	\N	1		6	1	\N	9	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+74	2019-12-29	2019-12-29 13:45:46.295559+00	fw02		\N	\N	1		6	1	\N	9	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+75	2019-12-29	2019-12-29 13:45:46.340504+00	fw03		\N	\N	1		6	1	\N	12	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+76	2019-12-29	2019-12-29 13:45:46.385541+00	fw04		\N	\N	1		6	1	\N	12	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+77	2019-12-29	2019-12-29 13:45:46.431322+00	leaf02		\N	\N	1		1	1	\N	1	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+78	2019-12-29	2019-12-29 13:45:46.477885+00	leaf03		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+79	2019-12-29	2019-12-29 13:45:46.528999+00	leaf04		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+80	2019-12-29	2019-12-29 13:45:46.574463+00	leaf05		\N	\N	1		1	1	\N	10	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+81	2019-12-29	2019-12-29 13:45:46.621176+00	leaf06		\N	\N	1		1	1	\N	10	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+82	2019-12-29	2019-12-29 13:45:46.66625+00	leaf07		\N	\N	1		1	1	\N	11	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+83	2019-12-29	2019-12-29 13:45:46.718443+00	leaf08		\N	\N	1		1	1	\N	11	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+84	2019-12-29	2019-12-29 13:45:46.759367+00	netq-ts		\N	\N	1		3	3	\N	\N	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+85	2019-12-29	2019-12-29 13:45:46.789683+00	oob-mgmt-server		\N	\N	1		4	2	\N	15	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+96	2019-12-29	2019-12-29 13:45:47.169071+00	server08		\N	\N	1		3	2	\N	3	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+97	2019-12-29	2019-12-29 13:45:47.200676+00	server09		\N	\N	1		3	2	\N	9	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+98	2019-12-29	2019-12-29 13:45:47.233934+00	server10		\N	\N	1		3	2	\N	9	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+99	2019-12-29	2019-12-29 13:45:47.272921+00	server11		\N	\N	1		3	2	\N	12	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+100	2019-12-29	2019-12-29 13:45:47.307581+00	server12		\N	\N	1		3	2	\N	12	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+101	2019-12-29	2019-12-29 13:45:47.340074+00	server13		\N	\N	1		3	2	\N	10	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+102	2019-12-29	2019-12-29 13:45:47.37357+00	server14		\N	\N	1		3	2	\N	10	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+103	2019-12-29	2019-12-29 13:45:47.406552+00	server15		\N	\N	1		3	2	\N	11	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+104	2019-12-29	2019-12-29 13:45:47.439694+00	server16		\N	\N	1		3	2	\N	11	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+105	2019-12-29	2019-12-29 13:45:47.473203+00	server17		\N	\N	1		3	2	\N	11	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+106	2019-12-29	2019-12-29 13:45:47.505582+00	server18		\N	\N	1		3	2	\N	11	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+107	2019-12-29	2019-12-29 13:45:47.537308+00	server19		\N	\N	1		3	2	\N	11	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+108	2019-12-29	2019-12-29 13:45:47.577604+00	server20		\N	\N	1		3	2	\N	11	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+109	2019-12-29	2019-12-29 13:45:47.611142+00	service01		\N	\N	1		1	4	\N	9	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+110	2019-12-29	2019-12-29 13:45:47.656041+00	service02		\N	\N	1		1	4	\N	9	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+111	2019-12-29	2019-12-29 13:45:47.704324+00	service03		\N	\N	1		1	4	\N	12	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+112	2019-12-29	2019-12-29 13:45:47.751268+00	service04		\N	\N	1		1	4	\N	12	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+113	2019-12-29	2019-12-29 13:45:47.800482+00	spine01		\N	\N	1		2	4	\N	2	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+114	2019-12-29	2019-12-29 13:45:47.844875+00	spine02		\N	\N	1		2	4	\N	2	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+115	2019-12-29	2019-12-29 13:45:47.892722+00	spine03		\N	\N	1		2	4	\N	2	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+116	2019-12-29	2019-12-29 13:45:47.932673+00	spine04		\N	\N	1		2	4	\N	2	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+117	2019-12-29	2019-12-29 13:45:47.972594+00	spine05		\N	\N	1		2	4	\N	13	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+118	2019-12-29	2019-12-29 13:45:48.018026+00	spine06		\N	\N	1		2	4	\N	13	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+119	2019-12-29	2019-12-29 13:45:48.056205+00	spine07		\N	\N	1		2	4	\N	13	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+120	2019-12-29	2019-12-29 13:45:48.10376+00	spine08		\N	\N	1		2	4	\N	13	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+121	2019-12-29	2019-12-29 13:45:48.147295+00	super01		\N	\N	1		5	4	\N	14	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+122	2019-12-29	2019-12-29 13:45:48.187712+00	super02		\N	\N	1		5	4	\N	14	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+123	2019-12-29	2019-12-29 13:45:48.226842+00	super03		\N	\N	1		5	4	\N	14	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
+124	2019-12-29	2019-12-29 13:45:48.272597+00	super04		\N	\N	1		5	4	\N	14	\N	\N	\N	\N	2	\N	\N	\N	\N	\N
 \.
 
 
@@ -4914,8 +4955,14 @@ COPY public.dcim_devicebaytemplate (id, name, device_type_id) FROM stdin;
 --
 
 COPY public.dcim_devicerole (id, name, slug, color, vm_role, created, last_updated) FROM stdin;
-1	Leaf	leaf	aa1409	f	2019-12-29	2019-12-29 11:09:41.654834+00
-2	Spine	spine	aa1409	f	2019-12-29	2019-12-29 11:09:41.654834+00
+2	Spine	spine	4caf50	f	2019-12-29	2019-12-29 12:13:37.277794+00
+1	Leaf	leaf	8bc34a	f	2019-12-29	2019-12-29 12:13:55.629826+00
+5	Superspine	superspine	2f6a31	f	2019-12-29	2019-12-29 12:14:35.373558+00
+3	Server	server	3f51b5	t	2019-12-29	2019-12-29 12:15:17.08172+00
+8	OOB Switch	oob-switch	cddc39	f	2019-12-29	2019-12-29 13:21:07.833177+00
+4	OOB Server	oob-server	2196f3	f	2019-12-29	2019-12-29 13:23:23.016803+00
+6	Firewall	firewall	f44336	f	2019-12-29	2019-12-29 13:26:38.429086+00
+7	Router	router	cddc39	f	2019-12-29	2019-12-29 13:26:46.30013+00
 \.
 
 
@@ -4924,7 +4971,10 @@ COPY public.dcim_devicerole (id, name, slug, color, vm_role, created, last_updat
 --
 
 COPY public.dcim_devicetype (id, model, slug, u_height, is_full_depth, manufacturer_id, subdevice_role, part_number, comments, created, last_updated) FROM stdin;
-1	Cumulus VX	cumulus-vx	0	f	1	\N			2019-12-29	2019-12-29 11:09:41.772023+00
+2	Ubuntu 18.04 vm	ubuntu-18-04-vm	1	t	2	\N			2019-12-29	2019-12-29 12:09:32.559825+00
+3	NetQ Cloud VM appliance	netq-cloud-vm-appliance	1	t	1	\N			2019-12-29	2019-12-29 12:10:38.678388+00
+1	Cumulus VX Leaf	cumulus-vx-leaf	0	f	1	\N			2019-12-29	2019-12-29 13:34:07.040218+00
+4	Cumulus VX Spine	cumulus-vx-spine	1	t	1	\N			2019-12-29	2019-12-29 13:34:53.025896+00
 \.
 
 
@@ -4950,155 +5000,1406 @@ COPY public.dcim_frontporttemplate (id, name, type, rear_port_position, device_t
 
 COPY public.dcim_interface (id, name, type, mgmt_only, description, device_id, mac_address, lag_id, enabled, mtu, virtual_machine_id, mode, untagged_vlan_id, _connected_circuittermination_id, _connected_interface_id, connection_status, cable_id) FROM stdin;
 2	swp1	1000	f		1	\N	1	t	\N	\N	\N	\N	\N	\N	\N	\N
-108	irb2501	0	f	bgp_external	13	\N	\N	t	\N	\N	100	7	\N	\N	\N	\N
+170	eth0	1000	t		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 4	lo	0	f		1	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 9	clagd-vxlan-anycast-ip	0	f		1	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-109	irb2502	0	f	bgp_external	13	\N	\N	t	\N	\N	100	8	\N	\N	\N	\N
-87	peerlink.4094	0	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-94	lo	0	f		11	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-68	bond01	200	f		9	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-110	irb2503	0	f	bgp_external	13	\N	\N	t	\N	\N	100	9	\N	\N	\N	\N
+171	swp1	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+172	swp2	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+173	swp3	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+174	swp4	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+175	swp5	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 13	swp2	1000	f		1	\N	12	t	\N	\N	\N	\N	\N	\N	\N	\N
-111	irb2504	0	f	bgp_external	13	\N	\N	t	\N	\N	100	19	\N	\N	\N	\N
+176	swp6	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 3	irb1000	0	f		1	\N	\N	t	\N	\N	100	1	\N	\N	\N	\N
 137	irb1002	0	f		1	\N	\N	t	\N	\N	100	3	\N	\N	\N	\N
 5	peerlink	200	f		1	44:38:39:ff:01:02	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 8	peerlink.4094	0	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-16	bond02	200	f		4	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-69	bond02	200	f		9	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-17	clagd-vxlan-anycast-ip	0	f		4	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-71	irb1000	0	f		9	\N	\N	t	\N	\N	100	1	\N	\N	\N	\N
-19	lo	0	f		4	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-21	peerlink.4094	0	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-20	peerlink	200	f		4	44:38:39:ff:01:02	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-22	swp1	1000	f		4	\N	15	t	\N	\N	\N	\N	\N	\N	\N	\N
-23	swp2	1000	f		4	\N	16	t	\N	\N	\N	\N	\N	\N	\N	\N
-18	irb1000	0	f		4	\N	\N	t	\N	\N	100	1	\N	\N	\N	\N
-28	lo	0	f		5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-29	swp1	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-30	swp2	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-31	swp3	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-32	swp4	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-33	swp5	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-34	swp6	1000	f	bgp_underlay	5	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-35	lo	0	f		6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-36	swp1	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-37	swp2	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-38	swp3	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-39	swp4	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-40	swp5	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-41	swp6	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-46	lo	0	f		7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-48	peerlink.4094	0	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-81	bond01	200	f		10	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-70	clagd-vxlan-anycast-ip	0	f		9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+177	swp7	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+178	swp8	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+179	swp9	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+180	swp10	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+181	swp11	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+182	swp12	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+183	swp13	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+184	swp14	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+185	swp15	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+186	swp16	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+187	swp17	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+188	swp18	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+189	swp19	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+190	swp20	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+191	swp21	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+192	swp22	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+193	swp23	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+194	swp24	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+195	swp25	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+196	swp26	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+197	swp27	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+198	swp28	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+199	swp29	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+200	swp30	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+201	swp31	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+202	swp32	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+203	swp33	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+204	swp34	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 1	bond01	200	f		1	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-59	lo	0	f		8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-60	peerlink	200	f		8	44:38:39:ff:01:34	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-47	peerlink	200	f		7	44:38:39:ff:01:34	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-61	peerlink.4094	0	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-72	lo	0	f		9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-74	peerlink.4094	0	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-75	swp1	1000	f		9	\N	68	t	\N	\N	\N	\N	\N	\N	\N	\N
-76	swp2	1000	f		9	\N	69	t	\N	\N	\N	\N	\N	\N	\N	\N
-73	peerlink	200	f		9	44:38:39:ff:01:56	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-83	clagd-vxlan-anycast-ip	0	f		10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-85	lo	0	f		10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-88	swp1	1000	f		10	\N	81	t	\N	\N	\N	\N	\N	\N	\N	\N
-89	swp2	1000	f		10	\N	82	t	\N	\N	\N	\N	\N	\N	\N	\N
-86	peerlink	200	f		10	44:38:39:ff:01:56	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-99	lo	0	f		12	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-100	swp1	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-101	swp2	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-95	swp1	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-96	swp2	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-104	swp1	1000	f	bgp_underlay	13	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-105	swp2	1000	f	bgp_underlay	13	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+205	swp35	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+206	swp36	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+207	swp37	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+208	swp38	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+209	swp39	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+210	swp40	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+211	swp41	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+212	swp42	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+213	swp43	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+214	swp44	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+215	swp45	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+216	swp46	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+217	swp47	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+218	swp48	1200	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+219	swp49	1600	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+220	swp50	1600	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+221	swp51	1600	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+222	swp52	1600	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+223	swp53	1600	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+224	swp54	1600	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+225	swp55	1600	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 12	bond02	200	f		1	\N	\N	t	\N	\N	200	1	\N	\N	\N	\N
-15	bond01	200	f		4	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-82	bond02	200	f		10	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-106	swp49	1000	f		13	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-107	swp50	1000	f		13	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-115	irb2508	0	f	bgp_external	14	\N	\N	t	\N	\N	100	14	\N	\N	\N	\N
-116	swp1	1000	f	bgp_underlay	14	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-117	swp2	1000	f	bgp_underlay	14	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-129	swp2	1000	f		16	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-120	swp1	1000	f		15	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-121	swp2	1000	f		15	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-62	swp1	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-63	swp2	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-122	irb2501	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	7	\N	\N	\N	\N
-123	irb2502	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	8	\N	\N	\N	\N
-124	irb2505	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	11	\N	\N	\N	\N
-125	irb2506	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	12	\N	\N	\N	\N
-126	irb2701	0	f	bgp_external	15	\N	\N	t	\N	\N	100	16	\N	\N	\N	\N
-127	irb2702	0	f	bgp_external	15	\N	\N	t	\N	\N	100	17	\N	\N	\N	\N
-141	irb1001	0	f		4	\N	\N	t	\N	\N	100	2	\N	\N	\N	\N
-128	swp1	1000	f		16	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-142	irb1002	0	f		4	\N	\N	t	\N	\N	100	3	\N	\N	\N	\N
+226	swp56	1600	f		71	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+227	eth0	1000	t		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+228	swp1	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+229	swp2	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+230	swp3	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+231	swp4	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+232	swp5	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+233	swp6	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+234	swp7	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+235	swp8	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+236	swp9	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+237	swp10	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+238	swp11	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+239	swp12	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+240	swp13	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+241	swp14	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+242	swp15	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+243	swp16	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+244	swp17	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+245	swp18	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+246	swp19	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 11	swp52	1000	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 6	swp49	1000	f		1	\N	5	t	\N	\N	\N	\N	\N	\N	\N	\N
 7	swp50	1000	f		1	\N	5	t	\N	\N	\N	\N	\N	\N	\N	\N
-27	swp52	1000	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-25	swp50	1000	f		4	\N	20	t	\N	\N	\N	\N	\N	\N	\N	\N
-24	swp49	1000	f		4	\N	20	t	\N	\N	\N	\N	\N	\N	\N	\N
-54	swp52	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-53	swp51	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-52	swp50	1000	f		7	\N	47	t	\N	\N	\N	\N	\N	\N	\N	\N
-51	swp49	1000	f		7	\N	47	t	\N	\N	\N	\N	\N	\N	\N	\N
-67	swp52	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-66	swp51	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-65	swp50	1000	f		8	\N	60	t	\N	\N	\N	\N	\N	\N	\N	\N
-64	swp49	1000	f		8	\N	60	t	\N	\N	\N	\N	\N	\N	\N	\N
-79	swp53	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-80	swp54	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-77	swp49	1000	f		9	\N	73	t	\N	\N	\N	\N	\N	\N	\N	\N
-78	swp50	1000	f		9	\N	73	t	\N	\N	\N	\N	\N	\N	\N	\N
-92	swp53	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-93	swp54	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-90	swp49	1000	f		10	\N	86	t	\N	\N	\N	\N	\N	\N	\N	\N
-91	swp50	1000	f		10	\N	86	t	\N	\N	\N	\N	\N	\N	\N	\N
-98	swp7	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-102	swp6	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-103	swp7	1000	f	bgp_underlay	12	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-130	irb2503	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	9	\N	\N	\N	\N
-131	irb2504	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	10	\N	\N	\N	\N
-132	irb2507	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	13	\N	\N	\N	\N
-133	irb2508	0	f	bgp_underlay	16	\N	\N	t	\N	\N	100	14	\N	\N	\N	\N
-134	irb2703	0	f	bgp_external	16	\N	\N	t	\N	\N	100	18	\N	\N	\N	\N
-135	irb2704	0	f	bgp_external	16	\N	\N	t	\N	\N	100	19	\N	\N	\N	\N
-143	irb1003	0	f		4	\N	\N	t	\N	\N	100	4	\N	\N	\N	\N
-118	swp49	1000	f		14	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-144	irb1004	0	f		4	\N	\N	t	\N	\N	100	5	\N	\N	\N	\N
-119	swp50	1000	f		14	\N	\N	t	\N	\N	200	\N	\N	\N	\N	\N
-112	irb2505	0	f	bgp_external	14	\N	\N	t	\N	\N	100	11	\N	\N	\N	\N
-145	irb1005	0	f		4	\N	\N	t	\N	\N	100	6	\N	\N	\N	\N
-113	irb2506	0	f	bgp_external	14	\N	\N	t	\N	\N	100	12	\N	\N	\N	\N
-114	irb2507	0	f	bgp_external	14	\N	\N	t	\N	\N	100	13	\N	\N	\N	\N
-156	irb1001	0	f		9	\N	\N	t	\N	\N	100	2	\N	\N	\N	\N
-157	irb1002	0	f		9	\N	\N	t	\N	\N	100	3	\N	\N	\N	\N
-158	irb1003	0	f		9	\N	\N	t	\N	\N	100	4	\N	\N	\N	\N
-159	irb1004	0	f		9	\N	\N	t	\N	\N	100	5	\N	\N	\N	\N
-160	irb1005	0	f		9	\N	\N	t	\N	\N	100	6	\N	\N	\N	\N
+247	swp20	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+248	swp21	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+249	swp22	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+250	swp23	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+251	swp24	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+252	swp25	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+253	swp26	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+254	swp27	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+255	swp28	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+256	swp29	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+257	swp30	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+258	swp31	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+259	swp32	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+260	swp33	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+261	swp34	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+262	swp35	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+263	swp36	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+264	swp37	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+265	swp38	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+266	swp39	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+267	swp40	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+268	swp41	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+269	swp42	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+270	swp43	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+271	swp44	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+272	swp45	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+273	swp46	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+274	swp47	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+275	swp48	1200	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+276	swp49	1600	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+277	swp50	1600	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+278	swp51	1600	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+279	swp52	1600	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+280	swp53	1600	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+281	swp54	1600	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+282	swp55	1600	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+283	swp56	1600	f		72	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+284	eth0	1000	t		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+285	swp1	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+286	swp2	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+287	swp3	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+288	swp4	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+289	swp5	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+290	swp6	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+291	swp7	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+292	swp8	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+293	swp9	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+294	swp10	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+295	swp11	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+296	swp12	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+297	swp13	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+298	swp14	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+299	swp15	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+300	swp16	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+301	swp17	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+302	swp18	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+303	swp19	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+304	swp20	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+305	swp21	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+306	swp22	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 136	irb1001	0	f		1	\N	\N	t	\N	\N	100	2	\N	\N	\N	\N
 138	irb1003	0	f		1	\N	\N	t	\N	\N	100	4	\N	\N	\N	\N
 139	irb1004	0	f		1	\N	\N	t	\N	\N	100	5	\N	\N	\N	\N
 140	irb1005	0	f		1	\N	\N	t	\N	\N	100	6	\N	\N	\N	\N
-161	irb1001	0	f		10	\N	\N	t	\N	\N	100	2	\N	\N	\N	\N
-162	irb1002	0	f		10	\N	\N	t	\N	\N	100	3	\N	\N	\N	\N
-163	irb1003	0	f		10	\N	\N	t	\N	\N	100	4	\N	\N	\N	\N
-164	irb1004	0	f		10	\N	\N	t	\N	\N	100	5	\N	\N	\N	\N
-165	irb1005	0	f		10	\N	\N	t	\N	\N	100	6	\N	\N	\N	\N
-84	irb1000	0	f		10	\N	\N	t	\N	\N	100	1	\N	\N	\N	\N
-166	swp51	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-167	swp52	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-168	swp51	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-169	swp52	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-49	swp1	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-50	swp2	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+307	swp23	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+308	swp24	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+309	swp25	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+310	swp26	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+311	swp27	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+312	swp28	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+313	swp29	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+314	swp30	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+315	swp31	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+316	swp32	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+317	swp33	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+318	swp34	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 10	swp51	1000	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-26	swp51	1000	f	bgp_underlay	4	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
-97	swp6	1000	f	bgp_underlay	11	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+319	swp35	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+320	swp36	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+321	swp37	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+322	swp38	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+323	swp39	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+324	swp40	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+325	swp41	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+326	swp42	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+327	swp43	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+328	swp44	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+329	swp45	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+330	swp46	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+331	swp47	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+332	swp48	1200	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+333	swp49	1600	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+334	swp50	1600	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+335	swp51	1600	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+336	swp52	1600	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+337	swp53	1600	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+338	swp54	1600	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+339	swp55	1600	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+340	swp56	1600	f		73	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+341	eth0	1000	t		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+342	swp1	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+343	swp2	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+344	swp3	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+345	swp4	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+346	swp5	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+347	swp6	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+348	swp7	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+349	swp8	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+350	swp9	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+351	swp10	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+352	swp11	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+353	swp12	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+354	swp13	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+355	swp14	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+356	swp15	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+357	swp16	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+358	swp17	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+359	swp18	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+360	swp19	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+361	swp20	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+362	swp21	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+363	swp22	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+364	swp23	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+365	swp24	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+366	swp25	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+367	swp26	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+368	swp27	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+369	swp28	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+370	swp29	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+371	swp30	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+372	swp31	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+373	swp32	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+374	swp33	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+375	swp34	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+376	swp35	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+377	swp36	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+378	swp37	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+379	swp38	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+380	swp39	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+381	swp40	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+382	swp41	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+383	swp42	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+384	swp43	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+385	swp44	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+386	swp45	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+387	swp46	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+388	swp47	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+389	swp48	1200	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+390	swp49	1600	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+391	swp50	1600	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+392	swp51	1600	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+393	swp52	1600	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+394	swp53	1600	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+395	swp54	1600	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+396	swp55	1600	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+397	swp56	1600	f		74	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+398	eth0	1000	t		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+399	swp1	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+400	swp2	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+401	swp3	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+402	swp4	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+403	swp5	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+404	swp6	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+405	swp7	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+406	swp8	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+407	swp9	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+408	swp10	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+409	swp11	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+410	swp12	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+411	swp13	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+412	swp14	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+413	swp15	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+414	swp16	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+415	swp17	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+416	swp18	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+417	swp19	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+418	swp20	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+419	swp21	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+420	swp22	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+421	swp23	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+422	swp24	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+423	swp25	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+424	swp26	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+425	swp27	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+426	swp28	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+427	swp29	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+428	swp30	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+429	swp31	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+430	swp32	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+431	swp33	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+432	swp34	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+433	swp35	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+434	swp36	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+435	swp37	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+436	swp38	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+437	swp39	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+438	swp40	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+439	swp41	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+440	swp42	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+441	swp43	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+442	swp44	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+443	swp45	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+444	swp46	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+445	swp47	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+446	swp48	1200	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+447	swp49	1600	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+448	swp50	1600	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+449	swp51	1600	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+450	swp52	1600	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+451	swp53	1600	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+452	swp54	1600	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+453	swp55	1600	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+454	swp56	1600	f		75	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+455	eth0	1000	t		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+456	swp1	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+457	swp2	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+458	swp3	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+459	swp4	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+460	swp5	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+461	swp6	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+462	swp7	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+463	swp8	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+464	swp9	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+465	swp10	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+466	swp11	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+467	swp12	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+468	swp13	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+469	swp14	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+470	swp15	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+471	swp16	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+472	swp17	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+473	swp18	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+474	swp19	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+475	swp20	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+476	swp21	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+477	swp22	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+478	swp23	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+479	swp24	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+480	swp25	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+481	swp26	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+482	swp27	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+483	swp28	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+484	swp29	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+485	swp30	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+486	swp31	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+487	swp32	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+488	swp33	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+489	swp34	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+490	swp35	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+491	swp36	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+492	swp37	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+493	swp38	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+494	swp39	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+495	swp40	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+496	swp41	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+497	swp42	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+498	swp43	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+499	swp44	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+500	swp45	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+501	swp46	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+502	swp47	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+503	swp48	1200	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+504	swp49	1600	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+505	swp50	1600	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+506	swp51	1600	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+507	swp52	1600	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+508	swp53	1600	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+509	swp54	1600	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+510	swp55	1600	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+511	swp56	1600	f		76	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+512	eth0	1000	t		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+513	swp1	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+514	swp2	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+515	swp3	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+516	swp4	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+517	swp5	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+518	swp6	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+519	swp7	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+520	swp8	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+521	swp9	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+522	swp10	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+523	swp11	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+524	swp12	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+525	swp13	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+526	swp14	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+527	swp15	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+528	swp16	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+529	swp17	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+530	swp18	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+531	swp19	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+532	swp20	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+533	swp21	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+534	swp22	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+535	swp23	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+536	swp24	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+537	swp25	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+538	swp26	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+539	swp27	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+540	swp28	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+541	swp29	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+542	swp30	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+543	swp31	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+544	swp32	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+545	swp33	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+546	swp34	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+547	swp35	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+548	swp36	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+549	swp37	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+550	swp38	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+551	swp39	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+552	swp40	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+553	swp41	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+554	swp42	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+555	swp43	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+556	swp44	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+557	swp45	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+558	swp46	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+559	swp47	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+560	swp48	1200	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+561	swp49	1600	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+562	swp50	1600	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+563	swp51	1600	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+564	swp52	1600	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+565	swp53	1600	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+566	swp54	1600	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+567	swp55	1600	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+568	swp56	1600	f		77	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+569	eth0	1000	t		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+570	swp1	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+571	swp2	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+572	swp3	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+573	swp4	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+574	swp5	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+575	swp6	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+576	swp7	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+577	swp8	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+578	swp9	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+579	swp10	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+580	swp11	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+581	swp12	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+582	swp13	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+583	swp14	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+584	swp15	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+585	swp16	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+586	swp17	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+587	swp18	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+588	swp19	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+589	swp20	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+590	swp21	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+591	swp22	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+592	swp23	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+593	swp24	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+594	swp25	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+595	swp26	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+596	swp27	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+597	swp28	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+598	swp29	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+599	swp30	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+600	swp31	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+601	swp32	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+602	swp33	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+603	swp34	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+604	swp35	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+605	swp36	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+606	swp37	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+607	swp38	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+608	swp39	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+609	swp40	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+610	swp41	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+611	swp42	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+612	swp43	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+613	swp44	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+614	swp45	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+615	swp46	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+616	swp47	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+617	swp48	1200	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+618	swp49	1600	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+619	swp50	1600	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+620	swp51	1600	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+621	swp52	1600	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+622	swp53	1600	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+623	swp54	1600	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+624	swp55	1600	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+625	swp56	1600	f		78	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+626	eth0	1000	t		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+627	swp1	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+628	swp2	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+629	swp3	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+630	swp4	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+631	swp5	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+632	swp6	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+633	swp7	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+634	swp8	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+635	swp9	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+636	swp10	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+637	swp11	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+638	swp12	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+639	swp13	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+640	swp14	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+641	swp15	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+642	swp16	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+643	swp17	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+644	swp18	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+645	swp19	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+646	swp20	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+647	swp21	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+648	swp22	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+649	swp23	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+650	swp24	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+651	swp25	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+652	swp26	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+653	swp27	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+654	swp28	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+655	swp29	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+656	swp30	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+657	swp31	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+658	swp32	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+659	swp33	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+660	swp34	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+661	swp35	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+662	swp36	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+663	swp37	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+664	swp38	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+665	swp39	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+666	swp40	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+667	swp41	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+668	swp42	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+669	swp43	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+670	swp44	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+671	swp45	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+672	swp46	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+673	swp47	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+674	swp48	1200	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+675	swp49	1600	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+676	swp50	1600	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+677	swp51	1600	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+678	swp52	1600	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+679	swp53	1600	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+680	swp54	1600	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+681	swp55	1600	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+682	swp56	1600	f		79	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+683	eth0	1000	t		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+684	swp1	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+685	swp2	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+686	swp3	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+687	swp4	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+688	swp5	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+689	swp6	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+690	swp7	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+691	swp8	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+692	swp9	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+693	swp10	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+694	swp11	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+695	swp12	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+696	swp13	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+697	swp14	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+698	swp15	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+699	swp16	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+700	swp17	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+701	swp18	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+702	swp19	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+703	swp20	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+704	swp21	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+705	swp22	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+706	swp23	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+707	swp24	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+708	swp25	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+709	swp26	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+710	swp27	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+711	swp28	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+712	swp29	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+713	swp30	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+714	swp31	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+715	swp32	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+716	swp33	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+717	swp34	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+718	swp35	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+719	swp36	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+720	swp37	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+721	swp38	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+722	swp39	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+723	swp40	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+724	swp41	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+725	swp42	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+726	swp43	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+727	swp44	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+728	swp45	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+729	swp46	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+730	swp47	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+731	swp48	1200	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+732	swp49	1600	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+733	swp50	1600	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+734	swp51	1600	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+735	swp52	1600	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+736	swp53	1600	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+737	swp54	1600	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+738	swp55	1600	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+739	swp56	1600	f		80	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+740	eth0	1000	t		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+741	swp1	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+742	swp2	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+743	swp3	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+744	swp4	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+745	swp5	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+746	swp6	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+747	swp7	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+748	swp8	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+749	swp9	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+750	swp10	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+751	swp11	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+752	swp12	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+753	swp13	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+754	swp14	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+755	swp15	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+756	swp16	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+757	swp17	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+758	swp18	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+759	swp19	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+760	swp20	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+761	swp21	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+762	swp22	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+763	swp23	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+764	swp24	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+765	swp25	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+766	swp26	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+767	swp27	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+768	swp28	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+769	swp29	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+770	swp30	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+771	swp31	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+772	swp32	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+773	swp33	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+774	swp34	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+775	swp35	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+776	swp36	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+777	swp37	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+778	swp38	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+779	swp39	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+780	swp40	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+781	swp41	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+782	swp42	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+783	swp43	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+784	swp44	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+785	swp45	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+786	swp46	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+787	swp47	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+788	swp48	1200	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+789	swp49	1600	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+790	swp50	1600	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+791	swp51	1600	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+792	swp52	1600	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+793	swp53	1600	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+794	swp54	1600	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+795	swp55	1600	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+796	swp56	1600	f		81	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+797	eth0	1000	t		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+798	swp1	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+799	swp2	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+800	swp3	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+801	swp4	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+802	swp5	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+803	swp6	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+804	swp7	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+805	swp8	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+806	swp9	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+807	swp10	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+808	swp11	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+809	swp12	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+810	swp13	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+811	swp14	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+812	swp15	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+813	swp16	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+814	swp17	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+815	swp18	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+816	swp19	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+817	swp20	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+818	swp21	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+819	swp22	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+820	swp23	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+821	swp24	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+822	swp25	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+823	swp26	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+824	swp27	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+825	swp28	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+826	swp29	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+827	swp30	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+828	swp31	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+829	swp32	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+830	swp33	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+831	swp34	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+832	swp35	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+833	swp36	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+834	swp37	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+835	swp38	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+836	swp39	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+837	swp40	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+838	swp41	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+839	swp42	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+840	swp43	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+841	swp44	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+842	swp45	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+843	swp46	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+844	swp47	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+845	swp48	1200	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+846	swp49	1600	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+847	swp50	1600	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+848	swp51	1600	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+849	swp52	1600	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+850	swp53	1600	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+851	swp54	1600	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+852	swp55	1600	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+853	swp56	1600	f		82	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+854	eth0	1000	t		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+855	swp1	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+856	swp2	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+857	swp3	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+858	swp4	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+859	swp5	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+860	swp6	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+861	swp7	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+862	swp8	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+863	swp9	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+864	swp10	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+865	swp11	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+866	swp12	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+867	swp13	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+868	swp14	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+869	swp15	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+870	swp16	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+871	swp17	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+872	swp18	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+873	swp19	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+874	swp20	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+875	swp21	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+876	swp22	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+877	swp23	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+878	swp24	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+879	swp25	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+880	swp26	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+881	swp27	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+882	swp28	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+883	swp29	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+884	swp30	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+885	swp31	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+886	swp32	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+887	swp33	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+888	swp34	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+889	swp35	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+890	swp36	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+891	swp37	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+892	swp38	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+893	swp39	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+894	swp40	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+895	swp41	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+896	swp42	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+897	swp43	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+898	swp44	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+899	swp45	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+900	swp46	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+901	swp47	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+902	swp48	1200	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+903	swp49	1600	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+904	swp50	1600	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+905	swp51	1600	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+906	swp52	1600	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+907	swp53	1600	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+908	swp54	1600	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+909	swp55	1600	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+910	swp56	1600	f		83	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+911	eth0	1000	t		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+912	swp1	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+913	swp2	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+914	swp3	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+915	swp4	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+916	swp5	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+917	swp6	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+918	swp7	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+919	swp8	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+920	swp9	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+921	swp10	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+922	swp11	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+923	swp12	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+924	swp13	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+925	swp14	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+926	swp15	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+927	swp16	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+928	swp17	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+929	swp18	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+930	swp19	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+931	swp20	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+932	swp21	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+933	swp22	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+934	swp23	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+935	swp24	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+936	swp25	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+937	swp26	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+938	swp27	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+939	swp28	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+940	swp29	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+941	swp30	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+942	swp31	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+943	swp32	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+944	swp33	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+945	swp34	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+946	swp35	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+947	swp36	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+948	swp37	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+949	swp38	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+950	swp39	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+951	swp40	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+952	swp41	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+953	swp42	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+954	swp43	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+955	swp44	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+956	swp45	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+957	swp46	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+958	swp47	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+959	swp48	1200	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+960	swp49	1600	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+961	swp50	1600	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+962	swp51	1600	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+963	swp52	1600	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+964	swp53	1600	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+965	swp54	1600	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+966	swp55	1600	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+967	swp56	1600	f		87	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+968	eth0	1000	t		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+969	swp1	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+970	swp2	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+971	swp3	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+972	swp4	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+973	swp5	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+974	swp6	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+975	swp7	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+976	swp8	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+977	swp9	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+978	swp10	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+979	swp11	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+980	swp12	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+981	swp13	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+982	swp14	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+983	swp15	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+984	swp16	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+985	swp17	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+986	swp18	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+987	swp19	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+988	swp20	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+989	swp21	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+990	swp22	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+991	swp23	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+992	swp24	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+993	swp25	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+994	swp26	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+995	swp27	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+996	swp28	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+997	swp29	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+998	swp30	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+999	swp31	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1000	swp32	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1001	swp33	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1002	swp34	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1003	swp35	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1004	swp36	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1005	swp37	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1006	swp38	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1007	swp39	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1008	swp40	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1009	swp41	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1010	swp42	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1011	swp43	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1012	swp44	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1013	swp45	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1014	swp46	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1015	swp47	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1016	swp48	1200	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1017	swp49	1600	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1018	swp50	1600	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1019	swp51	1600	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1020	swp52	1600	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1021	swp53	1600	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1022	swp54	1600	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1023	swp55	1600	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1024	swp56	1600	f		88	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1025	eth0	1000	t		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1026	swp1	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1027	swp2	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1028	swp3	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1029	swp4	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1030	swp5	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1031	swp6	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1032	swp7	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1033	swp8	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1034	swp9	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1035	swp10	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1036	swp11	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1037	swp12	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1038	swp13	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1039	swp14	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1040	swp15	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1041	swp16	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1042	swp17	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1043	swp18	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1044	swp19	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1045	swp20	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1046	swp21	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1047	swp22	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1048	swp23	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1049	swp24	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1050	swp25	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1051	swp26	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1052	swp27	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1053	swp28	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1054	swp29	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1055	swp30	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1056	swp31	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1057	swp32	1600	f		109	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1058	eth0	1000	t		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1059	swp1	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1060	swp2	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1061	swp3	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1062	swp4	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1063	swp5	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1064	swp6	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1065	swp7	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1066	swp8	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1067	swp9	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1068	swp10	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1069	swp11	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1070	swp12	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1071	swp13	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1072	swp14	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1073	swp15	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1074	swp16	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1075	swp17	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1076	swp18	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1077	swp19	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1078	swp20	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1079	swp21	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1080	swp22	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1081	swp23	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1082	swp24	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1083	swp25	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1084	swp26	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1085	swp27	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1086	swp28	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1087	swp29	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1088	swp30	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1089	swp31	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1090	swp32	1600	f		110	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1091	eth0	1000	t		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1092	swp1	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1093	swp2	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1094	swp3	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1095	swp4	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1096	swp5	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1097	swp6	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1098	swp7	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1099	swp8	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1100	swp9	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1101	swp10	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1102	swp11	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1103	swp12	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1104	swp13	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1105	swp14	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1106	swp15	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1107	swp16	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1108	swp17	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1109	swp18	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1110	swp19	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1111	swp20	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1112	swp21	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1113	swp22	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1114	swp23	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1115	swp24	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1116	swp25	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1117	swp26	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1118	swp27	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1119	swp28	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1120	swp29	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1121	swp30	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1122	swp31	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1123	swp32	1600	f		111	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1124	eth0	1000	t		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1125	swp1	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1126	swp2	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1127	swp3	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1128	swp4	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1129	swp5	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1130	swp6	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1131	swp7	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1132	swp8	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1133	swp9	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1134	swp10	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1135	swp11	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1136	swp12	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1137	swp13	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1138	swp14	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1139	swp15	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1140	swp16	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1141	swp17	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1142	swp18	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1143	swp19	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1144	swp20	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1145	swp21	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1146	swp22	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1147	swp23	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1148	swp24	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1149	swp25	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1150	swp26	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1151	swp27	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1152	swp28	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1153	swp29	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1154	swp30	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1155	swp31	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1156	swp32	1600	f		112	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1157	eth0	1000	t		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1158	swp1	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1159	swp2	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1160	swp3	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1161	swp4	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1162	swp5	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1163	swp6	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1164	swp7	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1165	swp8	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1166	swp9	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1167	swp10	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1168	swp11	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1169	swp12	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1170	swp13	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1171	swp14	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1172	swp15	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1173	swp16	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1174	swp17	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1175	swp18	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1176	swp19	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1177	swp20	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1178	swp21	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1179	swp22	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1180	swp23	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1181	swp24	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1182	swp25	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1183	swp26	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1184	swp27	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1185	swp28	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1186	swp29	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1187	swp30	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1188	swp31	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1189	swp32	1600	f		113	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1190	eth0	1000	t		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1191	swp1	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1192	swp2	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1193	swp3	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1194	swp4	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1195	swp5	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1196	swp6	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1197	swp7	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1198	swp8	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1199	swp9	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1200	swp10	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1201	swp11	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1202	swp12	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1203	swp13	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1204	swp14	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1205	swp15	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1206	swp16	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1207	swp17	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1208	swp18	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1209	swp19	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1210	swp20	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1211	swp21	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1212	swp22	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1213	swp23	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1214	swp24	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1215	swp25	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1216	swp26	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1217	swp27	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1218	swp28	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1219	swp29	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1220	swp30	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1221	swp31	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1222	swp32	1600	f		114	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1223	eth0	1000	t		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1224	swp1	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1225	swp2	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1226	swp3	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1227	swp4	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1228	swp5	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1229	swp6	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1230	swp7	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1231	swp8	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1232	swp9	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1233	swp10	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1234	swp11	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1235	swp12	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1236	swp13	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1237	swp14	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1238	swp15	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1239	swp16	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1240	swp17	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1241	swp18	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1242	swp19	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1243	swp20	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1244	swp21	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1245	swp22	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1246	swp23	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1247	swp24	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1248	swp25	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1249	swp26	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1250	swp27	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1251	swp28	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1252	swp29	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1253	swp30	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1254	swp31	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1255	swp32	1600	f		115	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1256	eth0	1000	t		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1257	swp1	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1258	swp2	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1259	swp3	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1260	swp4	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1261	swp5	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1262	swp6	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1263	swp7	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1264	swp8	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1265	swp9	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1266	swp10	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1267	swp11	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1268	swp12	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1269	swp13	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1270	swp14	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1271	swp15	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1272	swp16	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1273	swp17	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1274	swp18	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1275	swp19	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1276	swp20	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1277	swp21	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1278	swp22	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1279	swp23	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1280	swp24	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1281	swp25	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1282	swp26	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1283	swp27	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1284	swp28	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1285	swp29	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1286	swp30	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1287	swp31	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1288	swp32	1600	f		116	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1289	eth0	1000	t		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1290	swp1	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1291	swp2	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1292	swp3	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1293	swp4	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1294	swp5	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1295	swp6	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1296	swp7	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1297	swp8	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1298	swp9	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1299	swp10	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1300	swp11	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1301	swp12	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1302	swp13	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1303	swp14	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1304	swp15	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1305	swp16	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1306	swp17	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1307	swp18	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1308	swp19	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1309	swp20	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1310	swp21	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1311	swp22	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1312	swp23	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1313	swp24	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1314	swp25	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1315	swp26	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1316	swp27	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1317	swp28	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1318	swp29	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1319	swp30	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1320	swp31	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1321	swp32	1600	f		117	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1322	eth0	1000	t		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1323	swp1	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1324	swp2	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1325	swp3	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1326	swp4	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1327	swp5	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1328	swp6	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1329	swp7	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1330	swp8	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1331	swp9	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1332	swp10	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1333	swp11	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1334	swp12	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1335	swp13	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1336	swp14	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1337	swp15	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1338	swp16	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1339	swp17	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1340	swp18	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1341	swp19	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1342	swp20	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1343	swp21	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1344	swp22	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1345	swp23	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1346	swp24	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1347	swp25	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1348	swp26	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1349	swp27	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1350	swp28	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1351	swp29	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1352	swp30	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1353	swp31	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1354	swp32	1600	f		118	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1355	eth0	1000	t		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1356	swp1	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1357	swp2	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1358	swp3	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1359	swp4	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1360	swp5	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1361	swp6	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1362	swp7	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1363	swp8	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1364	swp9	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1365	swp10	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1366	swp11	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1367	swp12	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1368	swp13	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1369	swp14	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1370	swp15	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1371	swp16	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1372	swp17	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1373	swp18	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1374	swp19	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1375	swp20	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1376	swp21	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1377	swp22	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1378	swp23	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1379	swp24	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1380	swp25	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1381	swp26	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1382	swp27	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1383	swp28	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1384	swp29	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1385	swp30	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1386	swp31	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1387	swp32	1600	f		119	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1388	eth0	1000	t		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1389	swp1	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1390	swp2	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1391	swp3	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1392	swp4	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1393	swp5	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1394	swp6	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1395	swp7	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1396	swp8	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1397	swp9	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1398	swp10	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1399	swp11	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1400	swp12	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1401	swp13	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1402	swp14	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1403	swp15	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1404	swp16	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1405	swp17	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1406	swp18	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1407	swp19	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1408	swp20	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1409	swp21	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1410	swp22	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1411	swp23	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1412	swp24	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1413	swp25	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1414	swp26	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1415	swp27	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1416	swp28	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1417	swp29	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1418	swp30	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1419	swp31	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1420	swp32	1600	f		120	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1421	eth0	1000	t		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1422	swp1	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1423	swp2	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1424	swp3	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1425	swp4	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1426	swp5	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1427	swp6	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1428	swp7	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1429	swp8	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1430	swp9	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1431	swp10	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1432	swp11	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1433	swp12	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1434	swp13	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1435	swp14	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1436	swp15	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1437	swp16	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1438	swp17	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1439	swp18	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1440	swp19	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1441	swp20	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1442	swp21	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1443	swp22	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1444	swp23	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1445	swp24	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1446	swp25	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1447	swp26	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1448	swp27	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1449	swp28	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1450	swp29	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1451	swp30	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1452	swp31	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1453	swp32	1600	f		121	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1454	eth0	1000	t		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1455	swp1	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1456	swp2	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1457	swp3	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1458	swp4	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1459	swp5	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1460	swp6	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1461	swp7	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1462	swp8	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1463	swp9	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1464	swp10	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1465	swp11	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1466	swp12	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1467	swp13	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1468	swp14	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1469	swp15	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1470	swp16	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1471	swp17	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1472	swp18	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1473	swp19	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1474	swp20	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1475	swp21	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1476	swp22	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1477	swp23	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1478	swp24	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1479	swp25	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1480	swp26	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1481	swp27	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1482	swp28	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1483	swp29	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1484	swp30	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1485	swp31	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1486	swp32	1600	f		122	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1487	eth0	1000	t		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1488	swp1	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1489	swp2	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1490	swp3	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1491	swp4	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1492	swp5	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1493	swp6	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1494	swp7	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1495	swp8	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1496	swp9	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1497	swp10	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1498	swp11	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1499	swp12	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1500	swp13	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1501	swp14	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1502	swp15	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1503	swp16	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1504	swp17	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1505	swp18	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1506	swp19	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1507	swp20	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1508	swp21	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1509	swp22	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1510	swp23	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1511	swp24	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1512	swp25	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1513	swp26	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1514	swp27	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1515	swp28	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1516	swp29	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1517	swp30	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1518	swp31	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1519	swp32	1600	f		123	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1520	eth0	1000	t		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1521	swp1	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1522	swp2	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1523	swp3	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1524	swp4	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1525	swp5	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1526	swp6	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1527	swp7	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1528	swp8	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1529	swp9	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1530	swp10	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1531	swp11	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1532	swp12	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1533	swp13	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1534	swp14	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1535	swp15	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1536	swp16	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1537	swp17	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1538	swp18	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1539	swp19	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1540	swp20	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1541	swp21	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1542	swp22	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1543	swp23	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1544	swp24	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1545	swp25	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1546	swp26	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1547	swp27	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1548	swp28	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1549	swp29	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1550	swp30	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1551	swp31	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
+1552	swp32	1600	f		124	\N	\N	t	\N	\N	\N	\N	\N	\N	\N	\N
 \.
 
 
@@ -5111,30 +6412,6 @@ COPY public.dcim_interface_tagged_vlans (id, interface_id, vlan_id) FROM stdin;
 4	1	1
 5	12	1
 6	12	2
-7	15	1
-8	15	2
-9	16	1
-10	16	2
-19	68	1
-20	68	2
-21	69	1
-22	69	2
-23	106	7
-24	106	8
-25	107	9
-26	107	10
-27	120	7
-28	120	8
-29	121	11
-30	121	12
-39	128	9
-40	128	10
-43	118	11
-44	118	12
-45	119	13
-46	119	14
-47	129	13
-48	129	14
 49	1	3
 50	1	4
 51	1	5
@@ -5143,34 +6420,6 @@ COPY public.dcim_interface_tagged_vlans (id, interface_id, vlan_id) FROM stdin;
 54	12	4
 55	12	5
 56	12	6
-57	15	3
-58	15	4
-59	15	5
-60	15	6
-61	16	3
-62	16	4
-63	16	5
-64	16	6
-81	68	3
-82	68	4
-83	68	5
-84	68	6
-85	69	3
-86	69	4
-87	69	5
-88	69	6
-89	81	1
-90	81	2
-91	81	3
-92	81	4
-93	81	5
-94	81	6
-95	82	1
-96	82	2
-97	82	3
-98	82	4
-99	82	5
-100	82	6
 \.
 
 
@@ -5179,6 +6428,96 @@ COPY public.dcim_interface_tagged_vlans (id, interface_id, vlan_id) FROM stdin;
 --
 
 COPY public.dcim_interfacetemplate (id, name, type, mgmt_only, device_type_id) FROM stdin;
+1	eth0	1000	t	1
+2	swp1	1200	f	1
+3	swp2	1200	f	1
+4	swp3	1200	f	1
+5	swp4	1200	f	1
+6	swp5	1200	f	1
+7	swp6	1200	f	1
+8	swp7	1200	f	1
+9	swp8	1200	f	1
+10	swp9	1200	f	1
+11	swp10	1200	f	1
+12	swp11	1200	f	1
+13	swp12	1200	f	1
+14	swp13	1200	f	1
+15	swp14	1200	f	1
+16	swp15	1200	f	1
+17	swp16	1200	f	1
+18	swp17	1200	f	1
+19	swp18	1200	f	1
+20	swp19	1200	f	1
+21	swp20	1200	f	1
+22	swp21	1200	f	1
+23	swp22	1200	f	1
+24	swp23	1200	f	1
+25	swp24	1200	f	1
+26	swp25	1200	f	1
+27	swp26	1200	f	1
+28	swp27	1200	f	1
+29	swp28	1200	f	1
+30	swp29	1200	f	1
+31	swp30	1200	f	1
+32	swp31	1200	f	1
+33	swp32	1200	f	1
+34	swp33	1200	f	1
+35	swp34	1200	f	1
+36	swp35	1200	f	1
+37	swp36	1200	f	1
+38	swp37	1200	f	1
+39	swp38	1200	f	1
+40	swp39	1200	f	1
+41	swp40	1200	f	1
+42	swp41	1200	f	1
+43	swp42	1200	f	1
+44	swp43	1200	f	1
+45	swp44	1200	f	1
+46	swp45	1200	f	1
+47	swp46	1200	f	1
+48	swp47	1200	f	1
+49	swp48	1200	f	1
+50	swp49	1600	f	1
+51	swp50	1600	f	1
+52	swp51	1600	f	1
+53	swp52	1600	f	1
+54	swp53	1600	f	1
+55	swp54	1600	f	1
+56	swp55	1600	f	1
+57	swp56	1600	f	1
+58	eth0	1000	t	4
+59	swp1	1600	f	4
+60	swp2	1600	f	4
+61	swp3	1600	f	4
+62	swp4	1600	f	4
+63	swp5	1600	f	4
+64	swp6	1600	f	4
+65	swp7	1600	f	4
+66	swp8	1600	f	4
+67	swp9	1600	f	4
+68	swp10	1600	f	4
+69	swp11	1600	f	4
+70	swp12	1600	f	4
+71	swp13	1600	f	4
+72	swp14	1600	f	4
+73	swp15	1600	f	4
+74	swp16	1600	f	4
+75	swp17	1600	f	4
+76	swp18	1600	f	4
+77	swp19	1600	f	4
+78	swp20	1600	f	4
+79	swp21	1600	f	4
+80	swp22	1600	f	4
+81	swp23	1600	f	4
+82	swp24	1600	f	4
+83	swp25	1600	f	4
+84	swp26	1600	f	4
+85	swp27	1600	f	4
+86	swp28	1600	f	4
+87	swp29	1600	f	4
+88	swp30	1600	f	4
+89	swp31	1600	f	4
+90	swp32	1600	f	4
 \.
 
 
@@ -5196,6 +6535,7 @@ COPY public.dcim_inventoryitem (id, name, part_id, serial, discovered, device_id
 
 COPY public.dcim_manufacturer (id, name, slug, created, last_updated) FROM stdin;
 1	Cumulus Networks	cumulus-networks	2019-12-29	2019-12-29 11:09:41.8681+00
+2	Canonical	canonical	2019-12-29	2019-12-29 12:08:19.668268+00
 \.
 
 
@@ -5261,13 +6601,17 @@ COPY public.dcim_powerporttemplate (id, name, device_type_id, allocated_draw, ma
 --
 
 COPY public.dcim_rack (id, created, last_updated, name, facility_id, u_height, comments, group_id, site_id, tenant_id, type, width, role_id, desc_units, serial, status, asset_tag, outer_depth, outer_unit, outer_width) FROM stdin;
-1	2018-06-03	2018-06-09 00:29:07.362749+00	Rack1-pod1	\N	42		1	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
-2	2018-06-08	2018-06-09 00:29:24.68451+00	Spine-pod1	\N	42		1	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
-3	2018-06-09	2018-06-09 07:40:04.44653+00	Rack2-pod1	\N	42		1	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
-4	2018-06-09	2018-06-09 07:40:04.458497+00	Rack3-pod1	\N	42		1	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
-5	2018-06-09	2018-06-09 07:41:25.050604+00	Superspine	\N	42		3	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
-6	2018-06-09	2018-06-09 07:41:44.847313+00	Edge	\N	42		2	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
-7	2018-06-09	2018-06-09 07:44:02.190232+00	exit02	\N	42		1	1	\N	\N	19	\N	f		3	\N	\N	\N	\N
+6	2018-06-09	2019-12-29 11:56:59.965097+00	Edge	\N	42		7	2	\N	\N	19	\N	f		3	\N	\N	\N	\N
+1	2018-06-03	2019-12-29 12:02:33.315106+00	Rack1-pod1	\N	42		4	2	\N	\N	19	\N	f		3	\N	\N	\N	\N
+3	2018-06-09	2019-12-29 12:02:33.3314+00	Rack2-pod1	\N	42		4	2	\N	\N	19	\N	f		3	\N	\N	\N	\N
+2	2018-06-08	2019-12-29 12:02:33.352099+00	Spine-pod1	\N	42		4	2	\N	\N	19	\N	f		3	\N	\N	\N	\N
+9	2019-12-29	2019-12-29 12:03:27.404528+00	Service-pod1	\N	42		4	2	\N	\N	19	\N	f		3	\N	\N	\N	\N
+10	2019-12-29	2019-12-29 12:05:36.429216+00	Rack1-pod2	\N	42		4	2	\N	\N	19	\N	f		3	\N	\N	\N	\N
+11	2019-12-29	2019-12-29 12:05:36.436536+00	Rack2-pod2	\N	42		4	2	\N	\N	19	\N	f		3	\N	\N	\N	\N
+12	2019-12-29	2019-12-29 12:05:36.443002+00	Service-pod2	\N	42		4	2	\N	\N	19	\N	f		3	\N	\N	\N	\N
+13	2019-12-29	2019-12-29 12:05:36.449548+00	Spine-pod2	\N	42		4	2	\N	\N	19	\N	f		3	\N	\N	\N	\N
+14	2019-12-29	2019-12-29 12:06:34.938474+00	3tier	\N	42		6	2	\N	\N	19	\N	f		3	\N	\N	\N	\N
+15	2019-12-29	2019-12-29 12:10:08.472404+00	OOB	\N	42		\N	2	\N	\N	19	\N	f		3	\N	\N	\N	\N
 \.
 
 
@@ -5276,9 +6620,10 @@ COPY public.dcim_rack (id, created, last_updated, name, facility_id, u_height, c
 --
 
 COPY public.dcim_rackgroup (id, name, slug, site_id, created, last_updated) FROM stdin;
-1	Pod1	pod1	1	2019-12-29	2019-12-29 11:09:42.04854+00
-2	Edge	edge	1	2019-12-29	2019-12-29 11:09:42.04854+00
-3	Superspine	superspine	1	2019-12-29	2019-12-29 11:09:42.04854+00
+4	pod1	pod1	2	2019-12-29	2019-12-29 11:54:39.763631+00
+5	pod2	pod2	2	2019-12-29	2019-12-29 11:55:41.40499+00
+6	3tier	3tier	2	2019-12-29	2019-12-29 11:55:53.104008+00
+7	edge	edge	2	2019-12-29	2019-12-29 11:56:05.640659+00
 \.
 
 
@@ -5327,7 +6672,7 @@ COPY public.dcim_region (id, name, slug, lft, rght, tree_id, level, parent_id, c
 --
 
 COPY public.dcim_site (id, created, last_updated, name, slug, facility, asn, physical_address, shipping_address, comments, tenant_id, contact_email, contact_name, contact_phone, region_id, description, status, time_zone, latitude, longitude) FROM stdin;
-1	2018-06-03	2018-06-03 16:38:35.013009+00	Virtual Topology	virtual-topology		\N				\N				\N		1		\N	\N
+2	2019-12-29	2019-12-29 11:52:35.899688+00	Cumulus Networks CLdemo2	cldemo2		\N				\N				\N		1		\N	\N
 \.
 
 
@@ -5659,6 +7004,7 @@ w0iodv1mnxosfpa14r1ci8g3q6r0smwc	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjd
 4cq56ympmhiax6s49ruxg8k4uzlpdske	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2018-11-21 16:46:12.853948+00
 9h2c8w1m0snowc5woe4bj5jthfnp6v3x	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2019-06-22 15:18:24.791615+00
 cfap2t1gcwkc3os14v1p81uwib2r14jf	NDgxYTU0NGE3Y2ZhNDYzMzIzM2ZkZWIyNTUzMDlkMDBiMWM0Yjg2MDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoidXRpbGl0aWVzLmF1dGhfYmFja2VuZHMuVmlld0V4ZW1wdE1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IjE2MDY2MmY4N2IyMDM3NzdkNjA3NDE1OGZiNTZkYjI2NTE0OGNlMjkifQ==	2020-01-12 11:10:15.42396+00
+vvlyfselfigv6yrtdrp4zx7icmxfeoa5	NDgxYTU0NGE3Y2ZhNDYzMzIzM2ZkZWIyNTUzMDlkMDBiMWM0Yjg2MDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoidXRpbGl0aWVzLmF1dGhfYmFja2VuZHMuVmlld0V4ZW1wdE1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IjE2MDY2MmY4N2IyMDM3NzdkNjA3NDE1OGZiNTZkYjI2NTE0OGNlMjkifQ==	2020-01-12 11:50:34.723594+00
 \.
 
 
@@ -5756,29 +7102,6 @@ COPY public.extras_customfieldvalue (id, obj_id, serialized_value, field_id, obj
 1	1	65111	2	15
 4	7	192.168.200.19	4	38
 5	7	169.254.1.2	3	38
-7	8	192.168.200.21	4	38
-8	8	169.254.1.1	3	38
-6	4	65112	2	15
-9	5	65101	2	15
-10	6	65102	2	15
-12	22	192.168.200.17	4	38
-13	22	169.254.1.2	3	38
-15	27	192.168.200.20	4	38
-16	27	169.254.1.1	3	38
-11	7	65121	2	15
-19	11	65901	2	15
-20	12	65902	2	15
-23	15	65701	2	15
-24	16	65702	2	15
-25	36	192.168.200.29	4	38
-26	36	169.254.1.2	3	38
-27	43	192.168.200.32	4	38
-28	43	169.254.1.1	3	38
-14	8	65122	2	15
-17	9	65131	2	15
-18	10	65132	2	15
-21	13	65801	2	15
-22	14	65802	2	15
 \.
 
 
@@ -5819,6 +7142,602 @@ COPY public.extras_imageattachment (id, object_id, image, image_height, image_wi
 --
 
 COPY public.extras_objectchange (id, "time", user_name, request_id, action, changed_object_id, related_object_id, object_repr, object_data, changed_object_type_id, related_object_type_id, user_id) FROM stdin;
+1	2019-12-29 11:51:07.667203+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	4	\N	leaf02	{"face": null, "name": "leaf02", "rack": 1, "site": 1, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2018-06-08", "comments": "", "platform": 1, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2018-11-07T16:57:09.324Z", "custom_fields": {"ASN": "65112"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+2	2019-12-29 11:51:07.676287+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	5	\N	spine01	{"face": null, "name": "spine01", "rack": 2, "site": 1, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2018-06-08", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2018-06-08T21:58:28.048Z", "custom_fields": {"ASN": "65101"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+3	2019-12-29 11:51:07.680839+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	6	\N	spine02	{"face": null, "name": "spine02", "rack": 2, "site": 1, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2018-06-08", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2018-06-08T22:35:21.708Z", "custom_fields": {"ASN": "65102"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+4	2019-12-29 11:51:07.684908+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	7	\N	leaf03	{"face": null, "name": "leaf03", "rack": 3, "site": 1, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2018-06-08", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2018-06-09T07:42:23.365Z", "custom_fields": {"ASN": "65121"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+5	2019-12-29 11:51:07.688871+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	8	\N	leaf04	{"face": null, "name": "leaf04", "rack": 3, "site": 1, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2018-06-09", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2018-11-08T18:52:42.840Z", "custom_fields": {"ASN": "65122"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+6	2019-12-29 11:51:07.69265+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	9	\N	service01	{"face": null, "name": "service01", "rack": 4, "site": 1, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2018-06-09", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-06-08T15:19:27.946Z", "custom_fields": {"ASN": "65131"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+7	2019-12-29 11:51:07.6965+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	10	\N	service02	{"face": null, "name": "service02", "rack": 4, "site": 1, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2018-06-09", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-06-08T15:19:45.693Z", "custom_fields": {"ASN": "65132"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+8	2019-12-29 11:51:07.70021+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	11	\N	super01	{"face": null, "name": "super01", "rack": 5, "site": 1, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2018-06-09", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2018-06-09T08:15:21.612Z", "custom_fields": {"ASN": "65901"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+9	2019-12-29 11:51:07.703817+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	12	\N	super02	{"face": null, "name": "super02", "rack": 5, "site": 1, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2018-06-09", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2018-06-09T08:15:35.447Z", "custom_fields": {"ASN": "65902"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+10	2019-12-29 11:51:07.70734+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	13	\N	exit01	{"face": null, "name": "exit01", "rack": 6, "site": 1, "tags": [], "serial": "", "status": 0, "tenant": null, "cluster": null, "created": "2018-06-09", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-06-08T15:20:08.981Z", "custom_fields": {"ASN": "65801"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+11	2019-12-29 11:51:07.710584+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	14	\N	exit02	{"face": null, "name": "exit02", "rack": 6, "site": 1, "tags": [], "serial": "", "status": 0, "tenant": null, "cluster": null, "created": "2018-06-09", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-06-08T15:20:30.346Z", "custom_fields": {"ASN": "65802"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+12	2019-12-29 11:51:07.713657+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	15	\N	rtr01	{"face": null, "name": "rtr01", "rack": 6, "site": 1, "tags": [], "serial": "", "status": 0, "tenant": null, "cluster": null, "created": "2018-06-09", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2018-06-09T10:56:18.130Z", "custom_fields": {"ASN": "65701"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+13	2019-12-29 11:51:07.716574+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	16	\N	rtr02	{"face": null, "name": "rtr02", "rack": 6, "site": 1, "tags": [], "serial": "", "status": 0, "tenant": null, "cluster": null, "created": "2018-06-09", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2018-06-09T10:56:18.153Z", "custom_fields": {"ASN": "65702"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+14	2019-12-29 11:51:07.721549+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	4	\N	fc00:10::1/64	{"vrf": 1, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:10::1/64", "created": "2018-06-03", "dns_name": "", "interface": 18, "nat_inside": null, "description": "", "last_updated": "2018-06-08T23:22:15.278Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+15	2019-12-29 11:51:07.726621+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	6	\N	fc00:10::3/64	{"vrf": 1, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:10::3/64", "created": "2018-06-03", "dns_name": "", "interface": 18, "nat_inside": null, "description": "", "last_updated": "2018-06-08T23:22:46.362Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+16	2019-12-29 11:51:07.731281+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	8	\N	169.254.1.2/30	{"vrf": null, "role": null, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "169.254.1.2/30", "created": "2018-06-03", "dns_name": "", "interface": 21, "nat_inside": null, "description": "", "last_updated": "2018-06-08T20:20:21.168Z", "custom_fields": {"clag_peer_ip": "169.254.1.1", "clag_backup_ip": "192.168.200.21"}}	38	\N	1
+17	2019-12-29 11:51:07.735967+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	11	\N	10.10.10.2/32	{"vrf": null, "role": 10, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.10.10.2/32", "created": "2018-06-08", "dns_name": "", "interface": 19, "nat_inside": null, "description": "", "last_updated": "2018-06-08T20:17:59.798Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+18	2019-12-29 11:51:07.744382+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	12	\N	192.168.10.1/24	{"vrf": 1, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.10.1/24", "created": "2018-06-08", "dns_name": "", "interface": 18, "nat_inside": null, "description": "", "last_updated": "2018-06-08T23:21:48.785Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+19	2019-12-29 11:51:07.74857+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	14	\N	192.168.10.3/24	{"vrf": 1, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.10.3/24", "created": "2018-06-08", "dns_name": "", "interface": 18, "nat_inside": null, "description": "", "last_updated": "2018-06-08T23:22:04.357Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+20	2019-12-29 11:51:07.753707+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	15	\N	10.100.100.12/32	{"vrf": null, "role": 30, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.100.100.12/32", "created": "2018-06-08", "dns_name": "", "interface": 17, "nat_inside": null, "description": "", "last_updated": "2018-06-08T21:30:04.433Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+21	2019-12-29 11:51:07.758916+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	18	\N	10.10.20.1/32	{"vrf": null, "role": 10, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.10.20.1/32", "created": "2018-06-08", "dns_name": "", "interface": 28, "nat_inside": null, "description": "", "last_updated": "2018-06-08T22:36:50.542Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+22	2019-12-29 11:51:07.763976+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	19	\N	10.10.20.2/32	{"vrf": null, "role": 10, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.10.20.2/32", "created": "2018-06-08", "dns_name": "", "interface": 35, "nat_inside": null, "description": "", "last_updated": "2018-06-08T22:38:33.425Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+23	2019-12-29 11:51:07.768897+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	21	\N	10.10.10.3/32	{"vrf": null, "role": 10, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.10.10.3/32", "created": "2018-06-08", "dns_name": "", "interface": 46, "nat_inside": null, "description": "", "last_updated": "2018-06-08T23:59:01.661Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+24	2019-12-29 11:51:07.773573+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	22	\N	169.254.1.1/30	{"vrf": null, "role": null, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "169.254.1.1/30", "created": "2018-06-09", "dns_name": "", "interface": 48, "nat_inside": null, "description": "", "last_updated": "2018-06-09T00:00:28.026Z", "custom_fields": {"clag_peer_ip": "169.254.1.2", "clag_backup_ip": "192.168.200.17"}}	38	\N	1
+25	2019-12-29 11:51:07.778665+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	27	\N	169.254.1.2/30	{"vrf": null, "role": null, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "169.254.1.2/30", "created": "2018-06-09", "dns_name": "", "interface": 61, "nat_inside": null, "description": "", "last_updated": "2018-06-09T00:15:54.709Z", "custom_fields": {"clag_peer_ip": "169.254.1.1", "clag_backup_ip": "192.168.200.20"}}	38	\N	1
+26	2019-12-29 11:51:07.783332+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	28	\N	10.10.10.4/32	{"vrf": null, "role": 10, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.10.10.4/32", "created": "2018-06-09", "dns_name": "", "interface": 59, "nat_inside": null, "description": "", "last_updated": "2018-06-09T10:06:15.154Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+27	2019-12-29 11:51:07.788405+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	34	\N	10.100.100.56/32	{"vrf": null, "role": 30, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.100.100.56/32", "created": "2018-06-09", "dns_name": "", "interface": 70, "nat_inside": null, "description": "", "last_updated": "2018-06-09T08:37:02.310Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+28	2019-12-29 11:51:07.793057+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	35	\N	10.10.10.5/32	{"vrf": null, "role": 10, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.10.10.5/32", "created": "2018-06-09", "dns_name": "", "interface": 72, "nat_inside": null, "description": "", "last_updated": "2018-06-09T08:37:33.395Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+29	2019-12-29 11:51:07.798107+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	36	\N	169.254.1.1/30	{"vrf": null, "role": null, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "169.254.1.1/30", "created": "2018-06-09", "dns_name": "", "interface": 74, "nat_inside": null, "description": "", "last_updated": "2018-06-09T08:39:11.687Z", "custom_fields": {"clag_peer_ip": "169.254.1.2", "clag_backup_ip": "192.168.200.29"}}	38	\N	1
+254	2019-12-29 12:01:18.519033+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	2	\N	1001 (Vlan1001)	{"vid": 1001, "name": "Vlan1001", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-03", "description": "", "last_updated": "2019-12-29T12:01:18.441Z", "custom_fields": {}}	42	\N	1
+30	2019-12-29 11:51:07.802644+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	37	\N	192.168.10.1/24	{"vrf": 1, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.10.1/24", "created": "2018-06-09", "dns_name": "", "interface": 71, "nat_inside": null, "description": "", "last_updated": "2018-06-09T10:05:52.622Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+31	2019-12-29 11:51:07.806975+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	38	\N	192.168.10.6/24	{"vrf": 1, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.10.6/24", "created": "2018-06-09", "dns_name": "", "interface": 71, "nat_inside": null, "description": "", "last_updated": "2018-06-09T10:04:52.146Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+32	2019-12-29 11:51:07.810906+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	39	\N	fc00:10::6/64	{"vrf": 1, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:10::6/64", "created": "2018-06-09", "dns_name": "", "interface": 71, "nat_inside": null, "description": "", "last_updated": "2018-06-09T10:13:35.532Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+33	2019-12-29 11:51:07.814741+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	40	\N	fc00:10::1/64	{"vrf": 1, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:10::1/64", "created": "2018-06-09", "dns_name": "", "interface": 71, "nat_inside": null, "description": "", "last_updated": "2018-06-09T10:14:08.887Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+34	2019-12-29 11:51:07.819783+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	41	\N	10.100.100.56/32	{"vrf": null, "role": 30, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.100.100.56/32", "created": "2018-06-09", "dns_name": "", "interface": 83, "nat_inside": null, "description": "", "last_updated": "2018-06-09T08:48:52.770Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+35	2019-12-29 11:51:07.824766+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	42	\N	10.10.10.6/32	{"vrf": null, "role": 10, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.10.10.6/32", "created": "2018-06-09", "dns_name": "", "interface": 85, "nat_inside": null, "description": "", "last_updated": "2018-06-09T08:49:57.197Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+36	2019-12-29 11:51:07.831289+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	43	\N	169.254.1.2/30	{"vrf": null, "role": null, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "169.254.1.2/30", "created": "2018-06-09", "dns_name": "", "interface": 87, "nat_inside": null, "description": "", "last_updated": "2018-06-09T08:51:12.140Z", "custom_fields": {"clag_peer_ip": "169.254.1.1", "clag_backup_ip": "192.168.200.32"}}	38	\N	1
+37	2019-12-29 11:51:07.837926+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	44	\N	192.168.10.1/24	{"vrf": 1, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.10.1/24", "created": "2018-06-09", "dns_name": "", "interface": 84, "nat_inside": null, "description": "", "last_updated": "2018-06-09T10:05:52.630Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+38	2019-12-29 11:51:07.84305+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	45	\N	192.168.10.7/24	{"vrf": 1, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.10.7/24", "created": "2018-06-09", "dns_name": "", "interface": 84, "nat_inside": null, "description": "", "last_updated": "2018-06-09T10:05:30.547Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+39	2019-12-29 11:51:07.84699+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	46	\N	fc00:10::1/64	{"vrf": 1, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:10::1/64", "created": "2018-06-09", "dns_name": "", "interface": 84, "nat_inside": null, "description": "", "last_updated": "2018-06-09T10:14:08.893Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+40	2019-12-29 11:51:07.850956+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	47	\N	fc00:10::7/64	{"vrf": 1, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:10::7/64", "created": "2018-06-09", "dns_name": "", "interface": 84, "nat_inside": null, "description": "", "last_updated": "2018-06-09T10:13:35.540Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+41	2019-12-29 11:51:07.855857+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	48	\N	10.10.30.1/32	{"vrf": null, "role": 10, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.10.30.1/32", "created": "2018-06-09", "dns_name": "", "interface": 94, "nat_inside": null, "description": "", "last_updated": "2018-06-09T08:54:31.276Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+42	2019-12-29 11:51:07.860989+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	49	\N	10.10.30.2/32	{"vrf": null, "role": 10, "tags": [], "family": 4, "status": 1, "tenant": null, "address": "10.10.30.2/32", "created": "2018-06-09", "dns_name": "", "interface": 99, "nat_inside": null, "description": "", "last_updated": "2018-06-09T08:58:45.482Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+43	2019-12-29 11:51:07.866344+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	51	\N	192.168.11.3/24	{"vrf": 1, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.11.3/24", "created": "2018-06-09", "dns_name": "", "interface": 141, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:00:12.396Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+44	2019-12-29 11:51:07.871489+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	54	\N	192.168.11.6/24	{"vrf": 1, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.11.6/24", "created": "2018-06-09", "dns_name": "", "interface": 156, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:35:00.519Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+45	2019-12-29 11:51:07.876766+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	55	\N	192.168.11.7/24	{"vrf": 1, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.11.7/24", "created": "2018-06-09", "dns_name": "", "interface": 161, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:40:56.586Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+255	2019-12-29 12:01:18.529757+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	3	\N	1002 (Vlan1002)	{"vid": 1002, "name": "Vlan1002", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.444Z", "custom_fields": {}}	42	\N	1
+46	2019-12-29 11:51:07.881384+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	57	\N	192.168.12.3/24	{"vrf": 2, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.12.3/24", "created": "2018-06-09", "dns_name": "", "interface": 142, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:00:24.869Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+47	2019-12-29 11:51:07.886287+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	60	\N	192.168.12.6/24	{"vrf": 2, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.12.6/24", "created": "2018-06-09", "dns_name": "", "interface": 157, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:35:13.015Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+48	2019-12-29 11:51:07.890967+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	61	\N	192.168.12.7/24	{"vrf": 2, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.12.7/24", "created": "2018-06-09", "dns_name": "", "interface": 162, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:41:10.993Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+49	2019-12-29 11:51:07.89592+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	63	\N	192.168.13.3/24	{"vrf": 2, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.13.3/24", "created": "2018-06-09", "dns_name": "", "interface": 143, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:00:37.953Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+50	2019-12-29 11:51:07.901432+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	66	\N	192.168.13.6/24	{"vrf": 2, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.13.6/24", "created": "2018-06-09", "dns_name": "", "interface": 158, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:35:26.357Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+51	2019-12-29 11:51:07.906953+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	67	\N	192.168.13.7/24	{"vrf": 2, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.13.7/24", "created": "2018-06-09", "dns_name": "", "interface": 163, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:41:21.421Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+52	2019-12-29 11:51:07.912022+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	69	\N	192.168.14.3/24	{"vrf": 3, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.14.3/24", "created": "2018-06-09", "dns_name": "", "interface": 144, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:00:58.253Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+53	2019-12-29 11:51:07.917067+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	72	\N	192.168.14.6/24	{"vrf": 3, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.14.6/24", "created": "2018-06-09", "dns_name": "", "interface": 159, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:35:37.269Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+54	2019-12-29 11:51:07.922021+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	73	\N	192.168.14.7/24	{"vrf": 3, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.14.7/24", "created": "2018-06-09", "dns_name": "", "interface": 164, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:41:32.918Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+55	2019-12-29 11:51:07.927222+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	75	\N	192.168.15.3/24	{"vrf": 3, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.15.3/24", "created": "2018-06-09", "dns_name": "", "interface": 145, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:01:13.646Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+56	2019-12-29 11:51:07.93211+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	78	\N	192.168.15.6/24	{"vrf": 3, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.15.6/24", "created": "2018-06-09", "dns_name": "", "interface": 160, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:35:51.193Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+57	2019-12-29 11:51:07.937104+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	79	\N	192.168.15.7/24	{"vrf": 3, "role": null, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.15.7/24", "created": "2018-06-09", "dns_name": "", "interface": 165, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:41:45.053Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+58	2019-12-29 11:51:07.940963+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	81	\N	fc00:11::3/64	{"vrf": 1, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:11::3/64", "created": "2018-06-09", "dns_name": "", "interface": 141, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:58:19.005Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+59	2019-12-29 11:51:07.944739+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	84	\N	fc00:11::6/64	{"vrf": 1, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:11::6/64", "created": "2018-06-09", "dns_name": "", "interface": 156, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:36:17.526Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+60	2019-12-29 11:51:07.948481+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	85	\N	fc00:11::7/64	{"vrf": 1, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:11::7/64", "created": "2018-06-09", "dns_name": "", "interface": 161, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:39:38.399Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+61	2019-12-29 11:51:07.952671+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	87	\N	fc00:12::3/64	{"vrf": 2, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:12::3/64", "created": "2018-06-09", "dns_name": "", "interface": 142, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:58:35.058Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+256	2019-12-29 12:01:18.539576+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	4	\N	1003 (Vlan1003)	{"vid": 1003, "name": "Vlan1003", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.447Z", "custom_fields": {}}	42	\N	1
+62	2019-12-29 11:51:07.956523+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	90	\N	fc00:12::6/64	{"vrf": 2, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:12::6/64", "created": "2018-06-09", "dns_name": "", "interface": 157, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:36:38.637Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+63	2019-12-29 11:51:07.960399+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	91	\N	fc00:12::7/64	{"vrf": 2, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:12::7/64", "created": "2018-06-09", "dns_name": "", "interface": 162, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:39:51.423Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+64	2019-12-29 11:51:07.964092+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	93	\N	fc00:13::3/64	{"vrf": 2, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:13::3/64", "created": "2018-06-09", "dns_name": "", "interface": 143, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:59:00.601Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+65	2019-12-29 11:51:07.967929+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	96	\N	fc00:13::6/64	{"vrf": 2, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:13::6/64", "created": "2018-06-09", "dns_name": "", "interface": 158, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:36:53.220Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+66	2019-12-29 11:51:07.971646+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	97	\N	fc00:13::7/64	{"vrf": 2, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:13::7/64", "created": "2018-06-09", "dns_name": "", "interface": 163, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:40:06.835Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+67	2019-12-29 11:51:07.975501+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	99	\N	fc00:14::3/64	{"vrf": 3, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:14::3/64", "created": "2018-06-09", "dns_name": "", "interface": 144, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:59:16.304Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+68	2019-12-29 11:51:07.979346+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	102	\N	fc00:14::6/64	{"vrf": 3, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:14::6/64", "created": "2018-06-09", "dns_name": "", "interface": 159, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:37:08.244Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+69	2019-12-29 11:51:07.987182+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	103	\N	fc00:14::7/64	{"vrf": 3, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:14::7/64", "created": "2018-06-09", "dns_name": "", "interface": 164, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:40:20.317Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+70	2019-12-29 11:51:07.99148+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	105	\N	fc00:15::3/64	{"vrf": 3, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:15::3/64", "created": "2018-06-09", "dns_name": "", "interface": 145, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:59:30.920Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+71	2019-12-29 11:51:07.99583+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	108	\N	fc00:15::6/64	{"vrf": 3, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:15::6/64", "created": "2018-06-09", "dns_name": "", "interface": 160, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:37:28.611Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+72	2019-12-29 11:51:07.999872+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	109	\N	fc00:15::7/64	{"vrf": 3, "role": null, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:15::7/64", "created": "2018-06-09", "dns_name": "", "interface": 165, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:40:31.752Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+73	2019-12-29 11:51:08.0041+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	120	\N	192.168.11.1/24	{"vrf": 1, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.11.1/24", "created": "2018-06-09", "dns_name": "", "interface": 161, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:51:37.028Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+74	2019-12-29 11:51:08.008044+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	121	\N	192.168.12.1/24	{"vrf": 2, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.12.1/24", "created": "2018-06-09", "dns_name": "", "interface": 162, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:43:40.279Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+75	2019-12-29 11:51:08.0119+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	122	\N	192.168.13.1/24	{"vrf": 2, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.13.1/24", "created": "2018-06-09", "dns_name": "", "interface": 163, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:52:44.302Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+76	2019-12-29 11:51:08.015869+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	123	\N	192.168.14.1/24	{"vrf": 3, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.14.1/24", "created": "2018-06-09", "dns_name": "", "interface": 164, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:53:08.740Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+77	2019-12-29 11:51:08.019718+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	124	\N	192.168.15.1/24	{"vrf": 3, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.15.1/24", "created": "2018-06-09", "dns_name": "", "interface": 165, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:53:48.876Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+398	2019-12-29 13:32:43.549307+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	18	1	swp17	{"name": "swp17", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+399	2019-12-29 13:32:43.551133+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	19	1	swp18	{"name": "swp18", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+78	2019-12-29 11:51:08.023541+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	125	\N	192.168.11.1/24	{"vrf": 1, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.11.1/24", "created": "2018-06-09", "dns_name": "", "interface": 141, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:54:35.398Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+79	2019-12-29 11:51:08.02764+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	126	\N	192.168.12.1/24	{"vrf": 2, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.12.1/24", "created": "2018-06-09", "dns_name": "", "interface": 142, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:54:50.332Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+80	2019-12-29 11:51:08.031501+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	127	\N	192.168.13.1/24	{"vrf": 1, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.13.1/24", "created": "2018-06-09", "dns_name": "", "interface": 143, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:48:05.676Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+81	2019-12-29 11:51:08.035249+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	128	\N	192.168.14.1/24	{"vrf": 3, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.14.1/24", "created": "2018-06-09", "dns_name": "", "interface": 144, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:55:30.045Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+82	2019-12-29 11:51:08.039044+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	129	\N	192.168.15.1/24	{"vrf": 3, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.15.1/24", "created": "2018-06-09", "dns_name": "", "interface": 145, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:55:45.521Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+83	2019-12-29 11:51:08.042822+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	130	\N	fc00:11::1/64	{"vrf": 1, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:11::1/64", "created": "2018-06-09", "dns_name": "", "interface": 141, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:56:22.588Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+84	2019-12-29 11:51:08.046538+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	131	\N	fc00:12::1/64	{"vrf": 2, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:12::1/64", "created": "2018-06-09", "dns_name": "", "interface": 142, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:56:40.680Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+85	2019-12-29 11:51:08.051194+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	132	\N	fc00:13::1/64	{"vrf": 2, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:13::1/64", "created": "2018-06-09", "dns_name": "", "interface": 143, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:56:55.134Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+86	2019-12-29 11:51:08.055106+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	133	\N	fc00:14::1/64	{"vrf": 3, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:14::1/64", "created": "2018-06-09", "dns_name": "", "interface": 144, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:57:10.388Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+87	2019-12-29 11:51:08.059032+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	134	\N	fc00:15::1/64	{"vrf": 3, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:15::1/64", "created": "2018-06-09", "dns_name": "", "interface": 145, "nat_inside": null, "description": "", "last_updated": "2018-06-09T19:57:25.643Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+88	2019-12-29 11:51:08.063054+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	155	\N	192.168.11.1/24	{"vrf": 1, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 1, "address": "192.168.11.1/24", "created": "2018-06-09", "dns_name": "", "interface": 156, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:32:16.585Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+89	2019-12-29 11:51:08.067039+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	156	\N	fc00:11::1/64	{"vrf": 1, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:11::1/64", "created": "2018-06-09", "dns_name": "", "interface": 156, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:32:29.915Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+90	2019-12-29 11:51:08.071027+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	157	\N	192.168.12.1/24	{"vrf": 2, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.12.1/24", "created": "2018-06-09", "dns_name": "", "interface": 157, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:32:44.761Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+91	2019-12-29 11:51:08.075549+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	158	\N	fc00:12::1/64	{"vrf": 2, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:12::1/64", "created": "2018-06-09", "dns_name": "", "interface": 157, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:32:59.432Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+92	2019-12-29 11:51:08.080136+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	159	\N	192.168.13.1/24	{"vrf": 2, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 2, "address": "192.168.13.1/24", "created": "2018-06-09", "dns_name": "", "interface": 158, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:33:10.620Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+93	2019-12-29 11:51:08.084353+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	160	\N	fc00:13::1/64	{"vrf": 2, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:13::1/64", "created": "2018-06-09", "dns_name": "", "interface": 158, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:33:24.164Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+400	2019-12-29 13:32:43.552796+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	20	1	swp19	{"name": "swp19", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+94	2019-12-29 11:51:08.08842+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	161	\N	192.168.14.1/24	{"vrf": 3, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.14.1/24", "created": "2018-06-09", "dns_name": "", "interface": 159, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:33:39.459Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+95	2019-12-29 11:51:08.092513+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	162	\N	fc00:14::1/64	{"vrf": 3, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:14::1/64", "created": "2018-06-09", "dns_name": "", "interface": 159, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:33:54.627Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+96	2019-12-29 11:51:08.096766+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	163	\N	192.168.15.1/24	{"vrf": 3, "role": 41, "tags": [], "family": 4, "status": 1, "tenant": 3, "address": "192.168.15.1/24", "created": "2018-06-09", "dns_name": "", "interface": 160, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:34:07.400Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+97	2019-12-29 11:51:08.10105+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	164	\N	fc00:15::1/64	{"vrf": 3, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:15::1/64", "created": "2018-06-09", "dns_name": "", "interface": 160, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:34:28.218Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+98	2019-12-29 11:51:08.109997+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	165	\N	fc00:11::1/64	{"vrf": 1, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 1, "address": "fc00:11::1/64", "created": "2018-06-09", "dns_name": "", "interface": 161, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:38:10.179Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+99	2019-12-29 11:51:08.114425+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	166	\N	fc00:12::1/64	{"vrf": 2, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:12::1/64", "created": "2018-06-09", "dns_name": "", "interface": 162, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:38:21.848Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+100	2019-12-29 11:51:08.118461+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	167	\N	fc00:13::1/64	{"vrf": 2, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 2, "address": "fc00:13::1/64", "created": "2018-06-09", "dns_name": "", "interface": 163, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:38:38.687Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+101	2019-12-29 11:51:08.122303+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	168	\N	fc00:14::1/64	{"vrf": 3, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:14::1/64", "created": "2018-06-09", "dns_name": "", "interface": 164, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:38:51.179Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+102	2019-12-29 11:51:08.126266+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	169	\N	fc00:15::1/64	{"vrf": 3, "role": 41, "tags": [], "family": 6, "status": 1, "tenant": 3, "address": "fc00:15::1/64", "created": "2018-06-09", "dns_name": "", "interface": 165, "nat_inside": null, "description": "", "last_updated": "2018-06-09T20:39:07.863Z", "custom_fields": {"clag_peer_ip": "None", "clag_backup_ip": "None"}}	38	\N	1
+103	2019-12-29 11:51:08.135689+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	15	\N	bond01	{"lag": null, "mtu": null, "mode": 200, "name": "bond01", "tags": [], "type": 200, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+104	2019-12-29 11:51:08.143864+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	16	\N	bond02	{"lag": null, "mtu": null, "mode": 200, "name": "bond02", "tags": [], "type": 200, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+105	2019-12-29 11:51:08.15039+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	17	\N	clagd-vxlan-anycast-ip	{"lag": null, "mtu": null, "mode": null, "name": "clagd-vxlan-anycast-ip", "tags": [], "type": 0, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+106	2019-12-29 11:51:08.157081+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	18	\N	irb1000	{"lag": null, "mtu": null, "mode": 100, "name": "irb1000", "tags": [], "type": 0, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 1, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+107	2019-12-29 11:51:08.163518+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	19	\N	lo	{"lag": null, "mtu": null, "mode": null, "name": "lo", "tags": [], "type": 0, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+108	2019-12-29 11:51:08.170276+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	20	\N	peerlink	{"lag": null, "mtu": null, "mode": null, "name": "peerlink", "tags": [], "type": 200, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": "44:38:39:FF:01:02", "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+109	2019-12-29 11:51:08.177342+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	21	\N	peerlink.4094	{"lag": null, "mtu": null, "mode": null, "name": "peerlink.4094", "tags": [], "type": 0, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+257	2019-12-29 12:01:18.549274+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	5	\N	1004 (Vlan1004)	{"vid": 1004, "name": "Vlan1004", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.450Z", "custom_fields": {}}	42	\N	1
+110	2019-12-29 11:51:08.184319+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	22	\N	swp1	{"lag": 15, "mtu": null, "mode": null, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+111	2019-12-29 11:51:08.191316+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	23	\N	swp2	{"lag": 16, "mtu": null, "mode": null, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+112	2019-12-29 11:51:08.198335+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	24	\N	swp49	{"lag": 20, "mtu": null, "mode": null, "name": "swp49", "tags": [], "type": 1000, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+113	2019-12-29 11:51:08.20568+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	25	\N	swp50	{"lag": 20, "mtu": null, "mode": null, "name": "swp50", "tags": [], "type": 1000, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+114	2019-12-29 11:51:08.212371+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	26	\N	swp51	{"lag": null, "mtu": null, "mode": null, "name": "swp51", "tags": [], "type": 1000, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+115	2019-12-29 11:51:08.219029+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	27	\N	swp52	{"lag": null, "mtu": null, "mode": null, "name": "swp52", "tags": [], "type": 1000, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+116	2019-12-29 11:51:08.22681+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	28	\N	lo	{"lag": null, "mtu": null, "mode": null, "name": "lo", "tags": [], "type": 0, "cable": null, "device": 5, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+117	2019-12-29 11:51:08.233223+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	29	\N	swp1	{"lag": null, "mtu": null, "mode": null, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 5, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+118	2019-12-29 11:51:08.239626+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	30	\N	swp2	{"lag": null, "mtu": null, "mode": null, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 5, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+119	2019-12-29 11:51:08.246062+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	31	\N	swp3	{"lag": null, "mtu": null, "mode": null, "name": "swp3", "tags": [], "type": 1000, "cable": null, "device": 5, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+120	2019-12-29 11:51:08.253125+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	32	\N	swp4	{"lag": null, "mtu": null, "mode": null, "name": "swp4", "tags": [], "type": 1000, "cable": null, "device": 5, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+121	2019-12-29 11:51:08.260065+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	33	\N	swp5	{"lag": null, "mtu": null, "mode": null, "name": "swp5", "tags": [], "type": 1000, "cable": null, "device": 5, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+122	2019-12-29 11:51:08.266981+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	34	\N	swp6	{"lag": null, "mtu": null, "mode": null, "name": "swp6", "tags": [], "type": 1000, "cable": null, "device": 5, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+123	2019-12-29 11:51:08.274943+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	35	\N	lo	{"lag": null, "mtu": null, "mode": null, "name": "lo", "tags": [], "type": 0, "cable": null, "device": 6, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+124	2019-12-29 11:51:08.281763+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	36	\N	swp1	{"lag": null, "mtu": null, "mode": null, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 6, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+125	2019-12-29 11:51:08.298288+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	37	\N	swp2	{"lag": null, "mtu": null, "mode": null, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 6, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+126	2019-12-29 11:51:08.312107+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	38	\N	swp3	{"lag": null, "mtu": null, "mode": null, "name": "swp3", "tags": [], "type": 1000, "cable": null, "device": 6, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+393	2019-12-29 13:32:43.540169+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	13	1	swp12	{"name": "swp12", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+127	2019-12-29 11:51:08.32028+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	39	\N	swp4	{"lag": null, "mtu": null, "mode": null, "name": "swp4", "tags": [], "type": 1000, "cable": null, "device": 6, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+128	2019-12-29 11:51:08.328609+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	40	\N	swp5	{"lag": null, "mtu": null, "mode": null, "name": "swp5", "tags": [], "type": 1000, "cable": null, "device": 6, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+129	2019-12-29 11:51:08.336646+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	41	\N	swp6	{"lag": null, "mtu": null, "mode": null, "name": "swp6", "tags": [], "type": 1000, "cable": null, "device": 6, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+130	2019-12-29 11:51:08.346384+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	46	\N	lo	{"lag": null, "mtu": null, "mode": null, "name": "lo", "tags": [], "type": 0, "cable": null, "device": 7, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+131	2019-12-29 11:51:08.354304+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	47	\N	peerlink	{"lag": null, "mtu": null, "mode": null, "name": "peerlink", "tags": [], "type": 200, "cable": null, "device": 7, "enabled": true, "mgmt_only": false, "description": "", "mac_address": "44:38:39:FF:01:34", "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+132	2019-12-29 11:51:08.361533+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	48	\N	peerlink.4094	{"lag": null, "mtu": null, "mode": null, "name": "peerlink.4094", "tags": [], "type": 0, "cable": null, "device": 7, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+133	2019-12-29 11:51:08.370661+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	49	\N	swp1	{"lag": null, "mtu": null, "mode": null, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 7, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+134	2019-12-29 11:51:08.378833+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	50	\N	swp2	{"lag": null, "mtu": null, "mode": null, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 7, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+135	2019-12-29 11:51:08.386654+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	51	\N	swp49	{"lag": 47, "mtu": null, "mode": null, "name": "swp49", "tags": [], "type": 1000, "cable": null, "device": 7, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+136	2019-12-29 11:51:08.393134+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	52	\N	swp50	{"lag": 47, "mtu": null, "mode": null, "name": "swp50", "tags": [], "type": 1000, "cable": null, "device": 7, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+137	2019-12-29 11:51:08.399629+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	53	\N	swp51	{"lag": null, "mtu": null, "mode": null, "name": "swp51", "tags": [], "type": 1000, "cable": null, "device": 7, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+138	2019-12-29 11:51:08.40765+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	54	\N	swp52	{"lag": null, "mtu": null, "mode": null, "name": "swp52", "tags": [], "type": 1000, "cable": null, "device": 7, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+139	2019-12-29 11:51:08.415806+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	59	\N	lo	{"lag": null, "mtu": null, "mode": null, "name": "lo", "tags": [], "type": 0, "cable": null, "device": 8, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+140	2019-12-29 11:51:08.422747+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	60	\N	peerlink	{"lag": null, "mtu": null, "mode": null, "name": "peerlink", "tags": [], "type": 200, "cable": null, "device": 8, "enabled": true, "mgmt_only": false, "description": "", "mac_address": "44:38:39:FF:01:34", "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+141	2019-12-29 11:51:08.429415+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	61	\N	peerlink.4094	{"lag": null, "mtu": null, "mode": null, "name": "peerlink.4094", "tags": [], "type": 0, "cable": null, "device": 8, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+142	2019-12-29 11:51:08.44157+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	62	\N	swp1	{"lag": null, "mtu": null, "mode": null, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 8, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+143	2019-12-29 11:51:08.44786+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	63	\N	swp2	{"lag": null, "mtu": null, "mode": null, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 8, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+144	2019-12-29 11:51:08.454051+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	64	\N	swp49	{"lag": 60, "mtu": null, "mode": null, "name": "swp49", "tags": [], "type": 1000, "cable": null, "device": 8, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+145	2019-12-29 11:51:08.460548+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	65	\N	swp50	{"lag": 60, "mtu": null, "mode": null, "name": "swp50", "tags": [], "type": 1000, "cable": null, "device": 8, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+146	2019-12-29 11:51:08.466949+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	66	\N	swp51	{"lag": null, "mtu": null, "mode": null, "name": "swp51", "tags": [], "type": 1000, "cable": null, "device": 8, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+147	2019-12-29 11:51:08.47282+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	67	\N	swp52	{"lag": null, "mtu": null, "mode": null, "name": "swp52", "tags": [], "type": 1000, "cable": null, "device": 8, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+148	2019-12-29 11:51:08.482138+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	68	\N	bond01	{"lag": null, "mtu": null, "mode": 200, "name": "bond01", "tags": [], "type": 200, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+149	2019-12-29 11:51:08.489038+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	69	\N	bond02	{"lag": null, "mtu": null, "mode": 200, "name": "bond02", "tags": [], "type": 200, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+150	2019-12-29 11:51:08.497213+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	70	\N	clagd-vxlan-anycast-ip	{"lag": null, "mtu": null, "mode": null, "name": "clagd-vxlan-anycast-ip", "tags": [], "type": 0, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+151	2019-12-29 11:51:08.504701+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	71	\N	irb1000	{"lag": null, "mtu": null, "mode": 100, "name": "irb1000", "tags": [], "type": 0, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 1, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+152	2019-12-29 11:51:08.511546+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	72	\N	lo	{"lag": null, "mtu": null, "mode": null, "name": "lo", "tags": [], "type": 0, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+153	2019-12-29 11:51:08.517793+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	73	\N	peerlink	{"lag": null, "mtu": null, "mode": null, "name": "peerlink", "tags": [], "type": 200, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": "44:38:39:FF:01:56", "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+154	2019-12-29 11:51:08.524252+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	74	\N	peerlink.4094	{"lag": null, "mtu": null, "mode": null, "name": "peerlink.4094", "tags": [], "type": 0, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+155	2019-12-29 11:51:08.530508+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	75	\N	swp1	{"lag": 68, "mtu": null, "mode": null, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+156	2019-12-29 11:51:08.536437+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	76	\N	swp2	{"lag": 69, "mtu": null, "mode": null, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+157	2019-12-29 11:51:08.542312+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	77	\N	swp49	{"lag": 73, "mtu": null, "mode": null, "name": "swp49", "tags": [], "type": 1000, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+158	2019-12-29 11:51:08.548129+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	78	\N	swp50	{"lag": 73, "mtu": null, "mode": null, "name": "swp50", "tags": [], "type": 1000, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+159	2019-12-29 11:51:08.553984+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	79	\N	swp53	{"lag": null, "mtu": null, "mode": null, "name": "swp53", "tags": [], "type": 1000, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+160	2019-12-29 11:51:08.559711+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	80	\N	swp54	{"lag": null, "mtu": null, "mode": null, "name": "swp54", "tags": [], "type": 1000, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+161	2019-12-29 11:51:08.56688+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	81	\N	bond01	{"lag": null, "mtu": null, "mode": 200, "name": "bond01", "tags": [], "type": 200, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+162	2019-12-29 11:51:08.578598+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	82	\N	bond02	{"lag": null, "mtu": null, "mode": 200, "name": "bond02", "tags": [], "type": 200, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+163	2019-12-29 11:51:08.584405+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	83	\N	clagd-vxlan-anycast-ip	{"lag": null, "mtu": null, "mode": null, "name": "clagd-vxlan-anycast-ip", "tags": [], "type": 0, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+164	2019-12-29 11:51:08.590072+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	84	\N	irb1000	{"lag": null, "mtu": null, "mode": 100, "name": "irb1000", "tags": [], "type": 0, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 1, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+165	2019-12-29 11:51:08.595757+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	85	\N	lo	{"lag": null, "mtu": null, "mode": null, "name": "lo", "tags": [], "type": 0, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+166	2019-12-29 11:51:08.601648+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	86	\N	peerlink	{"lag": null, "mtu": null, "mode": null, "name": "peerlink", "tags": [], "type": 200, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": "44:38:39:FF:01:56", "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+167	2019-12-29 11:51:08.607751+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	87	\N	peerlink.4094	{"lag": null, "mtu": null, "mode": null, "name": "peerlink.4094", "tags": [], "type": 0, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+168	2019-12-29 11:51:08.614619+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	88	\N	swp1	{"lag": 81, "mtu": null, "mode": null, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+169	2019-12-29 11:51:08.620473+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	89	\N	swp2	{"lag": 82, "mtu": null, "mode": null, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+170	2019-12-29 11:51:08.626285+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	90	\N	swp49	{"lag": 86, "mtu": null, "mode": null, "name": "swp49", "tags": [], "type": 1000, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+171	2019-12-29 11:51:08.631993+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	91	\N	swp50	{"lag": 86, "mtu": null, "mode": null, "name": "swp50", "tags": [], "type": 1000, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+172	2019-12-29 11:51:08.637778+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	92	\N	swp53	{"lag": null, "mtu": null, "mode": null, "name": "swp53", "tags": [], "type": 1000, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+173	2019-12-29 11:51:08.643597+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	93	\N	swp54	{"lag": null, "mtu": null, "mode": null, "name": "swp54", "tags": [], "type": 1000, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+174	2019-12-29 11:51:08.65085+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	94	\N	lo	{"lag": null, "mtu": null, "mode": null, "name": "lo", "tags": [], "type": 0, "cable": null, "device": 11, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+175	2019-12-29 11:51:08.656827+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	95	\N	swp1	{"lag": null, "mtu": null, "mode": null, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 11, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+176	2019-12-29 11:51:08.662763+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	96	\N	swp2	{"lag": null, "mtu": null, "mode": null, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 11, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+177	2019-12-29 11:51:08.668672+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	97	\N	swp6	{"lag": null, "mtu": null, "mode": null, "name": "swp6", "tags": [], "type": 1000, "cable": null, "device": 11, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+178	2019-12-29 11:51:08.675103+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	98	\N	swp7	{"lag": null, "mtu": null, "mode": null, "name": "swp7", "tags": [], "type": 1000, "cable": null, "device": 11, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+179	2019-12-29 11:51:08.682608+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	99	\N	lo	{"lag": null, "mtu": null, "mode": null, "name": "lo", "tags": [], "type": 0, "cable": null, "device": 12, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+180	2019-12-29 11:51:08.690065+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	100	\N	swp1	{"lag": null, "mtu": null, "mode": null, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 12, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+181	2019-12-29 11:51:08.696634+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	101	\N	swp2	{"lag": null, "mtu": null, "mode": null, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 12, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+182	2019-12-29 11:51:08.702585+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	102	\N	swp6	{"lag": null, "mtu": null, "mode": null, "name": "swp6", "tags": [], "type": 1000, "cable": null, "device": 12, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+183	2019-12-29 11:51:08.708906+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	103	\N	swp7	{"lag": null, "mtu": null, "mode": null, "name": "swp7", "tags": [], "type": 1000, "cable": null, "device": 12, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+184	2019-12-29 11:51:08.716393+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	104	\N	swp1	{"lag": null, "mtu": null, "mode": null, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 13, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+185	2019-12-29 11:51:08.722019+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	105	\N	swp2	{"lag": null, "mtu": null, "mode": null, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 13, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+186	2019-12-29 11:51:08.728381+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	106	\N	swp49	{"lag": null, "mtu": null, "mode": 200, "name": "swp49", "tags": [], "type": 1000, "cable": null, "device": 13, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+187	2019-12-29 11:51:08.734245+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	107	\N	swp50	{"lag": null, "mtu": null, "mode": 200, "name": "swp50", "tags": [], "type": 1000, "cable": null, "device": 13, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+188	2019-12-29 11:51:08.739777+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	108	\N	irb2501	{"lag": null, "mtu": null, "mode": 100, "name": "irb2501", "tags": [], "type": 0, "cable": null, "device": 13, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 7, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+189	2019-12-29 11:51:08.745303+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	109	\N	irb2502	{"lag": null, "mtu": null, "mode": 100, "name": "irb2502", "tags": [], "type": 0, "cable": null, "device": 13, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 8, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+190	2019-12-29 11:51:08.750778+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	110	\N	irb2503	{"lag": null, "mtu": null, "mode": 100, "name": "irb2503", "tags": [], "type": 0, "cable": null, "device": 13, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 9, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+191	2019-12-29 11:51:08.756252+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	111	\N	irb2504	{"lag": null, "mtu": null, "mode": 100, "name": "irb2504", "tags": [], "type": 0, "cable": null, "device": 13, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 19, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+192	2019-12-29 11:51:08.763+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	112	\N	irb2505	{"lag": null, "mtu": null, "mode": 100, "name": "irb2505", "tags": [], "type": 0, "cable": null, "device": 14, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 11, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+193	2019-12-29 11:51:08.768672+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	113	\N	irb2506	{"lag": null, "mtu": null, "mode": 100, "name": "irb2506", "tags": [], "type": 0, "cable": null, "device": 14, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 12, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+194	2019-12-29 11:51:08.774635+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	114	\N	irb2507	{"lag": null, "mtu": null, "mode": 100, "name": "irb2507", "tags": [], "type": 0, "cable": null, "device": 14, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 13, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+195	2019-12-29 11:51:08.78026+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	115	\N	irb2508	{"lag": null, "mtu": null, "mode": 100, "name": "irb2508", "tags": [], "type": 0, "cable": null, "device": 14, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 14, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+196	2019-12-29 11:51:08.786005+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	116	\N	swp1	{"lag": null, "mtu": null, "mode": null, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 14, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+197	2019-12-29 11:51:08.794627+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	117	\N	swp2	{"lag": null, "mtu": null, "mode": null, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 14, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+198	2019-12-29 11:51:08.804307+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	118	\N	swp49	{"lag": null, "mtu": null, "mode": 200, "name": "swp49", "tags": [], "type": 1000, "cable": null, "device": 14, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+199	2019-12-29 11:51:08.810297+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	119	\N	swp50	{"lag": null, "mtu": null, "mode": 200, "name": "swp50", "tags": [], "type": 1000, "cable": null, "device": 14, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+200	2019-12-29 11:51:08.817267+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	120	\N	swp1	{"lag": null, "mtu": null, "mode": 200, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 15, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+201	2019-12-29 11:51:08.8228+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	121	\N	swp2	{"lag": null, "mtu": null, "mode": 200, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 15, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+202	2019-12-29 11:51:08.828375+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	122	\N	irb2501	{"lag": null, "mtu": null, "mode": 100, "name": "irb2501", "tags": [], "type": 0, "cable": null, "device": 15, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 7, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+203	2019-12-29 11:51:08.833844+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	123	\N	irb2502	{"lag": null, "mtu": null, "mode": 100, "name": "irb2502", "tags": [], "type": 0, "cable": null, "device": 15, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 8, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+204	2019-12-29 11:51:08.840613+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	124	\N	irb2505	{"lag": null, "mtu": null, "mode": 100, "name": "irb2505", "tags": [], "type": 0, "cable": null, "device": 15, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 11, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+205	2019-12-29 11:51:08.847457+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	125	\N	irb2506	{"lag": null, "mtu": null, "mode": 100, "name": "irb2506", "tags": [], "type": 0, "cable": null, "device": 15, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 12, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+206	2019-12-29 11:51:08.853417+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	126	\N	irb2701	{"lag": null, "mtu": null, "mode": 100, "name": "irb2701", "tags": [], "type": 0, "cable": null, "device": 15, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 16, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+207	2019-12-29 11:51:08.859179+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	127	\N	irb2702	{"lag": null, "mtu": null, "mode": 100, "name": "irb2702", "tags": [], "type": 0, "cable": null, "device": 15, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 17, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+208	2019-12-29 11:51:08.865946+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	128	\N	swp1	{"lag": null, "mtu": null, "mode": 200, "name": "swp1", "tags": [], "type": 1000, "cable": null, "device": 16, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+209	2019-12-29 11:51:08.871497+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	129	\N	swp2	{"lag": null, "mtu": null, "mode": 200, "name": "swp2", "tags": [], "type": 1000, "cable": null, "device": 16, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+210	2019-12-29 11:51:08.877099+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	130	\N	irb2503	{"lag": null, "mtu": null, "mode": 100, "name": "irb2503", "tags": [], "type": 0, "cable": null, "device": 16, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 9, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+227	2019-12-29 11:51:08.993594+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	162	\N	irb1002	{"lag": null, "mtu": null, "mode": 100, "name": "irb1002", "tags": [], "type": 0, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 3, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+211	2019-12-29 11:51:08.882805+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	131	\N	irb2504	{"lag": null, "mtu": null, "mode": 100, "name": "irb2504", "tags": [], "type": 0, "cable": null, "device": 16, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 10, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+212	2019-12-29 11:51:08.888922+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	132	\N	irb2507	{"lag": null, "mtu": null, "mode": 100, "name": "irb2507", "tags": [], "type": 0, "cable": null, "device": 16, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 13, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+213	2019-12-29 11:51:08.896919+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	133	\N	irb2508	{"lag": null, "mtu": null, "mode": 100, "name": "irb2508", "tags": [], "type": 0, "cable": null, "device": 16, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 14, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+214	2019-12-29 11:51:08.903933+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	134	\N	irb2703	{"lag": null, "mtu": null, "mode": 100, "name": "irb2703", "tags": [], "type": 0, "cable": null, "device": 16, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 18, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+215	2019-12-29 11:51:08.910934+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	135	\N	irb2704	{"lag": null, "mtu": null, "mode": 100, "name": "irb2704", "tags": [], "type": 0, "cable": null, "device": 16, "enabled": true, "mgmt_only": false, "description": "bgp_external", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 19, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+216	2019-12-29 11:51:08.917258+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	141	\N	irb1001	{"lag": null, "mtu": null, "mode": 100, "name": "irb1001", "tags": [], "type": 0, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 2, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+217	2019-12-29 11:51:08.925208+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	142	\N	irb1002	{"lag": null, "mtu": null, "mode": 100, "name": "irb1002", "tags": [], "type": 0, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 3, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+218	2019-12-29 11:51:08.932738+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	143	\N	irb1003	{"lag": null, "mtu": null, "mode": 100, "name": "irb1003", "tags": [], "type": 0, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 4, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+219	2019-12-29 11:51:08.939166+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	144	\N	irb1004	{"lag": null, "mtu": null, "mode": 100, "name": "irb1004", "tags": [], "type": 0, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 5, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+220	2019-12-29 11:51:08.945124+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	145	\N	irb1005	{"lag": null, "mtu": null, "mode": 100, "name": "irb1005", "tags": [], "type": 0, "cable": null, "device": 4, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 6, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+221	2019-12-29 11:51:08.951456+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	156	\N	irb1001	{"lag": null, "mtu": null, "mode": 100, "name": "irb1001", "tags": [], "type": 0, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 2, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+222	2019-12-29 11:51:08.958236+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	157	\N	irb1002	{"lag": null, "mtu": null, "mode": 100, "name": "irb1002", "tags": [], "type": 0, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 3, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+223	2019-12-29 11:51:08.966026+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	158	\N	irb1003	{"lag": null, "mtu": null, "mode": 100, "name": "irb1003", "tags": [], "type": 0, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 4, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+224	2019-12-29 11:51:08.973718+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	159	\N	irb1004	{"lag": null, "mtu": null, "mode": 100, "name": "irb1004", "tags": [], "type": 0, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 5, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+225	2019-12-29 11:51:08.980844+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	160	\N	irb1005	{"lag": null, "mtu": null, "mode": 100, "name": "irb1005", "tags": [], "type": 0, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 6, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+226	2019-12-29 11:51:08.987436+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	161	\N	irb1001	{"lag": null, "mtu": null, "mode": 100, "name": "irb1001", "tags": [], "type": 0, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 2, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+253	2019-12-29 12:01:18.507631+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	1	\N	1000 (Vlan1000)	{"vid": 1000, "name": "Vlan1000", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-03", "description": "", "last_updated": "2019-12-29T12:01:18.438Z", "custom_fields": {}}	42	\N	1
+228	2019-12-29 11:51:08.999506+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	163	\N	irb1003	{"lag": null, "mtu": null, "mode": 100, "name": "irb1003", "tags": [], "type": 0, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 4, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+229	2019-12-29 11:51:09.005573+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	164	\N	irb1004	{"lag": null, "mtu": null, "mode": 100, "name": "irb1004", "tags": [], "type": 0, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 5, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+230	2019-12-29 11:51:09.011594+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	165	\N	irb1005	{"lag": null, "mtu": null, "mode": 100, "name": "irb1005", "tags": [], "type": 0, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "", "mac_address": null, "tagged_vlans": [], "untagged_vlan": 6, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+231	2019-12-29 11:51:09.017543+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	166	\N	swp51	{"lag": null, "mtu": null, "mode": null, "name": "swp51", "tags": [], "type": 1000, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+232	2019-12-29 11:51:09.023397+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	167	\N	swp52	{"lag": null, "mtu": null, "mode": null, "name": "swp52", "tags": [], "type": 1000, "cable": null, "device": 9, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+233	2019-12-29 11:51:09.029505+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	168	\N	swp51	{"lag": null, "mtu": null, "mode": null, "name": "swp51", "tags": [], "type": 1000, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+234	2019-12-29 11:51:09.035623+00	admin	6d0dfd83-75b4-4efc-9f3f-1d46ef5cc8ce	3	169	\N	swp52	{"lag": null, "mtu": null, "mode": null, "name": "swp52", "tags": [], "type": 1000, "cable": null, "device": 10, "enabled": true, "mgmt_only": false, "description": "bgp_underlay", "mac_address": null, "tagged_vlans": [], "untagged_vlan": null, "virtual_machine": null, "connection_status": null, "_connected_interface": null, "_connected_circuittermination": null}	18	\N	1
+235	2019-12-29 11:52:35.922489+00	admin	9a1f2802-a7e0-464d-9a2a-c8c1a7d27264	1	2	\N	Cumulus Networks CLdemo2	{"asn": null, "name": "Cumulus Networks CLdemo2", "slug": "cldemo2", "tags": [], "region": null, "status": 1, "tenant": null, "created": "2019-12-29", "comments": "", "facility": "", "latitude": null, "longitude": null, "time_zone": "", "description": "", "contact_name": "", "last_updated": "2019-12-29T11:52:35.899Z", "contact_email": "", "contact_phone": "", "custom_fields": {}, "physical_address": "", "shipping_address": ""}	29	\N	1
+236	2019-12-29 11:53:13.462916+00	admin	41c4df24-65f4-4cd1-86bf-286de192e61c	3	5	\N	Superspine	{"name": "Superspine", "role": null, "site": 1, "tags": [], "type": null, "group": 3, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-09", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2018-06-09T07:41:25.050Z", "custom_fields": {}}	27	\N	1
+237	2019-12-29 11:53:13.469345+00	admin	41c4df24-65f4-4cd1-86bf-286de192e61c	3	7	\N	exit02	{"name": "exit02", "role": null, "site": 1, "tags": [], "type": null, "group": 1, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-09", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2018-06-09T07:44:02.190Z", "custom_fields": {}}	27	\N	1
+238	2019-12-29 11:53:57.780421+00	admin	972eb46d-d215-4fb5-aef9-7aba217c224c	3	1	\N	Pod1	{"name": "Pod1", "site": 1, "slug": "pod1", "created": "2019-12-29", "last_updated": "2019-12-29T11:09:42.048Z"}	28	\N	1
+239	2019-12-29 11:53:57.783254+00	admin	972eb46d-d215-4fb5-aef9-7aba217c224c	3	2	\N	Edge	{"name": "Edge", "site": 1, "slug": "edge", "created": "2019-12-29", "last_updated": "2019-12-29T11:09:42.048Z"}	28	\N	1
+240	2019-12-29 11:53:57.785834+00	admin	972eb46d-d215-4fb5-aef9-7aba217c224c	3	3	\N	Superspine	{"name": "Superspine", "site": 1, "slug": "superspine", "created": "2019-12-29", "last_updated": "2019-12-29T11:09:42.048Z"}	28	\N	1
+241	2019-12-29 11:54:39.769141+00	admin	42430b3e-ee09-4582-854f-a80422a4c605	1	4	\N	pod1	{"name": "pod1", "site": 2, "slug": "pod1", "created": "2019-12-29", "last_updated": "2019-12-29T11:54:39.763Z"}	28	\N	1
+242	2019-12-29 11:55:25.049268+00	admin	84fef2de-4489-46bd-bfa7-1f07bc3986be	1	8	\N	pod2	{"name": "pod2", "role": null, "site": 2, "tags": [], "type": null, "group": null, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2019-12-29", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T11:55:25.032Z", "custom_fields": {}}	27	\N	1
+243	2019-12-29 11:55:41.416954+00	admin	14ddb5f3-6793-4a06-ae25-66d7cb3b4cbe	1	5	\N	pod2	{"name": "pod2", "site": 2, "slug": "pod2", "created": "2019-12-29", "last_updated": "2019-12-29T11:55:41.404Z"}	28	\N	1
+244	2019-12-29 11:55:53.108386+00	admin	e856df35-f115-4ce2-b1bd-8e2fccc8c6c9	1	6	\N	3tier	{"name": "3tier", "site": 2, "slug": "3tier", "created": "2019-12-29", "last_updated": "2019-12-29T11:55:53.104Z"}	28	\N	1
+245	2019-12-29 11:56:05.643794+00	admin	b5bf96fa-b0ef-4c57-a55f-7a50ea96de72	1	7	\N	edge	{"name": "edge", "site": 2, "slug": "edge", "created": "2019-12-29", "last_updated": "2019-12-29T11:56:05.640Z"}	28	\N	1
+246	2019-12-29 11:56:31.721986+00	admin	5f62fa0f-ba5b-4b48-8045-63b9ea46cd36	3	8	\N	pod2	{"name": "pod2", "role": null, "site": 2, "tags": [], "type": null, "group": null, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2019-12-29", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T11:55:25.032Z", "custom_fields": {}}	27	\N	1
+247	2019-12-29 11:56:59.979457+00	admin	43d522d6-b8a1-4f2a-855b-5babc87f8984	2	6	\N	Edge	{"name": "Edge", "role": null, "site": 2, "tags": [], "type": null, "group": 7, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-09", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T11:56:59.965Z", "custom_fields": {}}	27	\N	1
+248	2019-12-29 12:00:45.187731+00	admin	a238b966-d036-4966-be5b-ddf461981172	2	1	\N	Rack1-pod1	{"name": "Rack1-pod1", "role": null, "site": 2, "tags": [], "type": null, "group": null, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-03", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:00:45.136Z", "custom_fields": {}}	27	\N	1
+249	2019-12-29 12:00:45.198123+00	admin	a238b966-d036-4966-be5b-ddf461981172	2	1	\N	leaf01	{"face": null, "name": "leaf01", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2018-06-03", "comments": "", "platform": 1, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:00:45.141Z", "custom_fields": {"ASN": "65111"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+250	2019-12-29 12:00:45.209189+00	admin	a238b966-d036-4966-be5b-ddf461981172	2	3	\N	Rack2-pod1	{"name": "Rack2-pod1", "role": null, "site": 2, "tags": [], "type": null, "group": null, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-09", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:00:45.156Z", "custom_fields": {}}	27	\N	1
+251	2019-12-29 12:00:45.217695+00	admin	a238b966-d036-4966-be5b-ddf461981172	2	4	\N	Rack3-pod1	{"name": "Rack3-pod1", "role": null, "site": 2, "tags": [], "type": null, "group": null, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-09", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:00:45.164Z", "custom_fields": {}}	27	\N	1
+252	2019-12-29 12:00:45.225943+00	admin	a238b966-d036-4966-be5b-ddf461981172	2	2	\N	Spine-pod1	{"name": "Spine-pod1", "role": null, "site": 2, "tags": [], "type": null, "group": null, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-08", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:00:45.172Z", "custom_fields": {}}	27	\N	1
+258	2019-12-29 12:01:18.558998+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	6	\N	1005 (Vlan1005)	{"vid": 1005, "name": "Vlan1005", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.452Z", "custom_fields": {}}	42	\N	1
+259	2019-12-29 12:01:18.568374+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	7	\N	2501 (Vlan2501)	{"vid": 2501, "name": "Vlan2501", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.456Z", "custom_fields": {}}	42	\N	1
+260	2019-12-29 12:01:18.578538+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	8	\N	2502 (Vlan2502)	{"vid": 2502, "name": "Vlan2502", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.459Z", "custom_fields": {}}	42	\N	1
+261	2019-12-29 12:01:18.586899+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	9	\N	2503 (Vlan2503)	{"vid": 2503, "name": "Vlan2503", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.463Z", "custom_fields": {}}	42	\N	1
+262	2019-12-29 12:01:18.595344+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	10	\N	2504 (Vlan2504)	{"vid": 2504, "name": "Vlan2504", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.466Z", "custom_fields": {}}	42	\N	1
+263	2019-12-29 12:01:18.604264+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	11	\N	2505 (Vlan2505)	{"vid": 2505, "name": "Vlan2505", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.469Z", "custom_fields": {}}	42	\N	1
+264	2019-12-29 12:01:18.612936+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	12	\N	2506 (Vlan2506)	{"vid": 2506, "name": "Vlan2506", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.472Z", "custom_fields": {}}	42	\N	1
+265	2019-12-29 12:01:18.621286+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	13	\N	2507 (Vlan2507)	{"vid": 2507, "name": "Vlan2507", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.475Z", "custom_fields": {}}	42	\N	1
+266	2019-12-29 12:01:18.629801+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	14	\N	2508 (Vlan2508)	{"vid": 2508, "name": "Vlan2508", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.477Z", "custom_fields": {}}	42	\N	1
+267	2019-12-29 12:01:18.637934+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	16	\N	2701 (Vlan2701)	{"vid": 2701, "name": "Vlan2701", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.480Z", "custom_fields": {}}	42	\N	1
+268	2019-12-29 12:01:18.649309+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	17	\N	2702 (Vlan2702)	{"vid": 2702, "name": "Vlan2702", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.483Z", "custom_fields": {}}	42	\N	1
+269	2019-12-29 12:01:18.659531+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	18	\N	2703 (Vlan2703)	{"vid": 2703, "name": "Vlan2703", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.486Z", "custom_fields": {}}	42	\N	1
+270	2019-12-29 12:01:18.66898+00	admin	d65118f3-3f3a-4ea9-b156-23c0eb2ade0b	2	19	\N	2704 (Vlan2704)	{"vid": 2704, "name": "Vlan2704", "role": null, "site": 2, "tags": [], "group": null, "status": 1, "tenant": null, "created": "2018-06-09", "description": "", "last_updated": "2019-12-29T12:01:18.488Z", "custom_fields": {}}	42	\N	1
+271	2019-12-29 12:01:30.533434+00	admin	b97fa23f-347a-4a21-b2af-16f2f85d962c	3	1	\N	Virtual Topology	{"asn": null, "name": "Virtual Topology", "slug": "virtual-topology", "tags": [], "region": null, "status": 1, "tenant": null, "created": "2018-06-03", "comments": "", "facility": "", "latitude": null, "longitude": null, "time_zone": null, "description": "", "contact_name": "", "last_updated": "2018-06-03T16:38:35.013Z", "contact_email": "", "contact_phone": "", "custom_fields": {}, "physical_address": "", "shipping_address": ""}	29	\N	1
+272	2019-12-29 12:02:33.3631+00	admin	9c813ca5-7cc5-4e4a-81a6-cb8f22a4ba2b	2	1	\N	Rack1-pod1	{"name": "Rack1-pod1", "role": null, "site": 2, "tags": [], "type": null, "group": 4, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-03", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:02:33.315Z", "custom_fields": {}}	27	\N	1
+273	2019-12-29 12:02:33.372782+00	admin	9c813ca5-7cc5-4e4a-81a6-cb8f22a4ba2b	2	3	\N	Rack2-pod1	{"name": "Rack2-pod1", "role": null, "site": 2, "tags": [], "type": null, "group": 4, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-09", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:02:33.331Z", "custom_fields": {}}	27	\N	1
+274	2019-12-29 12:02:33.3813+00	admin	9c813ca5-7cc5-4e4a-81a6-cb8f22a4ba2b	2	4	\N	Rack3-pod1	{"name": "Rack3-pod1", "role": null, "site": 2, "tags": [], "type": null, "group": 4, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-09", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:02:33.341Z", "custom_fields": {}}	27	\N	1
+275	2019-12-29 12:02:33.391009+00	admin	9c813ca5-7cc5-4e4a-81a6-cb8f22a4ba2b	2	2	\N	Spine-pod1	{"name": "Spine-pod1", "role": null, "site": 2, "tags": [], "type": null, "group": 4, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-08", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:02:33.352Z", "custom_fields": {}}	27	\N	1
+276	2019-12-29 12:03:27.421639+00	admin	aa8c39ea-a8b5-4178-9861-52d199b7c2e6	1	9	\N	Service-pod1	{"name": "Service-pod1", "role": null, "site": 2, "tags": [], "type": null, "group": 4, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2019-12-29", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:03:27.404Z", "custom_fields": {}}	27	\N	1
+394	2019-12-29 13:32:43.541927+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	14	1	swp13	{"name": "swp13", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+277	2019-12-29 12:03:38.047565+00	admin	65f7fa0e-d4f6-454a-a398-4b2fcf0e1f85	3	4	\N	Rack3-pod1	{"name": "Rack3-pod1", "role": null, "site": 2, "tags": [], "type": null, "group": 4, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2018-06-09", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:02:33.341Z", "custom_fields": {}}	27	\N	1
+278	2019-12-29 12:05:36.48187+00	admin	a0440fce-6edb-476d-9c33-6311ffb7cab7	1	10	\N	Rack1-pod2	{"name": "Rack1-pod2", "role": null, "site": 2, "tags": [], "type": null, "group": 4, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2019-12-29", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:05:36.429Z", "custom_fields": {}}	27	\N	1
+279	2019-12-29 12:05:36.495456+00	admin	a0440fce-6edb-476d-9c33-6311ffb7cab7	1	11	\N	Rack2-pod2	{"name": "Rack2-pod2", "role": null, "site": 2, "tags": [], "type": null, "group": 4, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2019-12-29", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:05:36.436Z", "custom_fields": {}}	27	\N	1
+280	2019-12-29 12:05:36.504267+00	admin	a0440fce-6edb-476d-9c33-6311ffb7cab7	1	12	\N	Service-pod2	{"name": "Service-pod2", "role": null, "site": 2, "tags": [], "type": null, "group": 4, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2019-12-29", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:05:36.443Z", "custom_fields": {}}	27	\N	1
+281	2019-12-29 12:05:36.515842+00	admin	a0440fce-6edb-476d-9c33-6311ffb7cab7	1	13	\N	Spine-pod2	{"name": "Spine-pod2", "role": null, "site": 2, "tags": [], "type": null, "group": 4, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2019-12-29", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:05:36.449Z", "custom_fields": {}}	27	\N	1
+282	2019-12-29 12:06:34.959769+00	admin	da7375d8-6e4e-4c2e-80b1-df85f6064654	1	14	\N	3tier	{"name": "3tier", "role": null, "site": 2, "tags": [], "type": null, "group": 6, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2019-12-29", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:06:34.938Z", "custom_fields": {}}	27	\N	1
+283	2019-12-29 12:08:19.678665+00	admin	11403a6e-e428-459c-8189-8ba45d0897fd	1	2	\N	Canonical	{"name": "Canonical", "slug": "canonical", "created": "2019-12-29", "last_updated": "2019-12-29T12:08:19.668Z"}	21	\N	1
+284	2019-12-29 12:09:32.578367+00	admin	a799750b-f220-441c-b327-8dda5fcb6402	1	2	\N	Ubuntu 18.04 vm	{"slug": "ubuntu-18-04-vm", "tags": [], "model": "Ubuntu 18.04 vm", "created": "2019-12-29", "comments": "", "u_height": 1, "part_number": "", "last_updated": "2019-12-29T12:09:32.559Z", "manufacturer": 2, "custom_fields": {}, "is_full_depth": true, "subdevice_role": null}	17	\N	1
+285	2019-12-29 12:10:08.488928+00	admin	e45f43a9-2bb1-4e24-bcb2-cdac1f78871b	1	15	\N	OOB	{"name": "OOB", "role": null, "site": 2, "tags": [], "type": null, "group": null, "width": 19, "serial": "", "status": 3, "tenant": null, "created": "2019-12-29", "comments": "", "u_height": 42, "asset_tag": null, "desc_units": false, "outer_unit": null, "facility_id": null, "outer_depth": null, "outer_width": null, "last_updated": "2019-12-29T12:10:08.472Z", "custom_fields": {}}	27	\N	1
+286	2019-12-29 12:10:38.693706+00	admin	d9edf745-37bb-4474-89b3-7aa9f37b9e82	1	3	\N	NetQ Cloud VM appliance	{"slug": "netq-cloud-vm-appliance", "tags": [], "model": "NetQ Cloud VM appliance", "created": "2019-12-29", "comments": "", "u_height": 1, "part_number": "", "last_updated": "2019-12-29T12:10:38.678Z", "manufacturer": 1, "custom_fields": {}, "is_full_depth": true, "subdevice_role": null}	17	\N	1
+287	2019-12-29 12:12:23.154655+00	admin	adf294c7-41c9-4bd1-849c-84bbd9f0bff0	1	3	\N	server	{"name": "server", "slug": "server", "color": "aa1409", "created": "2019-12-29", "vm_role": true, "last_updated": "2019-12-29T12:12:23.148Z"}	16	\N	1
+288	2019-12-29 12:12:56.112863+00	admin	ca635fd6-bc61-4439-9727-9aadaaa9cca5	1	4	\N	oob-server	{"name": "oob-server", "slug": "oob-server", "color": "ff5722", "created": "2019-12-29", "vm_role": false, "last_updated": "2019-12-29T12:12:56.108Z"}	16	\N	1
+289	2019-12-29 12:13:20.011272+00	admin	6c10cb5a-7d22-4e3d-a2a9-34cdca72ffc7	1	5	\N	superspine	{"name": "superspine", "slug": "superspine", "color": "2f6a31", "created": "2019-12-29", "vm_role": true, "last_updated": "2019-12-29T12:13:20.007Z"}	16	\N	1
+290	2019-12-29 12:13:37.293527+00	admin	865329b4-8c69-4039-a723-093878eb490f	2	2	\N	Spine	{"name": "Spine", "slug": "spine", "color": "4caf50", "created": "2019-12-29", "vm_role": false, "last_updated": "2019-12-29T12:13:37.277Z"}	16	\N	1
+291	2019-12-29 12:13:55.633776+00	admin	39cc4df7-8acd-489b-ae50-48e660b4a253	2	1	\N	Leaf	{"name": "Leaf", "slug": "leaf", "color": "8bc34a", "created": "2019-12-29", "vm_role": false, "last_updated": "2019-12-29T12:13:55.629Z"}	16	\N	1
+292	2019-12-29 12:14:11.690876+00	admin	8fc83b04-d631-4410-b8e9-b752f5315d0c	2	4	\N	OOB Server	{"name": "OOB Server", "slug": "oob-server", "color": "ff5722", "created": "2019-12-29", "vm_role": false, "last_updated": "2019-12-29T12:14:11.687Z"}	16	\N	1
+293	2019-12-29 12:14:19.871811+00	admin	e155c07c-38d3-4ef9-84f8-a1212c32aadb	2	3	\N	Server	{"name": "Server", "slug": "server", "color": "aa1409", "created": "2019-12-29", "vm_role": true, "last_updated": "2019-12-29T12:14:19.868Z"}	16	\N	1
+294	2019-12-29 12:14:29.036002+00	admin	24260e4e-8cad-46ec-b3fd-9fb9fc8498e3	2	5	\N	Superspine	{"name": "Superspine", "slug": "superspine", "color": "2f6a31", "created": "2019-12-29", "vm_role": true, "last_updated": "2019-12-29T12:14:29.032Z"}	16	\N	1
+295	2019-12-29 12:14:35.377337+00	admin	50ef4860-8df9-4925-993c-16102b359706	2	5	\N	Superspine	{"name": "Superspine", "slug": "superspine", "color": "2f6a31", "created": "2019-12-29", "vm_role": false, "last_updated": "2019-12-29T12:14:35.373Z"}	16	\N	1
+296	2019-12-29 12:14:55.08803+00	admin	e7fe3c2b-b87d-4e1e-bda6-4f7afa8dc5c2	1	6	\N	Firewall	{"name": "Firewall", "slug": "firewall", "color": "f44336", "created": "2019-12-29", "vm_role": true, "last_updated": "2019-12-29T12:14:55.084Z"}	16	\N	1
+297	2019-12-29 12:15:17.091996+00	admin	53f6b55f-c541-4d97-873b-c0bd54224421	2	3	\N	Server	{"name": "Server", "slug": "server", "color": "3f51b5", "created": "2019-12-29", "vm_role": true, "last_updated": "2019-12-29T12:15:17.081Z"}	16	\N	1
+298	2019-12-29 12:15:40.666603+00	admin	feadb433-ffc2-42fd-a2be-36cada21187b	1	7	\N	Router	{"name": "Router", "slug": "router", "color": "cddc39", "created": "2019-12-29", "vm_role": true, "last_updated": "2019-12-29T12:15:40.660Z"}	16	\N	1
+395	2019-12-29 13:32:43.54389+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	15	1	swp14	{"name": "swp14", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+396	2019-12-29 13:32:43.545722+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	16	1	swp15	{"name": "swp15", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+299	2019-12-29 12:16:33.420852+00	admin	5ff72846-d4dc-4ecf-b07c-c4a7c2279114	1	17	\N	leaf02	{"face": null, "name": "leaf02", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:16:33.363Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+300	2019-12-29 12:17:30.429545+00	admin	51588877-da11-4381-9080-6d3fa7473e28	1	18	\N	server01	{"face": null, "name": "server01", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:17:30.380Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+301	2019-12-29 12:20:21.014879+00	admin	f7c87cd2-aa84-409a-88eb-fe6f50963682	1	19	\N	server02	{"face": null, "name": "server02", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:20:20.976Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+302	2019-12-29 12:20:48.430202+00	admin	c39b5229-d4a1-41e3-9f00-2d8bbe5de61e	1	20	\N	server03	{"face": null, "name": "server03", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:20:48.397Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+303	2019-12-29 12:23:14.795396+00	admin	e32d455f-bc7d-4462-9fae-8165e4713297	1	21	\N	server04	{"face": null, "name": "server04", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:23:14.749Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+304	2019-12-29 12:27:42.796543+00	admin	d8264866-3c83-442f-bfea-8d3d17d1e8ed	1	22	\N	leaf03	{"face": null, "name": "leaf03", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": 1, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:27:42.398Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+305	2019-12-29 12:27:42.806031+00	admin	d8264866-3c83-442f-bfea-8d3d17d1e8ed	1	23	\N	leaf04	{"face": null, "name": "leaf04", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:27:42.437Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+306	2019-12-29 12:27:42.814145+00	admin	d8264866-3c83-442f-bfea-8d3d17d1e8ed	1	24	\N	server05	{"face": null, "name": "server05", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:27:42.469Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+307	2019-12-29 12:27:42.822667+00	admin	d8264866-3c83-442f-bfea-8d3d17d1e8ed	1	25	\N	server06	{"face": null, "name": "server06", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:27:42.507Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+308	2019-12-29 12:27:42.831488+00	admin	d8264866-3c83-442f-bfea-8d3d17d1e8ed	1	26	\N	server07	{"face": null, "name": "server07", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:27:42.541Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+309	2019-12-29 12:27:42.83975+00	admin	d8264866-3c83-442f-bfea-8d3d17d1e8ed	1	27	\N	server08	{"face": null, "name": "server08", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:27:42.577Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+310	2019-12-29 12:27:42.848003+00	admin	d8264866-3c83-442f-bfea-8d3d17d1e8ed	1	28	\N	service01	{"face": null, "name": "service01", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": 1, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:27:42.626Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+311	2019-12-29 12:27:42.856605+00	admin	d8264866-3c83-442f-bfea-8d3d17d1e8ed	1	29	\N	service02	{"face": null, "name": "service02", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:27:42.666Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+312	2019-12-29 12:27:42.864814+00	admin	d8264866-3c83-442f-bfea-8d3d17d1e8ed	1	30	\N	server09	{"face": null, "name": "server09", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:27:42.697Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+313	2019-12-29 12:27:42.873128+00	admin	d8264866-3c83-442f-bfea-8d3d17d1e8ed	1	31	\N	server10	{"face": null, "name": "server10", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:27:42.727Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+314	2019-12-29 12:29:40.759239+00	admin	fbbf34c1-582b-44c0-b364-cea0aba28202	1	32	\N	fw01	{"face": null, "name": "fw01", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:29:40.720Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+315	2019-12-29 12:30:17.073703+00	admin	4249bfbb-1de3-47c8-aed8-857f5a554e0c	1	33	\N	fw02	{"face": null, "name": "fw02", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:30:17.029Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+316	2019-12-29 12:31:34.218088+00	admin	87ba2d07-af00-42eb-b3cd-ff4712b0badc	1	34	\N	spine01	{"face": null, "name": "spine01", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:31:34.166Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+317	2019-12-29 12:32:41.617857+00	admin	8b18f4be-013e-44c6-98be-f41a80401ebc	1	35	\N	spine02	{"face": null, "name": "spine02", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:32:41.494Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+318	2019-12-29 12:32:41.627471+00	admin	8b18f4be-013e-44c6-98be-f41a80401ebc	1	36	\N	spine03	{"face": null, "name": "spine03", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:32:41.530Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+319	2019-12-29 12:32:41.635646+00	admin	8b18f4be-013e-44c6-98be-f41a80401ebc	1	37	\N	spine04	{"face": null, "name": "spine04", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:32:41.561Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+320	2019-12-29 12:33:53.212833+00	admin	a4c04bea-0e3f-48f0-a872-c6286ceb5ce2	1	38	\N	super01	{"face": null, "name": "super01", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:33:53.175Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+321	2019-12-29 13:02:31.783031+00	admin	ac58df54-537f-4bd1-ab66-b14c15f0c907	2	24	\N	server05	{"face": null, "name": "server05", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:02:31.764Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+322	2019-12-29 13:03:16.149981+00	admin	02f0a1cd-ff54-4dcb-a0a7-3e25d447ed26	2	25	\N	server06	{"face": null, "name": "server06", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:03:16.131Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+323	2019-12-29 13:03:28.83077+00	admin	c9673656-dad4-4976-bc03-d87bdd2482bf	2	26	\N	server07	{"face": null, "name": "server07", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:03:28.813Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+324	2019-12-29 13:03:42.751563+00	admin	7f4a8402-76ae-4df1-ba83-5a4b626f90a5	2	27	\N	server08	{"face": null, "name": "server08", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:03:42.728Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+325	2019-12-29 13:03:54.756689+00	admin	95301c1c-61cb-4dc4-94e8-a85926b934ba	2	22	\N	leaf03	{"face": null, "name": "leaf03", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": 1, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:03:54.736Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+326	2019-12-29 13:04:06.131498+00	admin	2b04c6cd-1f3a-4639-be38-eb3e5cec1ddf	2	23	\N	leaf04	{"face": null, "name": "leaf04", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:04:06.113Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+327	2019-12-29 13:04:49.179993+00	admin	938b3577-d630-4b0d-ad37-1dceccb5f8c4	2	30	\N	server09	{"face": null, "name": "server09", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:04:49.162Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+328	2019-12-29 13:05:04.847184+00	admin	584fb442-674f-493a-8066-882a9553822f	2	31	\N	server10	{"face": null, "name": "server10", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:05:04.827Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+329	2019-12-29 13:05:59.41615+00	admin	a19d878c-2a5d-48c1-b344-8aa2148ba657	2	28	\N	service01	{"face": null, "name": "service01", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": 1, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:05:59.397Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+330	2019-12-29 13:06:14.243996+00	admin	56814e61-96d6-4585-ad94-53d1cb9ed475	2	29	\N	service02	{"face": null, "name": "service02", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:06:14.224Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+331	2019-12-29 13:08:17.967188+00	admin	18c01166-efaf-4e2a-84fe-10bbe35c1d5e	2	33	\N	fw02	{"face": null, "name": "fw02", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:08:17.948Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+332	2019-12-29 13:10:30.984587+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	32	\N	fw01	{"face": null, "name": "fw01", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.758Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+333	2019-12-29 13:10:30.991665+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	33	\N	fw02	{"face": null, "name": "fw02", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.774Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+334	2019-12-29 13:10:30.999048+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	1	\N	leaf01	{"face": null, "name": "leaf01", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2018-06-03", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.790Z", "custom_fields": {"ASN": "65111"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+335	2019-12-29 13:10:31.005423+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	17	\N	leaf02	{"face": null, "name": "leaf02", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.805Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+336	2019-12-29 13:10:31.011777+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	22	\N	leaf03	{"face": null, "name": "leaf03", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.821Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+337	2019-12-29 13:10:31.017924+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	23	\N	leaf04	{"face": null, "name": "leaf04", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.837Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+338	2019-12-29 13:10:31.0242+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	28	\N	service01	{"face": null, "name": "service01", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.852Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+339	2019-12-29 13:10:31.03051+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	29	\N	service02	{"face": null, "name": "service02", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.868Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+340	2019-12-29 13:10:31.039317+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	34	\N	spine01	{"face": null, "name": "spine01", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.886Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+341	2019-12-29 13:10:31.047922+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	35	\N	spine02	{"face": null, "name": "spine02", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.902Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+342	2019-12-29 13:10:31.056815+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	36	\N	spine03	{"face": null, "name": "spine03", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.926Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+343	2019-12-29 13:10:31.065804+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	37	\N	spine04	{"face": null, "name": "spine04", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.942Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+344	2019-12-29 13:10:31.08296+00	admin	f93b7d62-9f8f-41dd-9de1-0a38f3712586	2	38	\N	super01	{"face": null, "name": "super01", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.958Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+345	2019-12-29 13:12:55.891027+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	39	\N	super02	{"face": null, "name": "super02", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:54.952Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+346	2019-12-29 13:12:55.904065+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	40	\N	super03	{"face": null, "name": "super03", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:54.987Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+347	2019-12-29 13:12:55.913039+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	41	\N	super04	{"face": null, "name": "super04", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.024Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+348	2019-12-29 13:12:55.929108+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	42	\N	fw03	{"face": null, "name": "fw03", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.058Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+349	2019-12-29 13:12:55.937368+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	43	\N	fw04	{"face": null, "name": "fw04", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.093Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+350	2019-12-29 13:12:55.94559+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	44	\N	leaf05	{"face": null, "name": "leaf05", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.128Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+351	2019-12-29 13:12:55.953926+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	45	\N	leaf06	{"face": null, "name": "leaf06", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.163Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+352	2019-12-29 13:12:55.96249+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	46	\N	leaf07	{"face": null, "name": "leaf07", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.196Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+353	2019-12-29 13:12:55.971286+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	47	\N	leaf08	{"face": null, "name": "leaf08", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.234Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+354	2019-12-29 13:12:55.980142+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	48	\N	server11	{"face": null, "name": "server11", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.270Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+355	2019-12-29 13:12:55.994052+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	49	\N	server12	{"face": null, "name": "server12", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.304Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+397	2019-12-29 13:32:43.547608+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	17	1	swp16	{"name": "swp16", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+356	2019-12-29 13:12:56.00264+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	50	\N	server13	{"face": null, "name": "server13", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.336Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+357	2019-12-29 13:12:56.013466+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	51	\N	server14	{"face": null, "name": "server14", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.368Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+358	2019-12-29 13:12:56.027917+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	52	\N	server15	{"face": null, "name": "server15", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.399Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+359	2019-12-29 13:12:56.039382+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	53	\N	server16	{"face": null, "name": "server16", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.430Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+360	2019-12-29 13:12:56.050282+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	54	\N	server17	{"face": null, "name": "server17", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.460Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+361	2019-12-29 13:12:56.066373+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	55	\N	server18	{"face": null, "name": "server18", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.495Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+362	2019-12-29 13:12:56.077414+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	56	\N	server19	{"face": null, "name": "server19", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.525Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+363	2019-12-29 13:12:56.088312+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	57	\N	server20	{"face": null, "name": "server20", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.556Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+364	2019-12-29 13:12:56.096659+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	58	\N	service03	{"face": null, "name": "service03", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.587Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+365	2019-12-29 13:12:56.104922+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	59	\N	service04	{"face": null, "name": "service04", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.628Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+366	2019-12-29 13:12:56.113166+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	60	\N	spine05	{"face": null, "name": "spine05", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.660Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+367	2019-12-29 13:12:56.121302+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	61	\N	spine06	{"face": null, "name": "spine06", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.701Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+368	2019-12-29 13:12:56.129648+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	62	\N	spine07	{"face": null, "name": "spine07", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.739Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+369	2019-12-29 13:12:56.137823+00	admin	c1ce24a5-6624-4abd-8295-8b98cb6b678a	1	63	\N	spine08	{"face": null, "name": "spine08", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.774Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+370	2019-12-29 13:14:56.380965+00	admin	8e99942d-cf22-4acb-8ad3-a5abb4c2bd9a	1	64	\N	exit01	{"face": null, "name": "exit01", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:14:56.332Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+371	2019-12-29 13:15:40.822007+00	admin	7245572a-60ab-449e-a076-312f940c4f1a	1	65	\N	exit02	{"face": null, "name": "exit02", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:15:40.785Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+372	2019-12-29 13:16:03.903488+00	admin	427139d0-da4d-4022-ac6c-2805bafee029	1	66	\N	rtr01	{"face": null, "name": "rtr01", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 7, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:16:03.869Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+373	2019-12-29 13:16:24.286006+00	admin	f0bf5944-8ca0-4501-a328-133d70ada1a2	1	67	\N	rtr02	{"face": null, "name": "rtr02", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 7, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:16:24.251Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+374	2019-12-29 13:19:29.26243+00	admin	f478cb1a-b13e-45ab-9340-c8a3b1dd30e9	1	68	\N	oob-mgmt-server	{"face": null, "name": "oob-mgmt-server", "rack": 15, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 4, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:19:29.209Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+375	2019-12-29 13:19:59.351117+00	admin	fde6f8db-690f-4c02-a1d0-354d85513c88	1	69	\N	netq-ts	{"face": null, "name": "netq-ts", "rack": null, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 3, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:19:59.301Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+376	2019-12-29 13:21:07.841119+00	admin	4198af69-be5b-4f61-9a58-9b3dc49839fa	1	8	\N	OOB Switch	{"name": "OOB Switch", "slug": "oob-switch", "color": "cddc39", "created": "2019-12-29", "vm_role": false, "last_updated": "2019-12-29T13:21:07.833Z"}	16	\N	1
+377	2019-12-29 13:21:39.130903+00	admin	f71b10ea-cb45-4fd3-bcf5-cafd1e6644ae	1	70	\N	oob-mgmt-switch	{"face": null, "name": "oob-mgmt-switch", "rack": 15, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 8, "device_type": 3, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:21:39.083Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+378	2019-12-29 13:23:23.022884+00	admin	3f36a718-3102-46aa-8e0a-6c9c20826dd5	2	4	\N	OOB Server	{"name": "OOB Server", "slug": "oob-server", "color": "2196f3", "created": "2019-12-29", "vm_role": false, "last_updated": "2019-12-29T13:23:23.016Z"}	16	\N	1
+379	2019-12-29 13:26:38.433767+00	admin	c5f91da9-f2c3-42fd-b260-269fa0ac58df	2	6	\N	Firewall	{"name": "Firewall", "slug": "firewall", "color": "f44336", "created": "2019-12-29", "vm_role": false, "last_updated": "2019-12-29T13:26:38.429Z"}	16	\N	1
+380	2019-12-29 13:26:46.304459+00	admin	98ce661e-d878-42b0-9391-c195501b7a34	2	7	\N	Router	{"name": "Router", "slug": "router", "color": "cddc39", "created": "2019-12-29", "vm_role": false, "last_updated": "2019-12-29T13:26:46.300Z"}	16	\N	1
+381	2019-12-29 13:31:32.59652+00	admin	89747a88-a09b-4403-9e71-4f33d0505b40	1	1	1	eth0	{"name": "eth0", "type": 1000, "mgmt_only": true, "device_type": 1}	20	17	1
+382	2019-12-29 13:32:43.519917+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	2	1	swp1	{"name": "swp1", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+383	2019-12-29 13:32:43.52298+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	3	1	swp2	{"name": "swp2", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+384	2019-12-29 13:32:43.524793+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	4	1	swp3	{"name": "swp3", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+385	2019-12-29 13:32:43.526536+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	5	1	swp4	{"name": "swp4", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+386	2019-12-29 13:32:43.528197+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	6	1	swp5	{"name": "swp5", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+387	2019-12-29 13:32:43.529887+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	7	1	swp6	{"name": "swp6", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+388	2019-12-29 13:32:43.531675+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	8	1	swp7	{"name": "swp7", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+389	2019-12-29 13:32:43.533275+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	9	1	swp8	{"name": "swp8", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+390	2019-12-29 13:32:43.534932+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	10	1	swp9	{"name": "swp9", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+391	2019-12-29 13:32:43.536708+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	11	1	swp10	{"name": "swp10", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+392	2019-12-29 13:32:43.538433+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	12	1	swp11	{"name": "swp11", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+401	2019-12-29 13:32:43.554692+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	21	1	swp20	{"name": "swp20", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+402	2019-12-29 13:32:43.556966+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	22	1	swp21	{"name": "swp21", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+403	2019-12-29 13:32:43.558706+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	23	1	swp22	{"name": "swp22", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+404	2019-12-29 13:32:43.560347+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	24	1	swp23	{"name": "swp23", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+405	2019-12-29 13:32:43.56203+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	25	1	swp24	{"name": "swp24", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+406	2019-12-29 13:32:43.563622+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	26	1	swp25	{"name": "swp25", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+407	2019-12-29 13:32:43.565198+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	27	1	swp26	{"name": "swp26", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+408	2019-12-29 13:32:43.566947+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	28	1	swp27	{"name": "swp27", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+409	2019-12-29 13:32:43.56917+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	29	1	swp28	{"name": "swp28", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+410	2019-12-29 13:32:43.571248+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	30	1	swp29	{"name": "swp29", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+411	2019-12-29 13:32:43.572878+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	31	1	swp30	{"name": "swp30", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+412	2019-12-29 13:32:43.574642+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	32	1	swp31	{"name": "swp31", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+413	2019-12-29 13:32:43.576363+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	33	1	swp32	{"name": "swp32", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+414	2019-12-29 13:32:43.577923+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	34	1	swp33	{"name": "swp33", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+415	2019-12-29 13:32:43.579524+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	35	1	swp34	{"name": "swp34", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+416	2019-12-29 13:32:43.581268+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	36	1	swp35	{"name": "swp35", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+417	2019-12-29 13:32:43.583083+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	37	1	swp36	{"name": "swp36", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+418	2019-12-29 13:32:43.584796+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	38	1	swp37	{"name": "swp37", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+419	2019-12-29 13:32:43.586516+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	39	1	swp38	{"name": "swp38", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+420	2019-12-29 13:32:43.588254+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	40	1	swp39	{"name": "swp39", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+421	2019-12-29 13:32:43.589913+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	41	1	swp40	{"name": "swp40", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+422	2019-12-29 13:32:43.591629+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	42	1	swp41	{"name": "swp41", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+423	2019-12-29 13:32:43.59319+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	43	1	swp42	{"name": "swp42", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+424	2019-12-29 13:32:43.594855+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	44	1	swp43	{"name": "swp43", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+425	2019-12-29 13:32:43.59644+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	45	1	swp44	{"name": "swp44", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+426	2019-12-29 13:32:43.598037+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	46	1	swp45	{"name": "swp45", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+427	2019-12-29 13:32:43.599644+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	47	1	swp46	{"name": "swp46", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+428	2019-12-29 13:32:43.601313+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	48	1	swp47	{"name": "swp47", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+429	2019-12-29 13:32:43.602989+00	admin	69854d43-39cd-431c-9294-b0fd9da7a5c7	1	49	1	swp48	{"name": "swp48", "type": 1200, "mgmt_only": false, "device_type": 1}	20	17	1
+430	2019-12-29 13:33:10.851606+00	admin	c156e5da-effa-4855-9ea3-938bf2b5e856	1	50	1	swp49	{"name": "swp49", "type": 1600, "mgmt_only": false, "device_type": 1}	20	17	1
+431	2019-12-29 13:33:10.854491+00	admin	c156e5da-effa-4855-9ea3-938bf2b5e856	1	51	1	swp50	{"name": "swp50", "type": 1600, "mgmt_only": false, "device_type": 1}	20	17	1
+432	2019-12-29 13:33:10.856306+00	admin	c156e5da-effa-4855-9ea3-938bf2b5e856	1	52	1	swp51	{"name": "swp51", "type": 1600, "mgmt_only": false, "device_type": 1}	20	17	1
+433	2019-12-29 13:33:10.858099+00	admin	c156e5da-effa-4855-9ea3-938bf2b5e856	1	53	1	swp52	{"name": "swp52", "type": 1600, "mgmt_only": false, "device_type": 1}	20	17	1
+434	2019-12-29 13:33:10.863869+00	admin	c156e5da-effa-4855-9ea3-938bf2b5e856	1	54	1	swp53	{"name": "swp53", "type": 1600, "mgmt_only": false, "device_type": 1}	20	17	1
+435	2019-12-29 13:33:10.865664+00	admin	c156e5da-effa-4855-9ea3-938bf2b5e856	1	55	1	swp54	{"name": "swp54", "type": 1600, "mgmt_only": false, "device_type": 1}	20	17	1
+436	2019-12-29 13:33:10.870567+00	admin	c156e5da-effa-4855-9ea3-938bf2b5e856	1	56	1	swp55	{"name": "swp55", "type": 1600, "mgmt_only": false, "device_type": 1}	20	17	1
+437	2019-12-29 13:33:10.872413+00	admin	c156e5da-effa-4855-9ea3-938bf2b5e856	1	57	1	swp56	{"name": "swp56", "type": 1600, "mgmt_only": false, "device_type": 1}	20	17	1
+438	2019-12-29 13:34:07.05369+00	admin	6891ad6f-f7bc-4d05-b58f-0b7604820a0e	2	1	\N	Cumulus VX Leaf	{"slug": "cumulus-vx-leaf", "tags": [], "model": "Cumulus VX Leaf", "created": "2019-12-29", "comments": "", "u_height": 0, "part_number": "", "last_updated": "2019-12-29T13:34:07.040Z", "manufacturer": 1, "custom_fields": {}, "is_full_depth": false, "subdevice_role": null}	17	\N	1
+439	2019-12-29 13:34:53.043738+00	admin	09ecff1f-4e55-41af-a168-ae3285e60b48	1	4	\N	Cumulus VX Spine	{"slug": "cumulus-vx-spine", "tags": [], "model": "Cumulus VX Spine", "created": "2019-12-29", "comments": "", "u_height": 1, "part_number": "", "last_updated": "2019-12-29T13:34:53.025Z", "manufacturer": 1, "custom_fields": {}, "is_full_depth": true, "subdevice_role": null}	17	\N	1
+440	2019-12-29 13:35:08.309461+00	admin	92330efc-7da7-49f7-945f-66e6b44eea94	1	58	4	eth0	{"name": "eth0", "type": 1000, "mgmt_only": true, "device_type": 4}	20	17	1
+441	2019-12-29 13:35:30.746429+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	59	4	swp1	{"name": "swp1", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+442	2019-12-29 13:35:30.749519+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	60	4	swp2	{"name": "swp2", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+443	2019-12-29 13:35:30.751632+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	61	4	swp3	{"name": "swp3", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+444	2019-12-29 13:35:30.753365+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	62	4	swp4	{"name": "swp4", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+445	2019-12-29 13:35:30.755112+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	63	4	swp5	{"name": "swp5", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+446	2019-12-29 13:35:30.756885+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	64	4	swp6	{"name": "swp6", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+447	2019-12-29 13:35:30.758599+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	65	4	swp7	{"name": "swp7", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+448	2019-12-29 13:35:30.760212+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	66	4	swp8	{"name": "swp8", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+449	2019-12-29 13:35:30.7618+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	67	4	swp9	{"name": "swp9", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+450	2019-12-29 13:35:30.763703+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	68	4	swp10	{"name": "swp10", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+451	2019-12-29 13:35:30.765293+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	69	4	swp11	{"name": "swp11", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+452	2019-12-29 13:35:30.767065+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	70	4	swp12	{"name": "swp12", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+453	2019-12-29 13:35:30.768701+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	71	4	swp13	{"name": "swp13", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+454	2019-12-29 13:35:30.770375+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	72	4	swp14	{"name": "swp14", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+455	2019-12-29 13:35:30.772336+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	73	4	swp15	{"name": "swp15", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+456	2019-12-29 13:35:30.77401+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	74	4	swp16	{"name": "swp16", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+457	2019-12-29 13:35:30.775797+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	75	4	swp17	{"name": "swp17", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+458	2019-12-29 13:35:30.77748+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	76	4	swp18	{"name": "swp18", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+459	2019-12-29 13:35:30.779137+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	77	4	swp19	{"name": "swp19", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+460	2019-12-29 13:35:30.780756+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	78	4	swp20	{"name": "swp20", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+461	2019-12-29 13:35:30.782435+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	79	4	swp21	{"name": "swp21", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+462	2019-12-29 13:35:30.784094+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	80	4	swp22	{"name": "swp22", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+463	2019-12-29 13:35:30.786105+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	81	4	swp23	{"name": "swp23", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+464	2019-12-29 13:35:30.787959+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	82	4	swp24	{"name": "swp24", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+465	2019-12-29 13:35:30.789952+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	83	4	swp25	{"name": "swp25", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+466	2019-12-29 13:35:30.791618+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	84	4	swp26	{"name": "swp26", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+467	2019-12-29 13:35:30.793395+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	85	4	swp27	{"name": "swp27", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+468	2019-12-29 13:35:30.795168+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	86	4	swp28	{"name": "swp28", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+469	2019-12-29 13:35:30.796815+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	87	4	swp29	{"name": "swp29", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+470	2019-12-29 13:35:30.798507+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	88	4	swp30	{"name": "swp30", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+471	2019-12-29 13:35:30.800175+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	89	4	swp31	{"name": "swp31", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+472	2019-12-29 13:35:30.801833+00	admin	ee0eb946-7f67-4b87-86c4-764e367ac2c9	1	90	4	swp32	{"name": "swp32", "type": 1600, "mgmt_only": false, "device_type": 4}	20	17	1
+473	2019-12-29 13:39:32.331786+00	admin	03db4499-6d53-4c88-acad-6f9e6d9e36d2	2	28	\N	service01	{"face": null, "name": "service01", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:39:32.312Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+474	2019-12-29 13:39:41.40241+00	admin	d868e481-f20f-4474-a1cb-25d0f69b373d	2	29	\N	service02	{"face": null, "name": "service02", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:39:41.384Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+475	2019-12-29 13:39:50.71994+00	admin	991a2bad-3f52-4443-abc6-9990d9058651	2	58	\N	service03	{"face": null, "name": "service03", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:39:50.699Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+476	2019-12-29 13:39:59.950866+00	admin	644902dd-3b06-44fb-9981-6a386866aca8	2	59	\N	service04	{"face": null, "name": "service04", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:39:59.932Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+480	2019-12-29 13:40:37.125172+00	admin	731785a4-6636-46a8-a92c-65cf91857ca6	2	37	\N	spine04	{"face": null, "name": "spine04", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:37.106Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+484	2019-12-29 13:41:09.906556+00	admin	200b07f0-be83-4cd2-9d73-1b245999cf7b	2	63	\N	spine08	{"face": null, "name": "spine08", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:41:09.888Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+477	2019-12-29 13:40:10.312404+00	admin	a22f705c-6b5f-45b7-99a5-6c7b1797736f	2	34	\N	spine01	{"face": null, "name": "spine01", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:10.295Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+478	2019-12-29 13:40:21.312139+00	admin	b7a07024-6826-4aff-b5f3-f437a3edc1b8	2	36	\N	spine03	{"face": null, "name": "spine03", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:21.293Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+479	2019-12-29 13:40:28.923233+00	admin	e61af962-097a-4fb4-892b-813041793c09	2	35	\N	spine02	{"face": null, "name": "spine02", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:28.906Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+481	2019-12-29 13:40:44.958732+00	admin	3c8a8fed-53a8-4940-a589-b86d0d16bab6	2	60	\N	spine05	{"face": null, "name": "spine05", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:44.941Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+482	2019-12-29 13:40:53.017331+00	admin	3a118a98-c443-425f-a409-f55dd7bc72d5	2	61	\N	spine06	{"face": null, "name": "spine06", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:52.997Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+483	2019-12-29 13:41:00.84905+00	admin	72be9fd7-143e-43ba-b8df-c2e2334395a9	2	62	\N	spine07	{"face": null, "name": "spine07", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:41:00.825Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+485	2019-12-29 13:41:19.243964+00	admin	2ed82bb6-ba76-4e3d-ba74-7df55e5f1dcd	2	38	\N	super01	{"face": null, "name": "super01", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:41:19.226Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+486	2019-12-29 13:41:38.347662+00	admin	3e55aee2-dc15-4be7-a82e-bb7d31fd1119	2	39	\N	super02	{"face": null, "name": "super02", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:41:38.328Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+487	2019-12-29 13:41:47.009899+00	admin	6bd927c5-63e5-4f24-930a-07bd3ee8324f	2	40	\N	super03	{"face": null, "name": "super03", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:41:46.992Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+488	2019-12-29 13:42:11.389517+00	admin	3fc281db-0130-4ae8-b333-526f1197e156	2	41	\N	super04	{"face": null, "name": "super04", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:42:11.371Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+489	2019-12-29 13:45:18.147412+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	17	\N	leaf02	{"face": null, "name": "leaf02", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.805Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+490	2019-12-29 13:45:18.153658+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	18	\N	server01	{"face": null, "name": "server01", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:17:30.380Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+491	2019-12-29 13:45:18.156826+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	19	\N	server02	{"face": null, "name": "server02", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:20:20.976Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+492	2019-12-29 13:45:18.159713+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	20	\N	server03	{"face": null, "name": "server03", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:20:48.397Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+493	2019-12-29 13:45:18.162664+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	21	\N	server04	{"face": null, "name": "server04", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T12:23:14.749Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+494	2019-12-29 13:45:18.165479+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	22	\N	leaf03	{"face": null, "name": "leaf03", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.821Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+495	2019-12-29 13:45:18.168333+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	23	\N	leaf04	{"face": null, "name": "leaf04", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.837Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+496	2019-12-29 13:45:18.171105+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	24	\N	server05	{"face": null, "name": "server05", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:02:31.764Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+497	2019-12-29 13:45:18.173914+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	25	\N	server06	{"face": null, "name": "server06", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:03:16.131Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+498	2019-12-29 13:45:18.176712+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	26	\N	server07	{"face": null, "name": "server07", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:03:28.813Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+499	2019-12-29 13:45:18.179461+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	27	\N	server08	{"face": null, "name": "server08", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:03:42.728Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+500	2019-12-29 13:45:18.182224+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	28	\N	service01	{"face": null, "name": "service01", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:39:32.312Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+501	2019-12-29 13:45:18.185069+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	29	\N	service02	{"face": null, "name": "service02", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:39:41.384Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+502	2019-12-29 13:45:18.188021+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	30	\N	server09	{"face": null, "name": "server09", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:04:49.162Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+503	2019-12-29 13:45:18.190939+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	31	\N	server10	{"face": null, "name": "server10", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:05:04.827Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+504	2019-12-29 13:45:18.193704+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	32	\N	fw01	{"face": null, "name": "fw01", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.758Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+505	2019-12-29 13:45:18.196528+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	33	\N	fw02	{"face": null, "name": "fw02", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:10:30.774Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+506	2019-12-29 13:45:18.199332+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	34	\N	spine01	{"face": null, "name": "spine01", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:10.295Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+507	2019-12-29 13:45:18.202035+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	35	\N	spine02	{"face": null, "name": "spine02", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:28.906Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+508	2019-12-29 13:45:18.204769+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	36	\N	spine03	{"face": null, "name": "spine03", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:21.293Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+509	2019-12-29 13:45:18.207501+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	37	\N	spine04	{"face": null, "name": "spine04", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:37.106Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+510	2019-12-29 13:45:18.21023+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	42	\N	fw03	{"face": null, "name": "fw03", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.058Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+511	2019-12-29 13:45:18.212908+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	43	\N	fw04	{"face": null, "name": "fw04", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.093Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+512	2019-12-29 13:45:18.215711+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	44	\N	leaf05	{"face": null, "name": "leaf05", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.128Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+513	2019-12-29 13:45:18.218457+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	45	\N	leaf06	{"face": null, "name": "leaf06", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.163Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+514	2019-12-29 13:45:18.221146+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	46	\N	leaf07	{"face": null, "name": "leaf07", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.196Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+515	2019-12-29 13:45:18.223882+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	47	\N	leaf08	{"face": null, "name": "leaf08", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.234Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+516	2019-12-29 13:45:18.226715+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	48	\N	server11	{"face": null, "name": "server11", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.270Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+517	2019-12-29 13:45:18.229447+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	49	\N	server12	{"face": null, "name": "server12", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.304Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+518	2019-12-29 13:45:18.233175+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	50	\N	server13	{"face": null, "name": "server13", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.336Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+519	2019-12-29 13:45:18.236013+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	51	\N	server14	{"face": null, "name": "server14", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.368Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+520	2019-12-29 13:45:18.238734+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	52	\N	server15	{"face": null, "name": "server15", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.399Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+521	2019-12-29 13:45:18.241487+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	53	\N	server16	{"face": null, "name": "server16", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.430Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+522	2019-12-29 13:45:18.244184+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	54	\N	server17	{"face": null, "name": "server17", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.460Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+523	2019-12-29 13:45:18.247013+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	55	\N	server18	{"face": null, "name": "server18", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.495Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+524	2019-12-29 13:45:18.249742+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	56	\N	server19	{"face": null, "name": "server19", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.525Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+525	2019-12-29 13:45:18.252884+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	57	\N	server20	{"face": null, "name": "server20", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:12:55.556Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+526	2019-12-29 13:45:18.256119+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	58	\N	service03	{"face": null, "name": "service03", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:39:50.699Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+527	2019-12-29 13:45:18.260152+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	59	\N	service04	{"face": null, "name": "service04", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:39:59.932Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+528	2019-12-29 13:45:18.264155+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	60	\N	spine05	{"face": null, "name": "spine05", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:44.941Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+529	2019-12-29 13:45:18.268114+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	61	\N	spine06	{"face": null, "name": "spine06", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:40:52.997Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+530	2019-12-29 13:45:18.27184+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	62	\N	spine07	{"face": null, "name": "spine07", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:41:00.825Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+531	2019-12-29 13:45:18.275248+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	64	\N	exit01	{"face": null, "name": "exit01", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:14:56.332Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+532	2019-12-29 13:45:18.278499+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	65	\N	exit02	{"face": null, "name": "exit02", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:15:40.785Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+533	2019-12-29 13:45:18.281895+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	66	\N	rtr01	{"face": null, "name": "rtr01", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 7, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:16:03.869Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+534	2019-12-29 13:45:18.285297+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	67	\N	rtr02	{"face": null, "name": "rtr02", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 7, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:16:24.251Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+535	2019-12-29 13:45:18.288658+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	68	\N	oob-mgmt-server	{"face": null, "name": "oob-mgmt-server", "rack": 15, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 4, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:19:29.209Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+536	2019-12-29 13:45:18.291744+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	69	\N	netq-ts	{"face": null, "name": "netq-ts", "rack": null, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 3, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:19:59.301Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+537	2019-12-29 13:45:18.296748+00	admin	10a88121-beac-4a1b-af01-ca66723643ce	3	70	\N	oob-mgmt-switch	{"face": null, "name": "oob-mgmt-switch", "rack": 15, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 8, "device_type": 3, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:21:39.083Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+538	2019-12-29 13:45:30.567942+00	admin	bd1d511d-7406-4ec1-8f61-20dfc683784c	3	38	\N	super01	{"face": null, "name": "super01", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:41:19.226Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+539	2019-12-29 13:45:30.57254+00	admin	bd1d511d-7406-4ec1-8f61-20dfc683784c	3	39	\N	super02	{"face": null, "name": "super02", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:41:38.328Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+540	2019-12-29 13:45:30.575861+00	admin	bd1d511d-7406-4ec1-8f61-20dfc683784c	3	40	\N	super03	{"face": null, "name": "super03", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:41:46.992Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+541	2019-12-29 13:45:30.578927+00	admin	bd1d511d-7406-4ec1-8f61-20dfc683784c	3	41	\N	super04	{"face": null, "name": "super04", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:42:11.371Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+542	2019-12-29 13:45:30.581837+00	admin	bd1d511d-7406-4ec1-8f61-20dfc683784c	3	63	\N	spine08	{"face": null, "name": "spine08", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:41:09.888Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+543	2019-12-29 13:45:48.742638+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	71	\N	exit01	{"face": null, "name": "exit01", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.152Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+544	2019-12-29 13:45:48.759277+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	72	\N	exit02	{"face": null, "name": "exit02", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.206Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+545	2019-12-29 13:45:48.768547+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	73	\N	fw01	{"face": null, "name": "fw01", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.250Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+546	2019-12-29 13:45:48.777809+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	74	\N	fw02	{"face": null, "name": "fw02", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.295Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+547	2019-12-29 13:45:48.786665+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	75	\N	fw03	{"face": null, "name": "fw03", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.340Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+548	2019-12-29 13:45:48.795314+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	76	\N	fw04	{"face": null, "name": "fw04", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 6, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.385Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+549	2019-12-29 13:45:48.804297+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	77	\N	leaf02	{"face": null, "name": "leaf02", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.431Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+550	2019-12-29 13:45:48.813588+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	78	\N	leaf03	{"face": null, "name": "leaf03", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.477Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+551	2019-12-29 13:45:48.822364+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	79	\N	leaf04	{"face": null, "name": "leaf04", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.528Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+552	2019-12-29 13:45:48.831441+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	80	\N	leaf05	{"face": null, "name": "leaf05", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.574Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+553	2019-12-29 13:45:48.840181+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	81	\N	leaf06	{"face": null, "name": "leaf06", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.621Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+554	2019-12-29 13:45:48.849101+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	82	\N	leaf07	{"face": null, "name": "leaf07", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.666Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+555	2019-12-29 13:45:48.857896+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	83	\N	leaf08	{"face": null, "name": "leaf08", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.718Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+556	2019-12-29 13:45:48.866787+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	84	\N	netq-ts	{"face": null, "name": "netq-ts", "rack": null, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 3, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.759Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+557	2019-12-29 13:45:48.875583+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	85	\N	oob-mgmt-server	{"face": null, "name": "oob-mgmt-server", "rack": 15, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 4, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.789Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+558	2019-12-29 13:45:48.884318+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	86	\N	oob-mgmt-switch	{"face": null, "name": "oob-mgmt-switch", "rack": 15, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 8, "device_type": 3, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.821Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+559	2019-12-29 13:45:48.89443+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	87	\N	rtr01	{"face": null, "name": "rtr01", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 7, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.855Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+560	2019-12-29 13:45:48.903209+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	88	\N	rtr02	{"face": null, "name": "rtr02", "rack": 6, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 7, "device_type": 1, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.901Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+561	2019-12-29 13:45:48.91214+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	89	\N	server01	{"face": null, "name": "server01", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.952Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+562	2019-12-29 13:45:48.920981+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	90	\N	server02	{"face": null, "name": "server02", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:46.982Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+563	2019-12-29 13:45:48.930071+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	91	\N	server03	{"face": null, "name": "server03", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.013Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+564	2019-12-29 13:45:48.938939+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	92	\N	server04	{"face": null, "name": "server04", "rack": 1, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.043Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+565	2019-12-29 13:45:48.947753+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	93	\N	server05	{"face": null, "name": "server05", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.072Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+566	2019-12-29 13:45:48.962113+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	94	\N	server06	{"face": null, "name": "server06", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.102Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+567	2019-12-29 13:45:48.970717+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	95	\N	server07	{"face": null, "name": "server07", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.138Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+568	2019-12-29 13:45:48.97972+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	96	\N	server08	{"face": null, "name": "server08", "rack": 3, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.169Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+569	2019-12-29 13:45:48.988506+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	97	\N	server09	{"face": null, "name": "server09", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.200Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+570	2019-12-29 13:45:48.99732+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	98	\N	server10	{"face": null, "name": "server10", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.233Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+571	2019-12-29 13:45:49.005983+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	99	\N	server11	{"face": null, "name": "server11", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.272Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+572	2019-12-29 13:45:49.014352+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	100	\N	server12	{"face": null, "name": "server12", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.307Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+573	2019-12-29 13:45:49.02266+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	101	\N	server13	{"face": null, "name": "server13", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.340Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+574	2019-12-29 13:45:49.033003+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	102	\N	server14	{"face": null, "name": "server14", "rack": 10, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.373Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+575	2019-12-29 13:45:49.041365+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	103	\N	server15	{"face": null, "name": "server15", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.406Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+576	2019-12-29 13:45:49.050016+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	104	\N	server16	{"face": null, "name": "server16", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.439Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+577	2019-12-29 13:45:49.058401+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	105	\N	server17	{"face": null, "name": "server17", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.473Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+578	2019-12-29 13:45:49.066516+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	106	\N	server18	{"face": null, "name": "server18", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.505Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+579	2019-12-29 13:45:49.074714+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	107	\N	server19	{"face": null, "name": "server19", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.537Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+580	2019-12-29 13:45:49.082861+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	108	\N	server20	{"face": null, "name": "server20", "rack": 11, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 3, "device_type": 2, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.577Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+581	2019-12-29 13:45:49.090906+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	109	\N	service01	{"face": null, "name": "service01", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.611Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+582	2019-12-29 13:45:49.102311+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	110	\N	service02	{"face": null, "name": "service02", "rack": 9, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.656Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+583	2019-12-29 13:45:49.110419+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	111	\N	service03	{"face": null, "name": "service03", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.704Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+584	2019-12-29 13:45:49.118471+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	112	\N	service04	{"face": null, "name": "service04", "rack": 12, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 1, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.751Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+585	2019-12-29 13:45:49.127758+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	113	\N	spine01	{"face": null, "name": "spine01", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.800Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+586	2019-12-29 13:45:49.135784+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	114	\N	spine02	{"face": null, "name": "spine02", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.844Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+587	2019-12-29 13:45:49.143817+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	115	\N	spine03	{"face": null, "name": "spine03", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.892Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+588	2019-12-29 13:45:49.15232+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	116	\N	spine04	{"face": null, "name": "spine04", "rack": 2, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.932Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+589	2019-12-29 13:45:49.16053+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	117	\N	spine05	{"face": null, "name": "spine05", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:47.972Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+590	2019-12-29 13:45:49.168505+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	118	\N	spine06	{"face": null, "name": "spine06", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:48.018Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+591	2019-12-29 13:45:49.176624+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	119	\N	spine07	{"face": null, "name": "spine07", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:48.056Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+592	2019-12-29 13:45:49.184909+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	120	\N	spine08	{"face": null, "name": "spine08", "rack": 13, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 2, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:48.103Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+593	2019-12-29 13:45:49.193848+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	121	\N	super01	{"face": null, "name": "super01", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:48.147Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+594	2019-12-29 13:45:49.202327+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	122	\N	super02	{"face": null, "name": "super02", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:48.187Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+595	2019-12-29 13:45:49.210931+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	123	\N	super03	{"face": null, "name": "super03", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:48.226Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
+596	2019-12-29 13:45:49.219536+00	admin	3fff273a-46a6-4ce0-96fc-77b52f0c03e3	1	124	\N	super04	{"face": null, "name": "super04", "rack": 14, "site": 2, "tags": [], "serial": "", "status": 1, "tenant": null, "cluster": null, "created": "2019-12-29", "comments": "", "platform": null, "position": null, "asset_tag": null, "device_role": 5, "device_type": 4, "primary_ip4": null, "primary_ip6": null, "vc_position": null, "vc_priority": null, "last_updated": "2019-12-29T13:45:48.272Z", "custom_fields": {"ASN": "None"}, "virtual_chassis": null, "local_context_data": null}	15	\N	1
 \.
 
 
@@ -5891,67 +7810,13 @@ COPY public.ipam_ipaddress (id, created, last_updated, family, address, descript
 86	2018-06-09	2018-06-09 10:53:42.687133+00	6	fc00:12::2/64		137	\N	2	2	1	\N	
 92	2018-06-09	2018-06-09 10:54:23.916168+00	6	fc00:13::2/64		138	\N	2	2	1	\N	
 98	2018-06-09	2018-06-09 10:54:42.020742+00	6	fc00:14::2/64		139	\N	3	3	1	\N	
-120	2018-06-09	2018-06-09 19:51:37.028337+00	4	192.168.11.1/24		161	\N	1	1	1	41	
-49	2018-06-09	2018-06-09 08:58:45.482406+00	4	10.10.30.2		99	\N	\N	\N	1	10	
-122	2018-06-09	2018-06-09 19:52:44.302551+00	4	192.168.13.1/24		163	\N	2	2	1	41	
-124	2018-06-09	2018-06-09 19:53:48.876302+00	4	192.168.15.1/24		165	\N	3	3	1	41	
-126	2018-06-09	2018-06-09 19:54:50.332847+00	4	192.168.12.1/24		142	\N	2	2	1	41	
-128	2018-06-09	2018-06-09 19:55:30.045081+00	4	192.168.14.1/24		144	\N	3	3	1	41	
-130	2018-06-09	2018-06-09 19:56:22.588307+00	6	fc00:11::1/64		141	\N	1	1	1	41	
-132	2018-06-09	2018-06-09 19:56:55.134519+00	6	fc00:13::1/64		143	\N	2	2	1	41	
 7	2018-06-03	2018-06-08 16:53:47.050852+00	4	169.254.1.1/30		8	\N	\N	\N	1	\N	
-134	2018-06-09	2018-06-09 19:57:25.643063+00	6	fc00:15::1/64		145	\N	3	3	1	41	
-87	2018-06-09	2018-06-09 19:58:35.058177+00	6	fc00:12::3/64		142	\N	2	2	1	\N	
-93	2018-06-09	2018-06-09 19:59:00.601134+00	6	fc00:13::3/64		143	\N	2	2	1	\N	
-99	2018-06-09	2018-06-09 19:59:16.304608+00	6	fc00:14::3/64		144	\N	3	3	1	\N	
-51	2018-06-09	2018-06-09 20:00:12.396717+00	4	192.168.11.3/24		141	\N	1	1	1	\N	
-11	2018-06-08	2018-06-08 20:17:59.798689+00	4	10.10.10.2		19	\N	\N	\N	1	10	
-8	2018-06-03	2018-06-08 20:20:21.168161+00	4	169.254.1.2/30		21	\N	\N	\N	1	\N	
-57	2018-06-09	2018-06-09 20:00:24.869895+00	4	192.168.12.3/24		142	\N	2	2	1	\N	
-63	2018-06-09	2018-06-09 20:00:37.953922+00	4	192.168.13.3/24		143	\N	2	2	1	\N	
-69	2018-06-09	2018-06-09 20:00:58.253397+00	4	192.168.14.3/24		144	\N	3	3	1	\N	
-75	2018-06-09	2018-06-09 20:01:13.646992+00	4	192.168.15.3/24		145	\N	3	3	1	\N	
 10	2018-06-03	2018-06-08 21:24:46.126106+00	4	10.100.100.12		9	\N	\N	\N	1	30	
-15	2018-06-08	2018-06-08 21:30:04.433543+00	4	10.100.100.12		17	\N	\N	\N	1	30	
-18	2018-06-08	2018-06-08 22:36:50.542167+00	4	10.10.20.1		28	\N	\N	\N	1	10	
-19	2018-06-08	2018-06-08 22:38:33.425144+00	4	10.10.20.2		35	\N	\N	\N	1	10	
 16	2018-06-08	2018-06-08 23:21:39.662181+00	4	192.168.10.1/24		3	\N	1	1	1	41	
-12	2018-06-08	2018-06-08 23:21:48.785744+00	4	192.168.10.1/24		18	\N	1	1	1	41	
 13	2018-06-08	2018-06-08 23:21:56.237071+00	4	192.168.10.2/24		3	\N	1	1	1	\N	
-14	2018-06-08	2018-06-08 23:22:04.35702+00	4	192.168.10.3/24		18	\N	1	1	1	\N	
-4	2018-06-03	2018-06-08 23:22:15.27877+00	6	fc00:10::1/64		18	\N	1	1	1	41	
 5	2018-06-03	2018-06-08 23:22:27.540686+00	6	fc00:10::2/64		3	\N	1	1	1	\N	
-6	2018-06-03	2018-06-08 23:22:46.362188+00	6	fc00:10::3/64		18	\N	1	1	1	\N	
-21	2018-06-08	2018-06-08 23:59:01.661535+00	4	10.10.10.3		46	\N	\N	\N	1	10	
-22	2018-06-09	2018-06-09 00:00:28.026116+00	4	169.254.1.1/30		48	\N	\N	\N	1	\N	
 17	2018-06-08	2018-06-09 00:04:25.854341+00	6	fc00:10::1/64		3	\N	1	1	1	41	
-27	2018-06-09	2018-06-09 00:15:54.709314+00	4	169.254.1.2/30		61	\N	\N	\N	1	\N	
-34	2018-06-09	2018-06-09 08:37:02.310354+00	4	10.100.100.56		70	\N	\N	\N	1	30	
-35	2018-06-09	2018-06-09 08:37:33.395269+00	4	10.10.10.5		72	\N	\N	\N	1	10	
-36	2018-06-09	2018-06-09 08:39:11.687954+00	4	169.254.1.1/30		74	\N	\N	\N	1	\N	
-41	2018-06-09	2018-06-09 08:48:52.770896+00	4	10.100.100.56		83	\N	\N	\N	1	30	
-42	2018-06-09	2018-06-09 08:49:57.197178+00	4	10.10.10.6		85	\N	\N	\N	1	10	
-43	2018-06-09	2018-06-09 08:51:12.140443+00	4	169.254.1.2/30		87	\N	\N	\N	1	\N	
-48	2018-06-09	2018-06-09 08:54:31.276043+00	4	10.10.30.1		94	\N	\N	\N	1	10	
-54	2018-06-09	2018-06-09 20:35:00.51934+00	4	192.168.11.6/24		156	\N	1	1	1	\N	
-60	2018-06-09	2018-06-09 20:35:13.015298+00	4	192.168.12.6/24		157	\N	2	2	1	\N	
-66	2018-06-09	2018-06-09 20:35:26.35718+00	4	192.168.13.6/24		158	\N	2	2	1	\N	
-72	2018-06-09	2018-06-09 20:35:37.269083+00	4	192.168.14.6/24		159	\N	3	3	1	\N	
-45	2018-06-09	2018-06-09 10:05:30.547499+00	4	192.168.10.7/24		84	\N	1	1	1	\N	
-28	2018-06-09	2018-06-09 10:06:15.15478+00	4	10.10.10.4		59	\N	\N	\N	1	10	
-78	2018-06-09	2018-06-09 20:35:51.193111+00	4	192.168.15.6/24		160	\N	3	3	1	\N	
-90	2018-06-09	2018-06-09 20:36:38.637933+00	6	fc00:12::6/64		157	\N	2	2	1	\N	
-40	2018-06-09	2018-06-09 10:14:08.887747+00	6	fc00:10::1/64		71	\N	1	1	1	41	
-46	2018-06-09	2018-06-09 10:14:08.893935+00	6	fc00:10::1/64		84	\N	1	1	1	41	
-91	2018-06-09	2018-06-09 20:39:51.423013+00	6	fc00:12::7/64		162	\N	2	2	1	\N	
-55	2018-06-09	2018-06-09 20:40:56.586391+00	4	192.168.11.7/24		161	\N	1	1	1	\N	
-61	2018-06-09	2018-06-09 20:41:10.993366+00	4	192.168.12.7/24		162	\N	2	2	1	\N	
-73	2018-06-09	2018-06-09 20:41:32.918289+00	4	192.168.14.7/24		164	\N	3	3	1	\N	
-79	2018-06-09	2018-06-09 20:41:45.053978+00	4	192.168.15.7/24		165	\N	3	3	1	\N	
 50	2018-06-09	2018-06-09 10:45:00.558226+00	4	192.168.11.2/24		136	\N	1	1	1	\N	
-38	2018-06-09	2018-06-09 10:04:52.146074+00	4	192.168.10.6/24		71	\N	1	1	1	\N	
-37	2018-06-09	2018-06-09 10:05:52.622032+00	4	192.168.10.1/24		71	\N	1	1	1	41	
-44	2018-06-09	2018-06-09 10:05:52.630131+00	4	192.168.10.1/24		84	\N	1	1	1	41	
 115	2018-06-09	2018-06-09 10:51:21.927845+00	6	fc00:11::1/64		136	\N	1	1	1	41	
 116	2018-06-09	2018-06-09 10:51:53.153056+00	6	fc00:12::1/64		137	\N	2	2	1	41	
 117	2018-06-09	2018-06-09 10:52:08.888119+00	6	fc00:13::1/64		138	\N	2	2	1	41	
@@ -5959,46 +7824,11 @@ COPY public.ipam_ipaddress (id, created, last_updated, family, address, descript
 119	2018-06-09	2018-06-09 10:52:56.1531+00	6	fc00:15::1/64		140	\N	3	3	1	41	
 80	2018-06-09	2018-06-09 10:53:26.858314+00	6	fc00:11::2/64		136	\N	1	1	1	\N	
 104	2018-06-09	2018-06-09 10:54:58.958957+00	6	fc00:15::2/64		140	\N	3	3	1	\N	
-123	2018-06-09	2018-06-09 19:53:08.740336+00	4	192.168.14.1/24		164	\N	3	3	1	41	
-125	2018-06-09	2018-06-09 19:54:35.398377+00	4	192.168.11.1/24		141	\N	1	1	1	41	
-129	2018-06-09	2018-06-09 19:55:45.52175+00	4	192.168.15.1/24		145	\N	3	3	1	41	
-131	2018-06-09	2018-06-09 19:56:40.680239+00	6	fc00:12::1/64		142	\N	2	2	1	41	
-133	2018-06-09	2018-06-09 19:57:10.388924+00	6	fc00:14::1/64		144	\N	3	3	1	41	
-81	2018-06-09	2018-06-09 19:58:19.005782+00	6	fc00:11::3/64		141	\N	1	1	1	\N	
-105	2018-06-09	2018-06-09 19:59:30.920288+00	6	fc00:15::3/64		145	\N	3	3	1	\N	
-39	2018-06-09	2018-06-09 10:13:35.532328+00	6	fc00:10::6/64		71	\N	1	1	1	\N	
-47	2018-06-09	2018-06-09 10:13:35.540608+00	6	fc00:10::7/64		84	\N	1	1	1	\N	
-127	2018-06-09	2018-06-09 20:48:05.676037+00	4	192.168.13.1/24		143	\N	1	2	1	41	
-96	2018-06-09	2018-06-09 20:36:53.220312+00	6	fc00:13::6/64		158	\N	2	2	1	\N	
-102	2018-06-09	2018-06-09 20:37:08.244069+00	6	fc00:14::6/64		159	\N	3	3	1	\N	
-108	2018-06-09	2018-06-09 20:37:28.611635+00	6	fc00:15::6/64		160	\N	3	3	1	\N	
-165	2018-06-09	2018-06-09 20:38:10.179972+00	6	fc00:11::1/64		161	\N	1	1	1	41	
 110	2018-06-09	2018-06-09 10:45:52.595965+00	4	192.168.11.1/24		136	\N	1	1	1	41	
 111	2018-06-09	2018-06-09 10:46:35.0743+00	4	192.168.12.1/24		137	\N	2	2	1	41	
 112	2018-06-09	2018-06-09 10:46:52.321546+00	4	192.168.13.1/24		138	\N	2	2	1	41	
 113	2018-06-09	2018-06-09 10:47:12.440114+00	4	192.168.14.1/24		139	\N	3	3	1	41	
 114	2018-06-09	2018-06-09 10:47:34.379552+00	4	192.168.15.1/24		140	\N	3	3	1	41	
-155	2018-06-09	2018-06-09 20:32:16.585849+00	4	192.168.11.1/24		156	\N	1	1	1	41	
-156	2018-06-09	2018-06-09 20:32:29.915115+00	6	fc00:11::1/64		156	\N	1	1	1	41	
-157	2018-06-09	2018-06-09 20:32:44.76192+00	4	192.168.12.1/24		157	\N	2	2	1	41	
-158	2018-06-09	2018-06-09 20:32:59.432429+00	6	fc00:12::1/64		157	\N	2	2	1	41	
-159	2018-06-09	2018-06-09 20:33:10.620229+00	4	192.168.13.1/24		158	\N	2	2	1	41	
-160	2018-06-09	2018-06-09 20:33:24.164546+00	6	fc00:13::1/64		158	\N	2	2	1	41	
-161	2018-06-09	2018-06-09 20:33:39.459045+00	4	192.168.14.1/24		159	\N	3	3	1	41	
-162	2018-06-09	2018-06-09 20:33:54.627912+00	6	fc00:14::1/64		159	\N	3	3	1	41	
-163	2018-06-09	2018-06-09 20:34:07.400939+00	4	192.168.15.1/24		160	\N	3	3	1	41	
-164	2018-06-09	2018-06-09 20:34:28.218622+00	6	fc00:15::1/64		160	\N	3	3	1	41	
-84	2018-06-09	2018-06-09 20:36:17.526537+00	6	fc00:11::6/64		156	\N	1	1	1	\N	
-166	2018-06-09	2018-06-09 20:38:21.848697+00	6	fc00:12::1/64		162	\N	2	2	1	41	
-167	2018-06-09	2018-06-09 20:38:38.68772+00	6	fc00:13::1/64		163	\N	2	2	1	41	
-168	2018-06-09	2018-06-09 20:38:51.17949+00	6	fc00:14::1/64		164	\N	3	3	1	41	
-169	2018-06-09	2018-06-09 20:39:07.863229+00	6	fc00:15::1/64		165	\N	3	3	1	41	
-85	2018-06-09	2018-06-09 20:39:38.399468+00	6	fc00:11::7/64		161	\N	1	1	1	\N	
-97	2018-06-09	2018-06-09 20:40:06.835903+00	6	fc00:13::7/64		163	\N	2	2	1	\N	
-103	2018-06-09	2018-06-09 20:40:20.317366+00	6	fc00:14::7/64		164	\N	3	3	1	\N	
-109	2018-06-09	2018-06-09 20:40:31.752772+00	6	fc00:15::7/64		165	\N	3	3	1	\N	
-67	2018-06-09	2018-06-09 20:41:21.421193+00	4	192.168.13.7/24		163	\N	2	2	1	\N	
-121	2018-06-09	2018-06-09 20:43:40.279345+00	4	192.168.12.1/24		162	\N	2	2	1	41	
 \.
 
 
@@ -6047,24 +7877,24 @@ COPY public.ipam_service_ipaddresses (id, service_id, ipaddress_id) FROM stdin;
 --
 
 COPY public.ipam_vlan (id, created, last_updated, vid, name, status, role_id, site_id, group_id, description, tenant_id) FROM stdin;
-1	2018-06-03	2018-06-03 17:03:23.145948+00	1000	Vlan1000	1	\N	1	\N		\N
-2	2018-06-03	2018-06-03 17:04:33.134388+00	1001	Vlan1001	1	\N	1	\N		\N
-3	2018-06-09	2018-06-09 09:08:27.251969+00	1002	Vlan1002	1	\N	1	\N		\N
-4	2018-06-09	2018-06-09 09:08:49.648987+00	1003	Vlan1003	1	\N	1	\N		\N
-5	2018-06-09	2018-06-09 09:09:13.613934+00	1004	Vlan1004	1	\N	1	\N		\N
-6	2018-06-09	2018-06-09 09:09:26.857202+00	1005	Vlan1005	1	\N	1	\N		\N
-7	2018-06-09	2018-06-09 09:10:04.457964+00	2501	Vlan2501	1	\N	1	\N		\N
-9	2018-06-09	2018-06-09 09:10:36.250134+00	2503	Vlan2503	1	\N	1	\N		\N
-10	2018-06-09	2018-06-09 09:10:48.996452+00	2504	Vlan2504	1	\N	1	\N		\N
-11	2018-06-09	2018-06-09 09:11:02.479483+00	2505	Vlan2505	1	\N	1	\N		\N
-12	2018-06-09	2018-06-09 09:11:15.205472+00	2506	Vlan2506	1	\N	1	\N		\N
-13	2018-06-09	2018-06-09 09:11:39.566879+00	2507	Vlan2507	1	\N	1	\N		\N
-14	2018-06-09	2018-06-09 09:11:50.387545+00	2508	Vlan2508	1	\N	1	\N		\N
-8	2018-06-09	2018-06-09 09:12:17.090306+00	2502	Vlan2502	1	\N	1	\N		\N
-16	2018-06-09	2018-06-09 09:13:14.371242+00	2701	Vlan2701	1	\N	1	\N		\N
-17	2018-06-09	2018-06-09 09:13:34.406514+00	2702	Vlan2702	1	\N	1	\N		\N
-18	2018-06-09	2018-06-09 09:13:48.129519+00	2703	Vlan2703	1	\N	1	\N		\N
-19	2018-06-09	2018-06-09 09:14:08.255639+00	2704	Vlan2704	1	\N	1	\N		\N
+1	2018-06-03	2019-12-29 12:01:18.438305+00	1000	Vlan1000	1	\N	2	\N		\N
+2	2018-06-03	2019-12-29 12:01:18.441722+00	1001	Vlan1001	1	\N	2	\N		\N
+3	2018-06-09	2019-12-29 12:01:18.444529+00	1002	Vlan1002	1	\N	2	\N		\N
+4	2018-06-09	2019-12-29 12:01:18.447312+00	1003	Vlan1003	1	\N	2	\N		\N
+5	2018-06-09	2019-12-29 12:01:18.450057+00	1004	Vlan1004	1	\N	2	\N		\N
+6	2018-06-09	2019-12-29 12:01:18.45288+00	1005	Vlan1005	1	\N	2	\N		\N
+7	2018-06-09	2019-12-29 12:01:18.45631+00	2501	Vlan2501	1	\N	2	\N		\N
+8	2018-06-09	2019-12-29 12:01:18.459692+00	2502	Vlan2502	1	\N	2	\N		\N
+9	2018-06-09	2019-12-29 12:01:18.46335+00	2503	Vlan2503	1	\N	2	\N		\N
+10	2018-06-09	2019-12-29 12:01:18.466573+00	2504	Vlan2504	1	\N	2	\N		\N
+11	2018-06-09	2019-12-29 12:01:18.469349+00	2505	Vlan2505	1	\N	2	\N		\N
+12	2018-06-09	2019-12-29 12:01:18.472279+00	2506	Vlan2506	1	\N	2	\N		\N
+13	2018-06-09	2019-12-29 12:01:18.475187+00	2507	Vlan2507	1	\N	2	\N		\N
+14	2018-06-09	2019-12-29 12:01:18.477952+00	2508	Vlan2508	1	\N	2	\N		\N
+16	2018-06-09	2019-12-29 12:01:18.480729+00	2701	Vlan2701	1	\N	2	\N		\N
+17	2018-06-09	2019-12-29 12:01:18.483512+00	2702	Vlan2702	1	\N	2	\N		\N
+18	2018-06-09	2019-12-29 12:01:18.486225+00	2703	Vlan2703	1	\N	2	\N		\N
+19	2018-06-09	2019-12-29 12:01:18.488849+00	2704	Vlan2704	1	\N	2	\N		\N
 \.
 
 
@@ -6320,7 +8150,7 @@ SELECT pg_catalog.setval('public.dcim_consoleserverporttemplate_id_seq', 1, fals
 -- Name: dcim_device_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.dcim_device_id_seq', 16, true);
+SELECT pg_catalog.setval('public.dcim_device_id_seq', 124, true);
 
 
 --
@@ -6341,14 +8171,14 @@ SELECT pg_catalog.setval('public.dcim_devicebaytemplate_id_seq', 1, false);
 -- Name: dcim_devicerole_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.dcim_devicerole_id_seq', 2, true);
+SELECT pg_catalog.setval('public.dcim_devicerole_id_seq', 8, true);
 
 
 --
 -- Name: dcim_devicetype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.dcim_devicetype_id_seq', 1, true);
+SELECT pg_catalog.setval('public.dcim_devicetype_id_seq', 4, true);
 
 
 --
@@ -6369,7 +8199,7 @@ SELECT pg_catalog.setval('public.dcim_frontporttemplate_id_seq', 1, false);
 -- Name: dcim_interface_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.dcim_interface_id_seq', 169, true);
+SELECT pg_catalog.setval('public.dcim_interface_id_seq', 1552, true);
 
 
 --
@@ -6383,14 +8213,14 @@ SELECT pg_catalog.setval('public.dcim_interface_tagged_vlans_id_seq', 100, true)
 -- Name: dcim_interfacetemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.dcim_interfacetemplate_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_interfacetemplate_id_seq', 90, true);
 
 
 --
 -- Name: dcim_manufacturer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.dcim_manufacturer_id_seq', 1, true);
+SELECT pg_catalog.setval('public.dcim_manufacturer_id_seq', 2, true);
 
 
 --
@@ -6453,14 +8283,14 @@ SELECT pg_catalog.setval('public.dcim_powerporttemplate_id_seq', 1, false);
 -- Name: dcim_rack_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.dcim_rack_id_seq', 7, true);
+SELECT pg_catalog.setval('public.dcim_rack_id_seq', 15, true);
 
 
 --
 -- Name: dcim_rackgroup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.dcim_rackgroup_id_seq', 3, true);
+SELECT pg_catalog.setval('public.dcim_rackgroup_id_seq', 7, true);
 
 
 --
@@ -6502,7 +8332,7 @@ SELECT pg_catalog.setval('public.dcim_region_id_seq', 1, false);
 -- Name: dcim_site_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.dcim_site_id_seq', 1, true);
+SELECT pg_catalog.setval('public.dcim_site_id_seq', 2, true);
 
 
 --
@@ -6642,7 +8472,7 @@ SELECT pg_catalog.setval('public.extras_imageattachment_id_seq', 1, false);
 -- Name: extras_objectchange_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('public.extras_objectchange_id_seq', 1, false);
+SELECT pg_catalog.setval('public.extras_objectchange_id_seq', 596, true);
 
 
 --
