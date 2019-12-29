@@ -10,7 +10,7 @@
                                     api_filter='name=' + inventory_hostname,
                                     api_endpoint=netbox_api_endpoint, 
                                     token=netbox_api_token) }}"
-    vrfs: "{{ query('fragmentedpacket.netbox_modules.netbox', 'vrfs', 
+    ipaddresses: "{{ query('fragmentedpacket.netbox_modules.netbox', 'ipaddresses', 
                                     api_endpoint=netbox_api_endpoint, 
                                     token=netbox_api_token) }}"
   #template:
@@ -22,4 +22,4 @@
     msg: 
       - "{{ interfaces }}"
       - "{{ devices }}"
-      - "{{ vrfs }}"
+      - "{{ ipaddresses }}"
