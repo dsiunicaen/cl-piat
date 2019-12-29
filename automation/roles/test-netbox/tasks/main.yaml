@@ -10,7 +10,7 @@
                                     api_filter='name=' + inventory_hostname,
                                     api_endpoint=netbox_api_endpoint, 
                                     token=netbox_api_token) }}"
-    ipaddresses: "{{ query('fragmentedpacket.netbox_modules.netbox', 'ipaddresses', 
+    ipaddresses: "{{ query('fragmentedpacket.netbox_modules.netbox', 'ip-addresses', 
                                     api_endpoint=netbox_api_endpoint, 
                                     token=netbox_api_token) }}"
   #template:
