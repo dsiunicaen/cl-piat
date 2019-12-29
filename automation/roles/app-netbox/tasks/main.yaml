@@ -6,15 +6,11 @@
   copy:
     src: netbox.env
     dest: /home/cumulus/netbox-docker/netbox.env 
-  when:
-    - netbox_state.stdout.find('netbox') == -1
 
 - name: Netbox docker compose
   shell: 'cd /home/cumulus/netbox-docker;docker-compose pull;docker-compose up -d'
   environment:
     VERSION: v2.3.6
-  when:
-    - netbox_state.stdout.find('netbox') == -1
 
 - copy:
     src: netbox_postgres.sql
@@ -22,8 +18,6 @@
     owner: cumulus
     group: cumulus
     mode: 0644
-  when:
-    - netbox_state.stdout.find('netbox') == -1
 
 - name: Pause to let container start 
   pause:
@@ -31,6 +25,4 @@
 
 - name: Provision Netbox postgres db
   shell: 'cat netbox_postgres.sql | docker exec -i netboxdocker_postgres_1 psql -U postgres'
-  when:
-    - netbox_state.stdout.find('netbox') == -1
 ...
