@@ -1,13 +1,3 @@
----
-#- hosts: leaf01
-#  become: true
-#  connection: local
-#  gather_facts: False
-#  collections:
-#    - fragmentedpacket.netbox_modules
-#  roles:
-#  - { role: test-netbox, tags: ['test'] }
-
 - hosts: oob-mgmt-server 
   become: true
   roles:
