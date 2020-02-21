@@ -1,0 +1,69 @@
+Host oob-mgmt-server
+ User cumulus
+
+Host oob-mgmt-switch
+ User cumulus
+
+Host border02
+ User cumulus
+
+Host border01
+ User cumulus
+
+Host spine03
+ User cumulus
+
+Host spine01
+ User cumulus
+
+Host spine02
+ User cumulus
+
+Host spine04
+ User cumulus
+
+Host leaf03
+ User cumulus
+
+Host leaf04
+ User cumulus
+
+Host leaf01
+ User cumulus
+
+Host leaf02
+ User cumulus
+
+Host fw1
+ User cumulus
+
+Host fw2
+ User cumulus
+
+Host netq-ts
+ User cumulus
+
+Host server05
+ User cumulus
+
+Host server08
+ User cumulus
+
+Host server04
+ User cumulus
+
+Host server07
+ User cumulus
+
+Host server06
+ User cumulus
+
+Host server03
+ User cumulus
+
+Host server02
+ User cumulus
+
+Host server01
+ User cumulus
+

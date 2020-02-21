@@ -1,0 +1,38 @@
+# Created by Topology-Converter v4.7.1
+#    Template Revision: v4.7.1
+
+
+127.0.0.1 localhost 
+127.0.1.1 oob-mgmt-server
+
+192.168.200.1 oob-mgmt-server
+
+
+192.168.200.2 oob-mgmt-switch
+192.168.200.64 border02
+192.168.200.63 border01
+192.168.200.23 spine03
+192.168.200.21 spine01
+192.168.200.22 spine02
+192.168.200.24 spine04
+192.168.200.13 leaf03
+192.168.200.14 leaf04
+192.168.200.11 leaf01
+192.168.200.12 leaf02
+192.168.200.61 fw1
+192.168.200.62 fw2
+192.168.200.250 netq-ts
+192.168.200.35 server05
+192.168.200.38 server08
+192.168.200.34 server04
+192.168.200.37 server07
+192.168.200.36 server06
+192.168.200.33 server03
+192.168.200.32 server02
+192.168.200.31 server01
+
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters

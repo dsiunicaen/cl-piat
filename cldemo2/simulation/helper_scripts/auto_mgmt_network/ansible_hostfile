@@ -1,0 +1,57 @@
+# Created by Topology-Converter v4.7.1
+#    Template Revision: v4.7.1
+#    https://github.com/cumulusnetworks/topology_converter
+#    using topology data from: cldemo2.dot
+
+
+
+
+[oob-switch]
+oob-mgmt-switch ansible_host=192.168.200.2
+
+
+
+[exit]
+border02 ansible_host=192.168.200.64
+border01 ansible_host=192.168.200.63
+
+
+
+
+
+[leaf]
+leaf03 ansible_host=192.168.200.13
+leaf04 ansible_host=192.168.200.14
+leaf01 ansible_host=192.168.200.11
+leaf02 ansible_host=192.168.200.12
+fw1 ansible_host=192.168.200.61
+fw2 ansible_host=192.168.200.62
+
+
+
+[spine]
+spine03 ansible_host=192.168.200.23
+spine01 ansible_host=192.168.200.21
+spine02 ansible_host=192.168.200.22
+spine04 ansible_host=192.168.200.24
+
+
+
+
+
+[host]
+netq-ts ansible_host=192.168.200.250
+server05 ansible_host=192.168.200.35
+server08 ansible_host=192.168.200.38
+server04 ansible_host=192.168.200.34
+server07 ansible_host=192.168.200.37
+server06 ansible_host=192.168.200.36
+server03 ansible_host=192.168.200.33
+server02 ansible_host=192.168.200.32
+server01 ansible_host=192.168.200.31
+
+
+[all:vars]
+ansible_user=cumulus
+ansible_ssh_pass=CumulusLinux!
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'

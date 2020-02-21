@@ -1,0 +1,67 @@
+---
+stages:
+  - lint
+  - prep simulation environment
+  - build the simulation
+  - provision netq
+  - test the simulation
+  - cleanup the simulation
+  - trigger downstream pipelines
+
+lint:
+  stage: lint
+  script:
+    - bash ./ci-common/linter.sh
+
+prep:
+  stage: prep simulation environment
+  script:
+    - bash ./ci-common/prep.sh
+  only:
+    - /^dev.*/
+
+build:
+  stage: build the simulation
+  script:
+    - bash ./ci-common/cldemo2-bring-up-sim.sh
+  artifacts:
+    expire_in: 1 week
+    untracked: true
+    paths:
+      - simulation_$CI_PROJECT_NAME/
+  only:
+    - /^dev.*/
+
+provision-netq:
+  stage: provision netq
+  script:
+    - bash ./ci-common/provision-opta.sh
+  only:
+    - /^dev.*/
+  dependencies:
+    - build
+
+test:
+  stage: test the simulation
+  script:
+    - bash ./ci-common/test-sim-outside.sh
+  only:
+    - /^dev.*/
+  dependencies:
+    - build
+
+cleanup:
+  stage: cleanup the simulation
+  script:
+    - bash ./ci-common/cleanup.sh
+  only:
+    - /^dev.*/
+  dependencies:
+    - build
+
+downstream:
+  stage: trigger downstream pipelines
+  script:
+    - bash ./ci-common/downstream-repos.sh
+  only:
+    - /^master$/
